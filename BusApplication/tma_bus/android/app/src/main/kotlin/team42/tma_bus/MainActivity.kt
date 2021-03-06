@@ -1,4 +1,4 @@
-package com.tma.tma_bus
+package team42.tma_bus
 
 import io.flutter.embedding.android.FlutterActivity
 
