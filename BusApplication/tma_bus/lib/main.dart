@@ -1,64 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:tma_bus/screens/home/passengermap.dart';
+import 'package:tma_bus/screens/home/emergency.dart';
+import 'package:tma_bus/screens/home/currenttrip.dart';
+import 'package:tma_bus/database/dbtasks.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(MyApp());
+void main() async {
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-  }
+  runApp(MaterialApp(
+    // Title
+      title: "Using Tabs",
+      // Home
+      home: MyHome()));
+  await Firebase.initializeApp();
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHome extends StatefulWidget {
+  @override
+  MyHomeState createState() => MyHomeState();
+}
+
+// SingleTickerProviderStateMixin is used for animation
+class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
+  // Create a tab controller
+  TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the Tab Controller
+    controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the Tab Controller
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final AlertDialog dialog = AlertDialog(
-      title: Text('Confirm'),
-      content:
-      Text('Stop the trip?'),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('Yes'),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('No'),
-        ),
-      ],
-    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Current Trip'),
-        centerTitle: true,
-        backgroundColor: Colors.black45,
+      body: TabBarView(
+        // Add tabs as widgets
+        children: <Widget>[PassengerMapView(), TripControlView(), ReportEmergencyView()],
+        // set the controller
+        controller: controller,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-            onPressed: () {
-              showDialog<void>(context: context, builder: (context) => dialog);
-            },
-              child: Text(
-                "STOP TRIP",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                ),
-              )
+      // Set the bottom navigation bar
+      bottomNavigationBar: Material(
+        // set the color of the bottom navigation bar
+        color: Colors.black,
+        // set the tab bar as the child of bottom navigation bar
+        child: TabBar(
+          tabs: <Tab>[
+            Tab(
+              // set icon to the tab
+              icon: Icon(Icons.map),
             ),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Respond to button press
-              },
-              icon: Icon(Icons.report, size: 20),
-              label: Text("Report Emergency"),
-            )
-          ]
+            Tab(
+              icon: Icon(Icons.directions_bus),
+            ),
+            Tab(
+              icon: Icon(Icons.person),
+            ),
+          ],
+          // setup the controller
+          controller: controller,
         ),
       ),
     );

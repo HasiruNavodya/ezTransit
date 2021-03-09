@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "331408941592",
+    "project_id": "tma42-898f9",
+    "storage_bucket": "tma42-898f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331408941592:android:de2b117155a4dc25d5996d",
+        "android_client_info": {
+          "package_name": "team42.tma_bus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOPm6z2wT_c81uIgEYsQ_qJaqJAv0gxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
