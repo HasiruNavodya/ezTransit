@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tma_passenger/screens/home/busmap.dart';
+import 'package:tma_passenger/screens/home/bus_map.dart';
 import 'package:tma_passenger/screens/home/ride.dart';
 import 'package:tma_passenger/screens/home/user.dart';
+import 'package:tma_passenger/screens/home/add_ride.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -24,9 +25,8 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     // Initialize the Tab Controller
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -41,7 +41,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[BusMapView(), RideDetails(), UserDetails()],
+        children: <Widget>[BusMapView(), AddRide(), RideDetails(), UserDetails()],
         // set the controller
         controller: controller,
       ),
@@ -55,6 +55,9 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
             Tab(
               // set icon to the tab
               icon: Icon(Icons.map),
+            ),
+            Tab(
+              icon: Icon(Icons.add),
             ),
             Tab(
               icon: Icon(Icons.directions_bus),
