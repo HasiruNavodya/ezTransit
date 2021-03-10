@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ReportEmergencyView extends StatelessWidget {
+class PassengerMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Profile"),
+        title: Text("Trip Map"),
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
@@ -16,7 +16,7 @@ class ReportEmergencyView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Your Profile",
+                "passenger counts in bus stops shown in map",
                 style: TextStyle(),
               )
             ],

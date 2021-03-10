@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tma_bus/screens/home/passengermap.dart';
-import 'package:tma_bus/screens/home/emergency.dart';
-import 'package:tma_bus/screens/home/currenttrip.dart';
+import 'package:tma_bus/screens/home/account.dart';
+import 'package:tma_bus/screens/home/map.dart';
+import 'package:tma_bus/screens/home/report.dart';
+import 'package:tma_bus/screens/home/trip.dart';
+import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:tma_bus/database/dbtasks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,7 +33,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -46,7 +48,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[PassengerMapView(), TripControlView(), ReportEmergencyView()],
+        children: <Widget>[PassengerMapView(), TripControlView(), ReportEmergencyView(), Account()],
         // set the controller
         controller: controller,
       ),
@@ -65,8 +67,12 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
               icon: Icon(Icons.directions_bus),
             ),
             Tab(
+              icon: Icon(Icons.report_problem),
+            ),
+            Tab(
               icon: Icon(Icons.person),
             ),
+
           ],
           // setup the controller
           controller: controller,
