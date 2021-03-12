@@ -6,6 +6,7 @@ import 'package:tma_passenger/screens/home/add_ride.dart';
 
 void main() {
   runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
     // Title
       title: "Using Tabs",
       // Home
@@ -39,6 +40,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: TabBarView(
         // Add tabs as widgets
         children: <Widget>[BusMapView(), AddRide(), RideDetails(), UserDetails()],
