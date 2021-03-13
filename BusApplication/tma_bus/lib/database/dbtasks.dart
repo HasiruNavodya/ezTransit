@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Query users = FirebaseFirestore.instance.collection("routes").where('stops', arrayContainsAny: ['Colombo']);
+    Query users = FirebaseFirestore.instance
+        .collection("routes")
+        .where('stops', arrayContainsAny: ['Colombo']);
 
     return StreamBuilder<QuerySnapshot>(
       stream: users.snapshots(),
@@ -21,7 +23,8 @@ class UserInformation extends StatelessWidget {
         return new ListView(
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             return new ListTile(
-              title: new Text(document.data()['start'] + ' - ' + document.data()['end'] ),
+              title: new Text(
+                  document.data()['start'] + ' - ' + document.data()['end']),
             );
           }).toList(),
         );
