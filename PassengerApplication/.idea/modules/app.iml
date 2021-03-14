@@ -1,4 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module version="4">
-  <component name="ExternalSystem" externalSystem="GRADLE" linkedProjectId="app" linkedProjectPath="$MODULE_DIR$/../../tma_passenger/android/app" rootProjectPath="$MODULE_DIR$/../../tma_passenger/android/app" />
-</module>
+<module external.linked.project.id="app" external.linked.project.path="$MODULE_DIR$/../../tma_passenger/android/app" external.root.project.path="$MODULE_DIR$/../../tma_passenger/android/app" external.system.id="GRADLE" version="4" />

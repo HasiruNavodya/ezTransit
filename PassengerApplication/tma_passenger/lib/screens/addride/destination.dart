@@ -34,22 +34,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
  TextEditingController _searchview = TextEditingController();
- bool _firstSearch = true;
- String _query = "";
-
- List<String> _nebulae;
- List<String> _filterList;
-
  var _location;
-
- @override
- void initState()
- {
-   super.initState();
-    print(_location);
-
- }
-
+ var _name;
 
   @override
   Widget build(BuildContext context) {
@@ -76,18 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               stream: FirebaseFirestore.instance.collection("cities").snapshots(),
+
               builder: (context, snapshot) {
+                if(snapshot.data == null) return CircularProgressIndicator();
                 return ListView.builder(
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
+
                     DocumentSnapshot cities = snapshot.data.docs[index];
 
                     return Card(
                         child:ListTile(
-                         title: Text(cities['location']),
-                          subtitle: Text(cities['name']),
+                         title: Text(cities['location'].toString()),
+                          subtitle: Text(cities['name'].toString()),
 
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SelectPickup()),
+                                    );
+                          },
                         ),
                     );
 
