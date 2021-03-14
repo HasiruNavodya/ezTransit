@@ -56,6 +56,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="C:/src/flutter/bin/cache/dart-sdk" />
     <property name="settings.editor.selected.configurable" value="dart.settings" />
@@ -116,22 +117,22 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1615558404759" />
-    <state width="914" height="266" key="GridCell.Tab.0.bottom" timestamp="1615724701336">
+    <state width="914" height="241" key="GridCell.Tab.0.bottom" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="914" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1615724701336" />
-    <state width="914" height="266" key="GridCell.Tab.0.center" timestamp="1615724701335">
+    <state width="914" height="241" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.center" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="914" height="266" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1615724701335" />
-    <state width="914" height="266" key="GridCell.Tab.0.left" timestamp="1615724701335">
+    <state width="914" height="241" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.left" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="914" height="266" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1615724701335" />
-    <state width="914" height="266" key="GridCell.Tab.0.right" timestamp="1615724701335">
+    <state width="914" height="241" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.right" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="914" height="266" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1615724701335" />
+    <state width="914" height="241" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1615558406910">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -140,5 +141,16 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1615719574495" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart</url>
+          <line>42</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

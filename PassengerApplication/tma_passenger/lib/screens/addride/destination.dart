@@ -33,7 +33,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
- TextEditingController _searchController = TextEditingController();
+ TextEditingController _searchview = TextEditingController();
+ bool _firstSearch = true;
+ String _query = "";
+
+ List<String> _nebulae;
+ List<String> _filterList;
+
+ var _location;
+
+ @override
+ void initState()
+ {
+   super.initState();
+    print(_location);
+
+ }
 
 
   @override
@@ -48,9 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: <Widget>[
           TextField(
-            controller: _searchController,
+            controller: _searchview,
              decoration: InputDecoration(
              prefixIcon:Icon(Icons.search),
+               hintText: "Search Your Destination",
             ),
           ),
         Expanded(
@@ -65,10 +81,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot cities = snapshot.data.docs[index];
+
                     return Card(
                         child:ListTile(
-                          title: Text(cities['location']),
+                         title: Text(cities['location']),
                           subtitle: Text(cities['name']),
+
+                          onTap: (){},
                         ),
                     );
 
