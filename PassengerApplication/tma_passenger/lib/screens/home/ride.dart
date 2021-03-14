@@ -25,6 +25,7 @@ class _RideDetailsState extends State<RideDetails> {
 
   @override
   Widget build(BuildContext context) {
+    Query users = FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: 'EG-2234');
     return Scaffold(
       appBar: AppBar(
         title: Text("Current Ride"),
@@ -63,15 +64,25 @@ class _RideDetailsState extends State<RideDetails> {
           ),
           Expanded(
             flex: 7,
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('trips/test').snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return new Text("Loading");
-                  }
-                  var userDocument = snapshot.data;
-                  return new Text(userDocument["location"]);
+            child: StreamBuilder<QuerySnapshot>(
+              stream: users.snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
                 }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading");
+                }
+
+                return new ListView(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    return new ListTile(
+                      title: new Text(document.data()['desc']),
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ),
         ],
@@ -93,14 +104,25 @@ class _RideDetailsState extends State<RideDetails> {
 
   void _onAddMarkerPressed() {
     setState(() {
-      _markers.add(Marker(markerId: MarkerId(_lastPostion.toString()),
-          position: _lastPostion,
-          infoWindow: InfoWindow(
-            title: "",
-            snippet: "",
-          ),
-          icon: BitmapDescriptor.defaultMarker
-      ));
+
+      FirebaseFirestore.instance
+          .collection('trips')
+          .doc('test')
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print(documentSnapshot.data()['name']);
+        }
+
+        _markers.add(Marker(markerId: MarkerId(_lastPostion.toString()),
+            position: _lastPostion,
+            infoWindow: InfoWindow(
+              title: documentSnapshot.data()['name'],
+              snippet: "",
+            ),
+            icon: BitmapDescriptor.defaultMarker
+        ));
+      });
     });
   }
 
