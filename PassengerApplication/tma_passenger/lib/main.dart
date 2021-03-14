@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:tma_passenger/screens/home/bus_map.dart';
 import 'package:tma_passenger/screens/home/ride.dart';
 import 'package:tma_passenger/screens/home/user.dart';
 import 'package:tma_passenger/screens/home/add_ride.dart';
 
-void main() {
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-    // Title
-      title: "Using Tabs",
-      // Home
-      home: MyHome()));
+    debugShowCheckedModeBanner: false,
+    home: MyHome()
+    )
+  );
 }
 
 class MyHome extends StatefulWidget {

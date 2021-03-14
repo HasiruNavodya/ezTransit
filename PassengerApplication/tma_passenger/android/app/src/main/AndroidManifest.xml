@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="team42.tma_passenger">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
    <application
         android:label="tma_passenger"
         android:icon="@mipmap/ic_launcher">
@@ -8,7 +10,7 @@
 
        <meta-data
            android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyB5v8YToOMTcXzx_2BRIu6y4NawJbmyUFk"/>
+           android:value="AIzaSyCXMQA_0o00N8KA7iSXA870zExtgQ-Fc-A"/>
 
        <activity
             android:name=".MainActivity"
