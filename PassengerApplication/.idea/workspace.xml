@@ -23,12 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

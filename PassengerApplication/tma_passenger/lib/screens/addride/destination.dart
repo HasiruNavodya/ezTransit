@@ -65,10 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot cities = snapshot.data.docs[index];
-                    return ListTile(
-                      title: Text(cities['name']),
-                      subtitle: Text(cities['location']),
+                    return Card(
+                        child:ListTile(
+                          title: Text(cities['location']),
+                          subtitle: Text(cities['name']),
+                        ),
                     );
+
                   },
 
                 );
