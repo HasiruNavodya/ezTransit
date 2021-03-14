@@ -8,6 +8,7 @@ import 'package:tma_passenger/screens/home/user.dart';
 import 'package:tma_passenger/screens/home/add_ride.dart';
 
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

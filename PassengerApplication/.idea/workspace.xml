@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,18 +23,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tma_passenger/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/ios/Runner/AppDelegate.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_XL_API_30]" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -91,6 +102,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1615558348297">
@@ -105,25 +117,40 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1615558404759" />
-    <state width="1877" height="284" key="GridCell.Tab.0.bottom" timestamp="1615561062790">
+    <state width="914" height="241" key="GridCell.Tab.0.bottom" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1615561062790" />
-    <state width="1877" height="284" key="GridCell.Tab.0.center" timestamp="1615561062789">
+    <state width="914" height="241" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.center" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1615561062789" />
-    <state width="1877" height="284" key="GridCell.Tab.0.left" timestamp="1615561062789">
+    <state width="914" height="241" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.left" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1615561062789" />
-    <state width="1877" height="284" key="GridCell.Tab.0.right" timestamp="1615561062790">
+    <state width="914" height="241" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
+    <state width="914" height="241" key="GridCell.Tab.0.right" timestamp="1615735702195">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1615561062790" />
+    <state width="914" height="241" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1615735702195" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1615558406910">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1615558406910" />
+    <state x="616" y="243" key="run.anything.popup" timestamp="1615719574495">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1615719574495" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart</url>
+          <line>42</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
