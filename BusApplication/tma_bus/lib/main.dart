@@ -7,6 +7,7 @@ import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:tma_bus/database/dbtasks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:location/location.dart';
 
 void main() async {
 
@@ -16,6 +17,8 @@ void main() async {
       // Home
       home: MyHome()));
   await Firebase.initializeApp();
+
+
 }
 
 class MyHome extends StatefulWidget {

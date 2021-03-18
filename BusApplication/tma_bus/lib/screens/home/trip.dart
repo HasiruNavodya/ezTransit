@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 //import 'package:tma_bus/screens/trip/starttrip.dart';
+import 'package:location/location.dart';
 
 
 class TripControlView extends StatefulWidget {
@@ -10,6 +12,12 @@ class TripControlView extends StatefulWidget {
 class _TripControlViewState extends State<TripControlView> {
 
   String tripStatus = "off";
+
+  @override
+  void initState() {
+    super.initState();
+    storeUserLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,4 +66,16 @@ class _TripControlViewState extends State<TripControlView> {
   }
 }
 
+storeUserLocation()
+{
 
+  Location location = new Location();
+
+  location.onLocationChanged.listen((LocationData currentLocation) {
+
+    FirebaseFirestore.instance.collection('buses').doc('eg2345').set({
+      'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
+    });
+
+  });
+}
