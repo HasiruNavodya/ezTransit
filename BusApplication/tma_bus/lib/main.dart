@@ -18,7 +18,6 @@ void main() async {
       home: MyHome()));
   await Firebase.initializeApp();
 
-
 }
 
 class MyHome extends StatefulWidget {
