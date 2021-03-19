@@ -18,7 +18,8 @@ class SelectPickup extends StatefulWidget {
 
 class _SelectPickupState extends State<SelectPickup> {
 
-  TextEditingController _searchview = TextEditingController();
+  TextEditingController textEditingController = TextEditingController();
+  String searchString;
 
   @override
   Widget build(BuildContext context) {
@@ -31,62 +32,86 @@ class _SelectPickupState extends State<SelectPickup> {
       //backgroundColor: Colors.red,
       body: Column(
         children: <Widget>[
-          TextField(
-            controller: _searchview,
-            decoration: InputDecoration(
-              prefixIcon:Icon(Icons.search),
-              hintText: "Search Your Pickup Location",
-            ),
-          ),
           Expanded(
-            child:
+            child:Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(15.0) ,
+                  child: Container(
+                    child: TextField(
+                      onChanged: (val){
+                        setState(() {
+                          searchString = val.toLowerCase();
+                        });
+                      },
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.search),
 
-            StreamBuilder(
+
+                          ),
+                          hintText:'Search Your Pickup Location',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Antra',color: Colors.blueGrey)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
 
 
-                stream: FirebaseFirestore.instance.collection("cities").snapshots(),
 
-                builder: (context, snapshot) {
-                  if(snapshot.data == null) return CircularProgressIndicator();
-                  return ListView.builder(
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) {
+                    stream: (searchString == null || searchString.trim()== '')
+                        ?FirebaseFirestore.instance.collection("cities").snapshots()
+                        :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+                    builder: (context,snapshot){
+                      if(snapshot.hasError){
+                        return Text("Error ${snapshot.error}");
+                      }
+                      switch(snapshot.connectionState) {
+                        case ConnectionState.none:
+                          return Text("Not date Present");
 
-                      DocumentSnapshot cities = snapshot.data.docs[index];
+                        case ConnectionState.done:
+                          return Text("Done!");
 
-                      return Card(
-                        child:ListTile(
-                          title: Text(cities['location']),
-                          subtitle:Text(cities['name']),
+                        default :
+                          final List<DocumentSnapshot> documents = snapshot.data.docs;
+                          return new ListView(
+                              children: documents
+                                  .map((doc) => Card(
+                                child: ListTile(
+                                    title: Text(doc['location']),
+                                    subtitle: Text(doc['name']),
 
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SelectBus()),
-                            );
-                          },
-                        ),
-                      );
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => SelectBus()),
+                                      );
+                                    }
 
+                                ),
+                              ))
+                                  .toList());
+
+
+                      }
                     },
+                  ),
+                ),
 
-                  );
-                }
+
+              ],
+
             ),
           ),
         ],
-      ) ,
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => SelectBus()),
-      //     );
-      //   },
-      //   child: Icon(Icons.arrow_forward_ios),
-      //   backgroundColor: Colors.black87,
-      // ),
+      ),
     );
   }
+
 }
+
+

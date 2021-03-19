@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/pickup.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:async/async.dart';
 
-// Init firestore and geoFlutterFire
-final geo = Geoflutterfire();
-final _firestore = FirebaseFirestore.instance;
+
 
 
 class SelectDestination extends StatelessWidget {
@@ -32,10 +28,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final geo = Geoflutterfire();
 
- TextEditingController _searchview = TextEditingController();
- var _location;
- var _name;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  TextEditingController textEditingController = TextEditingController();
+  String searchString;
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,64 +46,84 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: Column(
-        children: <Widget>[
-          TextField(
-            controller: _searchview,
-             decoration: InputDecoration(
-             prefixIcon:Icon(Icons.search),
-               hintText: "Search Your Destination",
-            ),
-          ),
+      children: <Widget>[
         Expanded(
-          child:
+    child:Column(
+    children: <Widget>[
+      Padding(
+          padding: const EdgeInsets.all(15.0) ,
+      child: Container(
+        child: TextField(
+          onChanged: (val){
+            setState(() {
+              searchString = val.toLowerCase();
+            });
+          },
+            controller: textEditingController,
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.search),
 
-          StreamBuilder(
+
+                ),
+                hintText:'Search Your Destination',
+                hintStyle: TextStyle(
+                    fontFamily: 'Antra',color: Colors.blueGrey)),
+      ),
+       ),
+      ),
+      Expanded(
+        child: StreamBuilder<QuerySnapshot>(
 
 
-              stream: FirebaseFirestore.instance.collection("cities").snapshots(),
 
-              builder: (context, snapshot) {
-                if(snapshot.data == null) return CircularProgressIndicator();
-                return ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
+          stream: (searchString == null || searchString.trim()== '')
+              ?FirebaseFirestore.instance.collection("cities").snapshots()
+              :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+          builder: (context,snapshot){
+            if(snapshot.hasError){
+              return Text("Error ${snapshot.error}");
+            }
+            switch(snapshot.connectionState) {
+              case ConnectionState.none:
+                return Text("Not date Present");
 
-                    DocumentSnapshot cities = snapshot.data.docs[index];
+              case ConnectionState.done:
+                return Text("Done!");
 
-                    return Card(
-                        child:ListTile(
-                         title: Text(cities['location'].toString()),
-                          subtitle: Text(cities['name'].toString()),
+              default :
+                 final List<DocumentSnapshot> documents = snapshot.data.docs;
+                return new ListView(
+                    children: documents
+                        .map((doc) => Card(
+                      child: ListTile(
+                        title: Text(doc['location']),
+                          subtitle: Text(doc['name']),
 
-                          onTap: (){
-                            Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => SelectPickup()),
-                                    );
-                          },
-                        ),
-                    );
+                         onTap: () {
+                          Navigator.push(
+                              context,
+                           MaterialPageRoute(builder: (context) => SelectPickup()),
+                        );
+                       }
 
-                  },
+                      ),
+                    ))
+                        .toList());
 
-                );
-              }
-          ),
+
+            }
+          },
         ),
-        ],
-      ) ,
+      ),
 
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => SelectPickup()),
-      //     );
-      //   },
-      //   child: Icon(Icons.arrow_forward_ios),
-      //   backgroundColor: Colors.black87,
-      // ),
 
+    ],
+
+    ),
+    ),
+    ],
+    ),
     );
   }
 
