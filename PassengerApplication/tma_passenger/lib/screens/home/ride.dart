@@ -3,94 +3,78 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-// Init firestore and geoFlutterFire
-final geo = Geoflutterfire();
-final _firestore = FirebaseFirestore.instance;
-
-
+String busNumber = 'eg2345';
+String tripStatus = '';
+String bnum = '';
+dynamic tripData = '';
 
 class RideDetails extends StatefulWidget {
   @override
   _RideDetailsState createState() => _RideDetailsState();
 }
-
 class _RideDetailsState extends State<RideDetails> {
+
+  @override
+  void initState() {
+    super.initState();
+    test();
+  }
 
   GoogleMapController mapController;
   static const _initialPosition = LatLng(7.2906, 80.6337);
   LatLng _lastPostion = _initialPosition;
   final Set<Marker> _markers = {};
 
+  dynamic data;
+
+  
   @override
   Widget build(BuildContext context) {
-    Query users = FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: 'EG-2234');
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Current Ride"),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      //backgroundColor: Colors.red,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 15,
-            child: Stack(
-              children: [
-                GoogleMap(
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(target: LatLng(6.844688,80.015283), zoom: 15.0,),
-                  myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
-                  mapType: MapType.normal,
-                  compassEnabled: true,
-                  onCameraMove: _onCameraMove,
-                  markers: _markers,
+        appBar: AppBar(
+          title: Text("Current Ride"),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        //backgroundColor: Colors.red,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 15,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(target: LatLng(6.844688, 80.015283), zoom: 15.0,),
+                    myLocationEnabled: true,
+                    mapType: MapType.normal,
+                    compassEnabled: true,
+                    onCameraMove: _onCameraMove,
+                    markers: _markers,
                   ),
                 ],
               ),
             ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: ElevatedButton(
-                onPressed: () {
-                  _onAddMarkerPressed();
-                },
-                child: Text('Get Location'),
-              )
-            ),
-          ),
-          Expanded(
-            flex: 7,
-            child: StreamBuilder<QuerySnapshot>(
-              stream: users.snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Something went wrong');
-                }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading");
-                }
-
-                return new ListView(
-                  children: snapshot.data.docs.map((DocumentSnapshot document) {
-                    return new ListTile(
-                      title: new Text(document.data()['desc']),
-                    );
-                  }).toList(),
-                );
-              },
+            Expanded(
+              flex: 10,
+              child: Container(
+                child: Column(
+                  children: [
+                    Text(bnum),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
-      )
+          ],
+        ),
     );
   }
 
   void _onMapCreated(GoogleMapController controller) {
+    _initMarker();
     setState(() {
       mapController = controller;
     });
@@ -102,34 +86,45 @@ class _RideDetailsState extends State<RideDetails> {
     });
   }
 
-  void _onAddMarkerPressed() {
+  void _initMarker() {
+
     setState(() {
+      FirebaseFirestore.instance.collection('buses').doc('eg2345').snapshots().listen((DocumentSnapshot documentSnapshot) {
 
-      FirebaseFirestore.instance
-          .collection('trips')
-          .doc('test')
-          .get()
-          .then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print(documentSnapshot.data()['name']);
-        }
+          print("location updated");
 
-        _markers.add(Marker(markerId: MarkerId(_lastPostion.toString()),
-            position: _lastPostion,
+        _markers.add(
+          Marker(
+            markerId: MarkerId('bus'),
+            position: LatLng(documentSnapshot.data()['location'].latitude,documentSnapshot.data()['location'].longitude),
             infoWindow: InfoWindow(
-              title: documentSnapshot.data()['name'],
+              title: 'name',
               snippet: "",
             ),
-            icon: BitmapDescriptor.defaultMarker
+          icon: BitmapDescriptor.defaultMarker,
         ));
+
+        mapController?.animateCamera(
+          CameraUpdate.newLatLng(
+            LatLng(documentSnapshot.data()['location'].latitude,documentSnapshot.data()['location'].longitude),
+          ),
+        );
+
       });
     });
   }
 
-
-
-
-
-
+  void test() async{
+    FirebaseFirestore.instance.collection('buses').doc('$busNumber').get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        tripData = documentSnapshot.data();
+        print(tripData);
+        String bnum = documentSnapshot.data()['number'];
+        print(bnum);
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
 }
-
