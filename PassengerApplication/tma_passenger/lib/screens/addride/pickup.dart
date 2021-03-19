@@ -65,7 +65,10 @@ class _SelectPickupState extends State<SelectPickup> {
                     stream: (searchString == null || searchString.trim()== '')
                         ?FirebaseFirestore.instance.collection("cities").snapshots()
                         :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+
                     builder: (context,snapshot){
+                      if(snapshot.data == null) return CircularProgressIndicator();
+
                       if(snapshot.hasError){
                         return Text("Error ${snapshot.error}");
                       }
@@ -77,7 +80,9 @@ class _SelectPickupState extends State<SelectPickup> {
                           return Text("Done!");
 
                         default :
+
                           final List<DocumentSnapshot> documents = snapshot.data.docs;
+
                           return new ListView(
                               children: documents
                                   .map((doc) => Card(
