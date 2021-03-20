@@ -58,6 +58,13 @@ class ConfirmTicket extends StatelessWidget {
                 "Ticket Price:",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
+              FlatButton(color:Colors.green, onPressed: () {}, child: Text("Yes")
+              ),
+              RaisedButton(color:Colors.red, onPressed: () {}, child: Text("No")
+              ),
+
+
+
             ],
           ),
 
