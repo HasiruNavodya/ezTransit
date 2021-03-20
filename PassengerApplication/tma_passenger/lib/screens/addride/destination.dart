@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                          onTap: () {
                           Navigator.push(
                               context,
-                           MaterialPageRoute(builder: (context) => SelectPickup((doc['location'])),
+                           MaterialPageRoute(builder: (context) => SelectPickup((doc['location'])), //need to pass parameters here (doc['location'])
                            ),
                         );
                        }

@@ -12,7 +12,7 @@ class SelectBus extends StatefulWidget {
     this.destinationLocation=destinationloc;
   }
   @override
-  _SelectBusState createState() => _SelectBusState(pickuLocation,destinationLocation);
+  _SelectBusState createState() => _SelectBusState(pickuLocation,destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
 }
 
 class _SelectBusState extends State<SelectBus> {
@@ -54,7 +54,7 @@ class _SelectBusState extends State<SelectBus> {
           ),
           Expanded(
             flex: 3,
-            child: TripInfo(pickuLocation,destinationLocation),
+            child: TripInfo(),
           )
         ],
       ),
@@ -63,7 +63,7 @@ class _SelectBusState extends State<SelectBus> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ConfirmTicket()),
+            MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
           );
         },
         child: Icon(Icons.arrow_forward_ios),
@@ -75,13 +75,13 @@ class _SelectBusState extends State<SelectBus> {
 }
 
 class TripInfo extends StatelessWidget {
-  String pickuLocation;
-  String destinationLocation;
-  TripInfo(pickuLocation,destinationLocation)
-  {
-    this.pickuLocation=pickuLocation;
-    this.destinationLocation=destinationLocation;
-  }
+  // String pickuLocation;
+  // String destinationLocation;
+  // TripInfo(pickuLocation,destinationLocation)
+  // {
+  //   this.pickuLocation=pickuLocation;
+  //   this.destinationLocation=destinationLocation;
+  // }
 
   @override
   Widget build(BuildContext context) {

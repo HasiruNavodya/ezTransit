@@ -11,14 +11,13 @@ import 'package:async/async.dart';
 
 class SelectPickup extends StatefulWidget {
   String destinationLocation;
-
   SelectPickup(sk)
   {
-    this.destinationLocation = sk;
+    this.destinationLocation=sk;
   }
 
   @override
-  _SelectPickupState createState() => _SelectPickupState(destinationLocation);
+  _SelectPickupState createState() => _SelectPickupState(destinationLocation); //need to pass parameters here destinationLocation
 }
 
 class _SelectPickupState extends State<SelectPickup> {
@@ -104,7 +103,7 @@ class _SelectPickupState extends State<SelectPickup> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation),
+                                        MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation),  //need to pass parameters here (doc['location']),destinationLocation
                                         ),
                                       );
                                     }
