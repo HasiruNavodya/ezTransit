@@ -9,14 +9,38 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart';
 
-void main() async {
 
+void main() async {
   runApp(MaterialApp(
     // Title
       title: "Using Tabs",
       // Home
       home: MyHome()));
   await Firebase.initializeApp();
+
+  Location location = new Location();
+
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+
+  _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+      return;
+    }
+  }
+
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted != PermissionStatus.granted) {
+      return;
+    }
+  }
+
+  _locationData = await location.getLocation();
 
 }
 
@@ -36,6 +60,8 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
     // Initialize the Tab Controller
     controller = TabController(length: 4, vsync: this);
+
+
   }
 
   @override

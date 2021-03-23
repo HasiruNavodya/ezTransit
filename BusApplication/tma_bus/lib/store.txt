@@ -1,0 +1,78 @@
+
+    int geoRemove = nextStop;
+    print(nextStop);
+    nextStop = nextStop + 1;
+    print(nextStop);
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc('$nextStop').get().then((DocumentSnapshot stopsDoc) {
+      if (stopsDoc.exists) {
+        //stopsDoc.data()['location'].latitude.toDouble();
+        double nextlat = stopsDoc.data()['location'].latitude.toDouble();
+        double nextlng = stopsDoc.data()['location'].longitude.toDouble();
+
+        print(nextlat);
+        print(nextlng);
+
+        final geoNextStop = Geofence(
+          id: '$nextStop',
+          latitude: nextlat,
+          longitude: nextlng,
+          radius: [
+            GeofenceRadius(id: 'radius_25m', length: 100),
+          ],
+        );
+
+        //geofenceService.stop();
+
+        geofenceList.add(geoNextStop);
+        //geofenceService.removeGeofenceById('$geoRemove');
+        //print(geofenceList.length);
+/*
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
+          geofenceService.setOnActivityChanged(onActivityChanged);
+          geofenceService.setOnStreamError(onError);
+          geofenceService.start(geofenceList).catchError(onError);
+        }); */
+
+        int prevStop = nextStop-1;
+        print(prevStop);
+        FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc('$prevStop').update({
+          'passed' : 'true'
+        });
+
+      }
+    });
+
+
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc('$lastStopPassed').get().then((DocumentSnapshot stopsDoc) {
+        if (stopsDoc.exists) {
+          //stopsDoc.data()['location'].latitude.toDouble();
+          startlat = stopsDoc.data()['location'].latitude.toDouble();
+          startlng = stopsDoc.data()['location'].longitude.toDouble();
+
+          print(startlat);
+          print(startlng);
+
+          final gfStart = Geofence(
+            id: '$lastStopPassed',
+            latitude: startlat,
+            longitude: startlng,
+            radius: [
+              GeofenceRadius(id: 'radius_25m', length: 100),
+            ],
+          );
+
+          geofenceList.add(gfStart);
+          print(geofenceList.length);
+
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
+            geofenceService.setOnActivityChanged(onActivityChanged);
+            geofenceService.setOnStreamError(onError);
+            geofenceService.start(geofenceList).catchError(onError);
+          });
+
+        }
+      });
