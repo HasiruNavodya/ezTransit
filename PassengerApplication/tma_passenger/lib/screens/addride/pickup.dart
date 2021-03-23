@@ -10,13 +10,22 @@ import 'package:async/async.dart';
 
 
 class SelectPickup extends StatefulWidget {
-
+  String destinationLocation;
+  SelectPickup(sk)
+  {
+    this.destinationLocation=sk;
+  }
 
   @override
-  _SelectPickupState createState() => _SelectPickupState();
+  _SelectPickupState createState() => _SelectPickupState(destinationLocation); //need to pass parameters here destinationLocation
 }
 
 class _SelectPickupState extends State<SelectPickup> {
+  String destinationLocation;
+  _SelectPickupState(destinationLocation)
+  {
+    this.destinationLocation=destinationLocation;
+  }
 
   TextEditingController textEditingController = TextEditingController();
   String searchString;
@@ -31,6 +40,7 @@ class _SelectPickupState extends State<SelectPickup> {
       ),
       //backgroundColor: Colors.red,
       body: Column(
+
         children: <Widget>[
           Expanded(
             child:Column(
@@ -93,7 +103,8 @@ class _SelectPickupState extends State<SelectPickup> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SelectBus()),
+                                        MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation),  //need to pass parameters here (doc['location']),destinationLocation
+                                        ),
                                       );
                                     }
 

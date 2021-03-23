@@ -4,11 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SelectBus extends StatefulWidget {
+  String pickuLocation;
+  String destinationLocation;
+  SelectBus(pickuploc,destinationloc)
+  {
+    this.pickuLocation=pickuploc;
+    this.destinationLocation=destinationloc;
+  }
   @override
-  _SelectBusState createState() => _SelectBusState();
+  _SelectBusState createState() => _SelectBusState(pickuLocation,destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
 }
 
 class _SelectBusState extends State<SelectBus> {
+  String pickuLocation;
+  String destinationLocation;
+  _SelectBusState(pickuLocation,destinationLocation)
+  {
+    this.pickuLocation=pickuLocation;
+    this.destinationLocation=destinationLocation;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +63,7 @@ class _SelectBusState extends State<SelectBus> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ConfirmTicket()),
+            MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
           );
         },
         child: Icon(Icons.arrow_forward_ios),
@@ -60,6 +75,13 @@ class _SelectBusState extends State<SelectBus> {
 }
 
 class TripInfo extends StatelessWidget {
+  // String pickuLocation;
+  // String destinationLocation;
+  // TripInfo(pickuLocation,destinationLocation)
+  // {
+  //   this.pickuLocation=pickuLocation;
+  //   this.destinationLocation=destinationLocation;
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/buy.dart';
 
+import 'destination.dart';
+
 class ConfirmTicket extends StatelessWidget {
+  String destinationloc;
+  String pickuploc;
+  ConfirmTicket(dloc,ploc)
+  {
+    this.destinationloc=dloc;
+    this.pickuploc=ploc;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,29 +20,128 @@ class ConfirmTicket extends StatelessWidget {
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+
             children: <Widget>[
-              Text(
-                "Confirm Ticket",
-                style: TextStyle(),
-              )
-            ],
+            Expanded(
+                flex:1,
+              child:Container(
+
+               child: Text("Destination: $destinationloc",
+                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+
+               ),
+
+
+            ),
+        ),
+
+              Expanded(
+               flex: 1,
+               child:Container(
+
+                  child: Text("Pickup Location: $pickuploc",
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                  ),
+
           ),
+              ),
+
+      Expanded(
+        flex: 1,
+        child:Container(
+
+          child: Text("Bus:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BuyTicket()),
-          );
-        },
-        child: Icon(Icons.arrow_forward_ios),
-        backgroundColor: Colors.black87,
+
+      Expanded(
+        flex: 1,
+        child:Container(
+
+          child: Text("Pick Up At:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+
+        ),
       ),
+
+      Expanded(
+        flex: 1,
+        child:Container(
+
+          child: Text("Dropping At:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+
+        ),
+      ),
+
+      Expanded(
+        flex: 1,
+        child:Container(
+
+          child: Text("Ticket Price:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+
+        ),
+      ),
+
+              Expanded(
+                flex: 1,
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget> [
+
+                             FlatButton(color:Colors.green, onPressed: () {
+                               Navigator.push(
+                                   context,
+                                   MaterialPageRoute(builder: (context) => BuyTicket()),
+                               );
+                             }, child: Text("Yes"),
+                          ),
+                           RaisedButton(color:Colors.red, onPressed: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => SelectDestination()),
+                             );
+                           }, child: Text("No")
+                         ),
+
+
+                  ],
+
+
+
+                ),
+              ),
+
+
+
+
+
+
+
+
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => BuyTicket()),
+      //     );
+      //   },
+      //   child: Icon(Icons.arrow_forward_ios),
+      //   backgroundColor: Colors.black87,
+      // ),
+      ],
+    ),
     );
   }
 }
