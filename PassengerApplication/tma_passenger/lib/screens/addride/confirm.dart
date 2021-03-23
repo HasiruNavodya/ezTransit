@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/buy.dart';
 
+import 'destination.dart';
+
 class ConfirmTicket extends StatelessWidget {
   String destinationloc;
   String pickuploc;
@@ -31,7 +33,7 @@ class ConfirmTicket extends StatelessWidget {
                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
 
                ),
-                
+
 
             ),
         ),
@@ -97,9 +99,19 @@ class ConfirmTicket extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget> [
 
-                             FlatButton(color:Colors.green, onPressed: () {}, child: Text("Yes"),
+                             FlatButton(color:Colors.green, onPressed: () {
+                               Navigator.push(
+                                   context,
+                                   MaterialPageRoute(builder: (context) => BuyTicket()),
+                               );
+                             }, child: Text("Yes"),
                           ),
-                           RaisedButton(color:Colors.red, onPressed: () {}, child: Text("No")
+                           RaisedButton(color:Colors.red, onPressed: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => SelectDestination()),
+                             );
+                           }, child: Text("No")
                          ),
 
 
