@@ -19,14 +19,18 @@ class ConfirmTicket extends StatelessWidget {
       ),
       //backgroundColor: Colors.red,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
 
 
             children: <Widget>[
             Expanded(
-                flex: 1,
+                flex:1,
               child:Container(
 
-               child: Text("Destination: $destinationloc"),
+               child: Text("Destination: $destinationloc",
+                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+
+               ),
 
               // Text(""),
               //
@@ -72,7 +76,9 @@ class ConfirmTicket extends StatelessWidget {
                flex: 1,
                child:Container(
 
-                  child: Text("Pickup Location: $pickuploc"),
+                  child: Text("Pickup Location: $pickuploc",
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                  ),
 
           ),
               ),
@@ -81,7 +87,9 @@ class ConfirmTicket extends StatelessWidget {
         flex: 1,
         child:Container(
 
-          child: Text("Bus:"),
+          child: Text("Bus:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
 
         ),
       ),
@@ -90,7 +98,9 @@ class ConfirmTicket extends StatelessWidget {
         flex: 1,
         child:Container(
 
-          child: Text("Pick Up At:"),
+          child: Text("Pick Up At:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
 
         ),
       ),
@@ -99,7 +109,9 @@ class ConfirmTicket extends StatelessWidget {
         flex: 1,
         child:Container(
 
-          child: Text("Dropping At:"),
+          child: Text("Dropping At:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
 
         ),
       ),
@@ -108,7 +120,9 @@ class ConfirmTicket extends StatelessWidget {
         flex: 1,
         child:Container(
 
-          child: Text("Ticket Price:"),
+          child: Text("Ticket Price:",
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+          ),
 
         ),
       ),
@@ -116,13 +130,14 @@ class ConfirmTicket extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget> [
 
                              FlatButton(color:Colors.green, onPressed: () {}, child: Text("Yes"),
                           ),
                            RaisedButton(color:Colors.red, onPressed: () {}, child: Text("No")
                          ),
-                    
+
 
                   ],
 

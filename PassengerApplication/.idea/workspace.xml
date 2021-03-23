@@ -63,7 +63,6 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../BusApplication" />
     <property name="settings.editor.selected.configurable" value="dart.settings" />
@@ -135,30 +134,30 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1616151829096" />
-    <state width="1877" height="239" key="GridCell.Tab.0.bottom" timestamp="1616512538949">
+    <state width="914" height="239" key="GridCell.Tab.0.bottom" timestamp="1616517135152">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616512538949" />
-    <state width="1877" height="239" key="GridCell.Tab.0.center" timestamp="1616512538949">
+    <state width="914" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
+    <state width="914" height="239" key="GridCell.Tab.0.center" timestamp="1616517135152">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="239" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616512538949" />
-    <state width="1877" height="239" key="GridCell.Tab.0.left" timestamp="1616512538948">
+    <state width="914" height="239" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
+    <state width="914" height="239" key="GridCell.Tab.0.left" timestamp="1616517135152">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="239" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616512538948" />
-    <state width="1877" height="239" key="GridCell.Tab.0.right" timestamp="1616512538949">
+    <state width="914" height="239" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
+    <state width="914" height="239" key="GridCell.Tab.0.right" timestamp="1616517135152">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="239" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616512538949" />
+    <state width="914" height="239" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1615558406910">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1615558406910" />
-    <state x="616" y="243" key="run.anything.popup" timestamp="1615740232824">
+    <state x="616" y="243" key="run.anything.popup" timestamp="1616517200389">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1615740232824" />
+    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616517200389" />
     <state x="143" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1616231188892">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
