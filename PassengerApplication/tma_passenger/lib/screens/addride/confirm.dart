@@ -31,43 +31,7 @@ class ConfirmTicket extends StatelessWidget {
                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
 
                ),
-
-              // Text(""),
-              //
-              // Text(
-              //   "Pickup Location: $pickuploc",
-              //   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-              // ),
-              // Text(""),
-              //
-              //
-              // Text(
-              //   "Bus:",
-              //   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-              // ),
-              // Text(""),
-              //
-              // Text(
-              //   "Pick Up At:",
-              //   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-              // ),
-              // Text(""),
-              //
-              // Text(
-              //   "Dropping At:",
-              //   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-              // ),
-              // Text(""),
-              //
-              // Text(
-              //   "Ticket Price:",
-              //   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-              // ),
-              // FlatButton(color:Colors.green, onPressed: () {}, child: Text("Yes")
-              // ),
-              // RaisedButton(color:Colors.red, onPressed: () {}, child: Text("No")
-              // ),
-
+                
 
             ),
         ),
