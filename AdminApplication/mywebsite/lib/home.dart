@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mywebsite/auth.dart';
+import 'package:mywebsite/map.dart';
+
+import 'map.dart';
+import 'map.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,6 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +25,11 @@ class _HomePageState extends State<HomePage> {
       Text('You are logged in'),
       ElevatedButton(
           onPressed: () {
-            AuthService().signOut();
+            //AuthService().signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MapSample()),
+              );
           },
           child: Center(child: Text('LOG OUT')))
     ]));
