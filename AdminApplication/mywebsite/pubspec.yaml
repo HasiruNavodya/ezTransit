@@ -29,11 +29,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^1.0.1
-  universal_html: ^2.0.4
-
   firebase_auth: ^1.0.1
   firebase_auth_web: ^1.0.2
-  google_maps: ^5.1.0
+  google_maps_flutter_web: ^0.2.1
 
 
 dev_dependencies:
