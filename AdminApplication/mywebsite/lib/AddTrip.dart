@@ -182,28 +182,7 @@ Widget _buildSeat(){
         
         elevation:0.0,
       ),
-      body:// Column(
-        
-       // children:[
-         /* child: DraggableScrollbar.semicircle(
-           controller: _controller, 
-           child: GridView.builder(
-             controller: _controller,
-             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-               crossAxisCount: 5,
-               ),
-               padding: EdgeInsets.zero,
-               itemCount: 1000,
-               itemBuilder:(context,index){
-                 return Container(
-                   alignment: Alignment.center,
-                   margin:EdgeInsets.all(2.0),
-                   color:Colors.grey[300],
-
-                 );
-               },
-           ),
-          ),*/
+      body:
         Container(
          
           
@@ -223,19 +202,14 @@ Widget _buildSeat(){
         
       ),
           
-      // height: MediaQuery.of(context).size.height*6,
-       //width:0.4 * MediaQuery.of(context).size.width,
+      
         padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 400.0),
        
       
-       /* child:Card(
-        
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-         // color: Colors.blue[400],
          
-       elevation: 6.0,*/
+       
          child:Container(
-            //: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            
              constraints: BoxConstraints(maxHeight: 1500),
              decoration:BoxDecoration(
         gradient: LinearGradient(
@@ -246,10 +220,7 @@ Widget _buildSeat(){
             
         Colors.blue[100],
             
-            //Colors.indigo[900],
-            //Colors.deepPurple[900],
-         //  Color.fromRGBO(195,20,50,1.0),
-       // Color.fromRGBO(36,11,54,1.0),
+            
         ]),
       ),
         child: Form(
@@ -281,101 +252,7 @@ Widget _buildSeat(){
             SizedBox(height :10.0),
               
               
-              //SizedBox(height :10.0),
-              /* TextFormField(
-                controller: plateNumber,
-               validator: (val) => val.isEmpty ?'Enter the plate number':null,   
-               decoration: InputDecoration(
-               labelText: 'Plate Number',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                   setState(() => email = val);
-
-                 }
-               ),
-                SizedBox(height :10.0),
-              
-               TextFormField(
-                 controller: driverName,
-                 validator: (val) => val.isEmpty?'Enter the driver name':null,
-                // obscureText: true,
-                decoration: InputDecoration(
-               labelText: 'Driver Name',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                  controller: licenseNumber,
-                 validator: (val) => val.isEmpty?'Enter the driver license number':null,
-                
-                decoration: InputDecoration(
-               labelText: 'Driver License Number',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-
-               TextFormField(
-                 controller: color,
-                validator: (val) => val.isEmpty?'Enter the color':null,
-                decoration: InputDecoration(
-               labelText: 'Color',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                 controller: publicPrivate,
-                validator: (val) => val.isEmpty?'Enter private or public':null,
-                decoration: InputDecoration(
-               labelText: 'Private or Public',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                 controller: luxeryLevel,
-                  validator: (val) => val.isEmpty?'Enter luxery level':null,
-                decoration: InputDecoration(
-               labelText: 'Luxery Level',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                  controller: seat,
-                 validator: (val) => val.isEmpty?'Enter seat count':null,
-                decoration: InputDecoration(
-               labelText: 'Seat Count',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),*/
+             
 SizedBox(height :5.0),
 Row(
   mainAxisAlignment: MainAxisAlignment.center,
@@ -402,7 +279,7 @@ if(_formKey.currentState.validate()) {
   driverName.text,"License Number":licenseNumber.text,"Color":color.text,
   "Public or Private":publicPrivate.text,"Luxury Level":luxeryLevel.text,"Seat Count":seat.text,};
 
-  FirebaseFirestore.instance.collection('NewBus').add(data);
+  FirebaseFirestore.instance.collection('AddTrip').add(data);
 
                      
                        showDialog(context: context, builder:(BuildContext context) {
