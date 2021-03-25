@@ -38,6 +38,7 @@ class MapSampleState extends State<MapSample> {
     return new Scaffold(
       body: GoogleMap(
         onTap: (tapped) async {
+          
           getMarkers(tapped.latitude, tapped.longitude);
           await FirebaseFirestore.instance.collection('Marker_location').add({
             'latitude': tapped.latitude,
