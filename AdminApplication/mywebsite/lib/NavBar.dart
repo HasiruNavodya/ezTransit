@@ -171,7 +171,7 @@ class MobileNavbar extends StatelessWidget {
                         onPressed: (){
                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>AddTrip()));
                         },
-                        child: Text('New Bus',style:TextStyle(color: Colors.white), 
+                        child: Text('Add Trip',style:TextStyle(color: Colors.white), 
                     ),
                     ),
                     SizedBox(width:50),
