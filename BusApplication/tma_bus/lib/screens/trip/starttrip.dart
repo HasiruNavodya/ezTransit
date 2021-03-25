@@ -22,21 +22,25 @@ class _TripNavState extends State<TripNav> {
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('trips');
 
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc().get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
+    return StreamBuilder<QuerySnapshot>(
+      stream: users.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return Text('Something went wrong');
         }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data.data();
-          return Text("Full Name: $data");
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
         }
 
-        return Text("loading");
+        return new ListView(
+          children: snapshot.data.docs.map((DocumentSnapshot document) {
+            return new ListTile(
+              title: new Text(document.data()['name']),
+              subtitle: new Text(document.data()['time']),
+            );
+          }).toList(),
+        );
       },
     );
   }

@@ -7,6 +7,7 @@ import 'package:tma_passenger/screens/home/ride.dart';
 import 'package:tma_passenger/screens/home/user.dart';
 import 'package:tma_passenger/screens/home/add_ride.dart';
 
+import 'package:tma_passenger/screens/auth/login.dart';
 
 
 void main() async{
