@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/confirm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -15,15 +16,42 @@ class SelectBus extends StatefulWidget {
   _SelectBusState createState() => _SelectBusState(pickuLocation,destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
 }
 
+
 class _SelectBusState extends State<SelectBus> {
   String pickuLocation;
+  String pno;
   String destinationLocation;
+  String partName;
   _SelectBusState(pickuLocation,destinationLocation)
   {
     this.pickuLocation=pickuLocation;
     this.destinationLocation=destinationLocation;
+    partName='$destinationLocation'+'-'+'$pickuLocation';
   }
 
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+          print(partName);
+
+    FirebaseFirestore.instance
+        .collection('partialroutes')
+        .doc('$partName')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print(documentSnapshot.data()['partNo']);
+       pno=documentSnapshot.data()['partNo'];
+       print(pno);
+
+
+      }
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +82,7 @@ class _SelectBusState extends State<SelectBus> {
           ),
           Expanded(
             flex: 3,
-            child: TripInfo(),
+            child: TripInfo(pickuLocation,destinationLocation,pno),
           )
         ],
       ),
@@ -74,92 +102,91 @@ class _SelectBusState extends State<SelectBus> {
   }
 }
 
-class TripInfo extends StatelessWidget {
-  // String pickuLocation;
-  // String destinationLocation;
-  // TripInfo(pickuLocation,destinationLocation)
-  // {
-  //   this.pickuLocation=pickuLocation;
-  //   this.destinationLocation=destinationLocation;
-  // }
+class TripInfo extends StatefulWidget {
+  String pickuLocation;
+  String destinationLocation;
+  String pno;
+  TripInfo(pickuLocation,destinationLocation,pno)
+  {
+    this.pickuLocation=pickuLocation;
+    this.destinationLocation=destinationLocation;
+    this.pno=pno;
+  }
 
   @override
+  _TripInfoState createState() => _TripInfoState(pno);
+}
+
+class _TripInfoState extends State<TripInfo> {
+  String pno;
+  _TripInfoState(pno)
+  {
+    this.pno=pno;
+    print("hy "+pno);
+
+  }
+  @override
   Widget build(BuildContext context) {
-    Query buses = FirebaseFirestore.instance.collection('trips').where('route', isEqualTo: '1000');
+
 
     return StreamBuilder<QuerySnapshot>(
-      stream: buses.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
+      stream: FirebaseFirestore.instance.collection("trips").where('parts', arrayContains: pno ).snapshots(),
 
-        return new ListView(
-          children: snapshot.data.docs.map((DocumentSnapshot document) {
-            return Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Center(child: Text(document.data()['desc']))
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Center(child: Text(document.data()['times']))
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(child: Text(_getStops())),
-                                  ),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(child: Text(_getStops())),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+      builder: (context,snapshot) {
+        if(snapshot.data == null) return CircularProgressIndicator();
+        if(snapshot.hasError){
+          return Text("Error ${snapshot.error}");
+        }
+        switch(snapshot.connectionState) {
+          case ConnectionState.none:
+            return Text("Not date Present");
+
+          case ConnectionState.done:
+            return Text("Done!");
+
+          default :
+            final List<DocumentSnapshot> documents = snapshot.data.docs;
+            return new ListView(
+                children: documents
+                    .map((doc) => Card(
+                  child: ListTile(
+                      title: Text(doc['name']),
+                      subtitle: Text(doc['startTime']),
+                      //
+                      // onTap: () {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => SelectPickup((doc['location'])), //need to pass parameters here (doc['location'])
+                      //     ),
+                      //   );
+                      // }
+
                   ),
-                ),
-              ),
-            );
-          }).toList(),
-        );
+                ))
+                    .toList());
+
+
+        }
       },
     );
   }
 }
 
-String _getStops(){
-  return 'stop1';
-}
+
+
+
+
+/*
+ListView(Text(document.data()['desc'])
+          children: snapshot.data.docs.map((DocumentSnapshot document) {
+            return ListTile(
+              title: new Text(document.data()['desc']),
+              subtitle: new Text(document.data()['start'] + document.data()['end']),
+            );
+          }).toList(),
+        );
+ */
 
 
 
