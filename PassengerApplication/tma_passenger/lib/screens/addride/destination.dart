@@ -78,9 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-          stream: (searchString == null || searchString.trim()== '')
-              ?FirebaseFirestore.instance.collection("cities").snapshots()
-              :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
           builder: (context,snapshot){
             if(snapshot.data == null) return CircularProgressIndicator();
             if(snapshot.hasError){
