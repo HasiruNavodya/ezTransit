@@ -82,7 +82,80 @@ class _SelectBusState extends State<SelectBus> {
           ),
           Expanded(
             flex: 3,
-            child: TripInfo(pickuLocation,destinationLocation,pno),
+            child: Stack(
+              children: [
+            StreamBuilder<QuerySnapshot>(
+            stream:
+            FirebaseFirestore.instance.collection("trips").where('parts', arrayContains: '$pno').snapshots(),
+
+            builder: (context,snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text("Loading");
+              }
+
+              return new ListView(
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            flex: 1,
+                                            child: Center(child: Text(document.data()['name'], style: TextStyle(fontSize: 7,fontWeight: FontWeight.bold),))
+                                        ),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Center(child: Text(document.data()['startTime'], style: TextStyle(fontSize: 7,fontWeight: FontWeight.bold),))
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(child: Text(_getStops())),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(child: Text(_getStops())),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              );
+            },
+          ),
+
+              ],
+            )
           )
         ],
       ),
@@ -101,77 +174,124 @@ class _SelectBusState extends State<SelectBus> {
     );
   }
 }
+//
+// class TripInfo extends StatefulWidget {
+//   String pickuLocation;
+//   String destinationLocation;
+//   String pno;
+//   TripInfo(pickuLocation,destinationLocation,pno)
+//   {
+//     this.pickuLocation=pickuLocation;
+//     this.destinationLocation=destinationLocation;
+//     this.pno=pno;
+//   }
+//
+//   @override
+//   _TripInfoState createState() => _TripInfoState(pno);
+// }
+//
+// class _TripInfoState extends State<TripInfo> {
+//   String pno;
+//   _TripInfoState(pno)
+//   {
+//     this.pno=pno;
+//     print("hy "+pno);
+//
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     Query buses = FirebaseFirestore.instance.collection("trips")
+//         .where("parts", arrayContains: "p123");
+//
+//     return StreamBuilder<QuerySnapshot>(
+//       stream: buses.snapshots(),
+//       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//         if (snapshot.hasError) {
+//           return Text('Something went wrong');
+//         }
+//
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return Text("Loading");
+//         }
+//
+//         return new ListView(
+//           children: snapshot.data.docs.map((DocumentSnapshot document) {
+//             return Container(
+//               child: Padding(
+//                 padding: const EdgeInsets.all(1.0),
+//                 child: Card(
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(30.0),
+//                     child: Row(
+//                       children: [
+//                         Expanded(
+//                           child: Column(
+//                             children: [
+//                               Row(
+//                                 children: [
+//                                   Expanded(
+//                                       flex: 1,
+//                                       child: Center(child: Text(document.data()['name'], style: TextStyle(fontSize: 7,fontWeight: FontWeight.bold),))
+//                                   ),
+//                                   Expanded(
+//                                       flex: 1,
+//                                       child: Center(child: Text(document.data()['startTime'], style: TextStyle(fontSize: 7,fontWeight: FontWeight.bold),))
+//                                   ),
+//                                 ],
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Expanded(
+//                           child: Column(
+//                             children: [
+//                               Row(
+//                                 children: [
+//                                   Expanded(
+//                                     flex: 1,
+//                                     child: Center(child: Text(_getStops())),
+//                                   ),
+//                                   Expanded(
+//                                     flex: 1,
+//                                     child: Center(child: Text(_getStops())),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             );
+//           }).toList(),
+//         );
+//       },
+//     );
+//   }
+// }
+//
+ String _getStops(){
+   return 'stop1';
+ }
 
-class TripInfo extends StatefulWidget {
-  String pickuLocation;
-  String destinationLocation;
-  String pno;
-  TripInfo(pickuLocation,destinationLocation,pno)
-  {
-    this.pickuLocation=pickuLocation;
-    this.destinationLocation=destinationLocation;
-    this.pno=pno;
-  }
-
-  @override
-  _TripInfoState createState() => _TripInfoState(pno);
-}
-
-class _TripInfoState extends State<TripInfo> {
-  String pno;
-  _TripInfoState(pno)
-  {
-    this.pno=pno;
-    print("hy "+pno);
-
-  }
-  @override
-  Widget build(BuildContext context) {
 
 
-    return StreamBuilder<QuerySnapshot>(
-
-      stream: FirebaseFirestore.instance.collection("trips").where('parts', arrayContains: pno ).snapshots(),
-
-      builder: (context,snapshot) {
-        if(snapshot.data == null) return CircularProgressIndicator();
-        if(snapshot.hasError){
-          return Text("Error ${snapshot.error}");
-        }
-        switch(snapshot.connectionState) {
-          case ConnectionState.none:
-            return Text("Not date Present");
-
-          case ConnectionState.done:
-            return Text("Done!");
-
-          default :
-            final List<DocumentSnapshot> documents = snapshot.data.docs;
-            return new ListView(
-                children: documents
-                    .map((doc) => Card(
-                  child: ListTile(
-                      title: Text(doc['name']),
-                      subtitle: Text(doc['startTime']),
-                      //
-                      // onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => SelectPickup((doc['location'])), //need to pass parameters here (doc['location'])
-                      //     ),
-                      //   );
-                      // }
-
-                  ),
-                ))
-                    .toList());
 
 
-        }
-      },
-    );
-  }
-}
+
+/*
+ListView(Text(document.data()['desc'])
+          children: snapshot.data.docs.map((DocumentSnapshot document) {
+            return ListTile(
+              title: new Text(document.data()['desc']),
+              subtitle: new Text(document.data()['start'] + document.data()['end']),
+            );
+          }).toList(),
+        );
+ */
 
 
 
