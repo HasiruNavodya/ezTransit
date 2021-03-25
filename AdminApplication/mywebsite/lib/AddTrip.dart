@@ -14,170 +14,126 @@ class _AddTripState extends State<AddTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _plateNumber ;
-  String _driverName ;  
-  String _licenseNumber ; 
-  String _color ; 
-  String _publicPrivate ; 
-  String _luxeryLevel ; 
-  String _seat ; 
+  String _stopName ;
+  String _arrivingTime ;  
+  String _timeDu ; 
+  String _latitude ; 
+  String _longitude ; 
+
 
 //get data from textformfield
-  TextEditingController plateNumber = new TextEditingController();
-   TextEditingController driverName = new TextEditingController();
-    TextEditingController licenseNumber = new TextEditingController();
-     TextEditingController color = new TextEditingController();
-      TextEditingController publicPrivate = new TextEditingController();
-       TextEditingController luxeryLevel = new TextEditingController();
-        TextEditingController seat = new TextEditingController();
+  TextEditingController stopName = new TextEditingController();
+   TextEditingController arrivingTime = new TextEditingController();
+    TextEditingController timeDu = new TextEditingController();
+     TextEditingController latitude = new TextEditingController();
+      TextEditingController longitude = new TextEditingController();
+       
 
-Widget _buildPlateNumber(){
+Widget _buildstopName(){
   return TextFormField(
-               controller: plateNumber,
+               controller: stopName,
                decoration: InputDecoration(
-               labelText: 'Plate Number',
+               labelText: 'Stop Name',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Plate Number is required';
+                    return 'Stop Name is required';
                  }
                },
                onSaved: (String value){
-                 _plateNumber = value;
+                 _stopName = value;
                },
                
    );
 }
 
   
-Widget _buildDriverName(){
+Widget _buildarrivingTime(){
   return TextFormField(
-                controller: driverName,
+                controller: arrivingTime,
                // maxLength: 30,
                decoration: InputDecoration(
-               labelText: 'Driver Name',
+               labelText: 'Arriving Time',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Driver Name is required';
+                    return 'Arriving Time is required';
                  }
                },
                onSaved: (String value){
-                 _driverName = value;
+                 _arrivingTime = value;
                },
                
    );
 }
 
 
-Widget _buildLicenseNumber(){
+Widget _buildtimeDu(){
   return TextFormField(
-               controller: licenseNumber,
+               controller: timeDu,
                decoration: InputDecoration(
-               labelText: 'Driver License Number',
+               labelText: 'Time Duration From Last Stop',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Driver License Number is required';
+                    return 'Time Duration From Last Stop is required';
                  }
                },
                onSaved: (String value){
-                 _licenseNumber = value;
+                 _timeDu = value;
                },
                
    );
 }
 
-Widget _buildColor(){
+Widget _buildlatitude(){
   return TextFormField(
-               controller: color,
+               controller: latitude,
                decoration: InputDecoration(
-               labelText: 'Color',
+               labelText: 'latitude',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return ('Color is required');
+                    return ('latitude is required');
                  }
                },
                onSaved: (String value){
-                 _color = value;
+                 _latitude = value;
                },
                
    );
 }
 
-Widget _buildPublicPrivate(){
+Widget _buildlongitude(){
   return TextFormField(
-                controller: publicPrivate,
+                controller: longitude,
                decoration: InputDecoration(
-               labelText: 'Public / Private',
+               labelText: 'longitude',
                border: OutlineInputBorder()),
                // maxLength: 7,
                  validator:(String value) {
                  if(value.isEmpty){
-                    return ('This field is required');
+                    return ('longitude is required');
                  }
                },
                onSaved: (String value){
-                 _publicPrivate = value;
+                 _longitude = value;
                },
                
    );
 }
 
-Widget _buildLuxeryLevel(){
-  return TextFormField(
-               controller: luxeryLevel,
-               decoration: InputDecoration(
-               labelText: 'Luxery Level',
-               border: OutlineInputBorder()),
-               // maxLength: 15,
-                 validator:(String value) {
-                 if(value.isEmpty){
-                    return ('This field is required');
-                 }
-               },
-               onSaved: (String value){
-                 _luxeryLevel = value;
-               },
-               
-   );
-}
-
-
-Widget _buildSeat(){
-  return TextFormField(
-               controller:seat,
-               
-               decoration: InputDecoration(
-               labelText: 'Seat Count',
-               
-               border: OutlineInputBorder()),
-                keyboardType:TextInputType.number,
-               // maxLength: 3,
-
-                 validator:(String value) {
-                 if(value.isEmpty){
-                    return ('Seat count is required');
-                 }
-               },
-               onSaved: (String value){
-                 _seat = value;
-               },
-               
-   );
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
       appBar: AppBar(
-        title: Text('Add New Bus'),
+        title: Text('Add Stops'),
         backgroundColor: Colors.pink[400],
         
         elevation:0.0,
@@ -235,21 +191,17 @@ Widget _buildSeat(){
             
             children : <Widget>[
               
-                _buildPlateNumber(),
+                _buildstopName(),
               SizedBox(height :10.0),
-              _buildDriverName(),
+              _buildarrivingTime(),
               SizedBox(height :10.0),
-              _buildLicenseNumber(),
+              _buildtimeDu(),
               SizedBox(height :10.0),
-              _buildColor(),
+              _buildlatitude(),
               SizedBox(height :10.0),
-              _buildPublicPrivate(),
+              _buildlongitude(),
               SizedBox(height :10.0),
-              _buildLuxeryLevel(),
-              SizedBox(height :10.0),
-              _buildSeat(),
-            SizedBox(height :10.0), 
-              
+             
               
 SizedBox(height :5.0),
 Row(
@@ -270,11 +222,11 @@ Row(
        
       // validate the form based on it's current state
 if(_formKey.currentState.validate()) {
-  Map <String, dynamic> data ={"Plate Number":plateNumber.text,"Driver Name":
-  driverName.text,"License Number":licenseNumber.text,"Color":color.text,
-  "Public or Private":publicPrivate.text,"Luxury Level":luxeryLevel.text,"Seat Count":seat.text,};
+  Map <String, dynamic> data ={"Stop Name":stopName.text,"Ariving Time":
+  arrivingTime.text,"Time Duration ":timeDu.text,"Latitude":latitude.text,
+  "Longitude":longitude.text,};
 
-  FirebaseFirestore.instance.collection('NewBus').add(data);
+  FirebaseFirestore.instance.collection('AddStops').add(data);
 
                      
                        showDialog(context: context, builder:(BuildContext context) {

@@ -46,7 +46,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   _buildResetForm() {
     return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+        padding: const EdgeInsets.only(top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
         child: ListView(children: [
           SizedBox(height: 75.0),
           Container(
@@ -54,8 +54,8 @@ class _ResetPasswordState extends State<ResetPassword> {
               width: 200.0,
               child: Stack(
                 children: [
-                  Text('Reset Your Passwor',
-                      style: TextStyle(fontFamily: 'Trueno', fontSize: 60.0)),
+                  Text('Reset Your Password',
+                      style: TextStyle(fontFamily: 'Trueno', fontSize: 40.0)),
                   //Dot placement
                   
                 ],
