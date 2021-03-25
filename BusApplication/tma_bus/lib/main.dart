@@ -76,7 +76,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[PassengerMapView(), TripNav(), ReportEmergencyView(), Account()],
+        children: <Widget>[PassengerMapView(), TripControlView(), ReportEmergencyView(), Account()],
         // set the controller
         controller: controller,
       ),
