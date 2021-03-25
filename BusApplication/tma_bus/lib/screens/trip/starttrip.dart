@@ -35,10 +35,16 @@ class _TripNavState extends State<TripNav> {
 
         return new ListView(
           children: snapshot.data.docs.map((DocumentSnapshot document) {
-            return new ListTile(
-              title: new Text(document.data()['name']),
-              subtitle: new Text(document.data()['time']),
+            return new OutlinedButton(
+              onPressed: () {
+                // Respond to button press
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(document.data()['name']??'default'),
+              ),
             );
+            //Card(child: Text(document.data()['name']??'default'),);
           }).toList(),
         );
       },
