@@ -68,7 +68,7 @@ class DesktopNavbar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical:20, horizontal:30),
       child: Container(
-        constraints: BoxConstraints(maxWidth: 1200),
+        constraints: BoxConstraints(maxWidth: 1800),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -93,8 +93,14 @@ class DesktopNavbar extends StatelessWidget {
                     ),
                     ),
                 SizedBox(width:60),
-                Text('Add Trip',style:TextStyle(color: Colors.white), 
-                ),
+                 MaterialButton(
+                        color:Colors.pink,
+                        onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>AddTrip()));
+                        },
+                        child: Text('Add Trip',style:TextStyle(color: Colors.white), 
+                    ),
+                    ),
                 SizedBox(width:60),
 
                    MaterialButton(
