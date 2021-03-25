@@ -19,6 +19,11 @@ int geoGate = 0;
 StreamController<String> streamController = StreamController<String>();
 
 class TripControlView extends StatefulWidget {
+
+  TripControlView(this.title, this.stream);
+  final String title;
+  final Stream<int> stream;
+
   @override
   _TripControlViewState createState() => _TripControlViewState();
 }
@@ -29,6 +34,19 @@ class _TripControlViewState extends State<TripControlView> {
   @override
   void initState() {
     super.initState();
+
+    void mySetState(int index) {
+      List statusList = ['A', 'B', 'C'];
+      setState(() {
+        statusName = statusList[index];
+      });
+    }
+
+    widget.stream.listen((index) {
+      mySetState(index);
+    });
+
+
 
     FirebaseFirestore.instance.collection('trips').doc('$tripID').get().then((DocumentSnapshot tripDoc) {
       if (tripDoc.exists) {
