@@ -202,14 +202,13 @@ Widget _buildSeat(){
         
       ),
           
-      
+     
         padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 400.0),
        
       
-         
-       
+      
          child:Container(
-            
+            //: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
              constraints: BoxConstraints(maxHeight: 1500),
              decoration:BoxDecoration(
         gradient: LinearGradient(
@@ -252,7 +251,101 @@ Widget _buildSeat(){
             SizedBox(height :10.0),
               
               
-             
+              //SizedBox(height :10.0),
+              /* TextFormField(
+                controller: plateNumber,
+               validator: (val) => val.isEmpty ?'Enter the plate number':null,   
+               decoration: InputDecoration(
+               labelText: 'Plate Number',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                   setState(() => email = val);
+
+                 }
+               ),
+                SizedBox(height :10.0),
+              
+               TextFormField(
+                 controller: driverName,
+                 validator: (val) => val.isEmpty?'Enter the driver name':null,
+                // obscureText: true,
+                decoration: InputDecoration(
+               labelText: 'Driver Name',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),
+                  SizedBox(height :10.0),
+
+               TextFormField(
+                  controller: licenseNumber,
+                 validator: (val) => val.isEmpty?'Enter the driver license number':null,
+                
+                decoration: InputDecoration(
+               labelText: 'Driver License Number',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),
+                  SizedBox(height :10.0),
+
+
+               TextFormField(
+                 controller: color,
+                validator: (val) => val.isEmpty?'Enter the color':null,
+                decoration: InputDecoration(
+               labelText: 'Color',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),
+                  SizedBox(height :10.0),
+
+               TextFormField(
+                 controller: publicPrivate,
+                validator: (val) => val.isEmpty?'Enter private or public':null,
+                decoration: InputDecoration(
+               labelText: 'Private or Public',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),
+                  SizedBox(height :10.0),
+
+               TextFormField(
+                 controller: luxeryLevel,
+                  validator: (val) => val.isEmpty?'Enter luxery level':null,
+                decoration: InputDecoration(
+               labelText: 'Luxery Level',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),
+                  SizedBox(height :10.0),
+
+               TextFormField(
+                  controller: seat,
+                 validator: (val) => val.isEmpty?'Enter seat count':null,
+                decoration: InputDecoration(
+               labelText: 'Seat Count',
+               border: OutlineInputBorder()
+               
+             ),
+                 onChanged: (val){
+                     setState(() => password = val);
+                 }),*/
 SizedBox(height :5.0),
 Row(
   mainAxisAlignment: MainAxisAlignment.center,
@@ -279,7 +372,7 @@ if(_formKey.currentState.validate()) {
   driverName.text,"License Number":licenseNumber.text,"Color":color.text,
   "Public or Private":publicPrivate.text,"Luxury Level":luxeryLevel.text,"Seat Count":seat.text,};
 
-  FirebaseFirestore.instance.collection('AddTrip').add(data);
+  FirebaseFirestore.instance.collection('NewBus').add(data);
 
                      
                        showDialog(context: context, builder:(BuildContext context) {
