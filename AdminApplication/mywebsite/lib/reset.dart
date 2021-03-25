@@ -54,7 +54,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               width: 200.0,
               child: Stack(
                 children: [
-                  Text('Reset Your Password',
+                  Text('Reset Your Passwor',
                       style: TextStyle(fontFamily: 'Trueno', fontSize: 60.0)),
                   //Dot placement
                   
