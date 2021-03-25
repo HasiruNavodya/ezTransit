@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
             ]
             ),
             SizedBox(height: 40.0,),
-            TextField(
+            TextFormField(
               decoration: InputDecoration(
                 labelText: "Email",
                 labelStyle: TextStyle(fontSize: 15),
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(height: 20.0,),
-            TextField(
+            TextFormField(
               obscureText: true,
               decoration: InputDecoration(
                 labelText: "Password",
