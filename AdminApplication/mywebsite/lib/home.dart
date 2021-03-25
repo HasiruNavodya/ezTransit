@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mywebsite/auth.dart';
+//import 'package:mywebsite/auth.dart';
 import 'package:mywebsite/map.dart';
 
 import 'map.dart';
-import 'map.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
               );
           },
           child: Center(child: Text('LOG OUT')))
+          
     ]));
   }
 }
