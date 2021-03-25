@@ -1,12 +1,5 @@
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-     title: 'Login App',
-     home: LoginPage(),
-    );
-  }
-}
+import 'package:flutter/material.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
