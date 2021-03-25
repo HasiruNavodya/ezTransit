@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'page.dart';
 
 const CameraPosition _kInitialPosition =
-CameraPosition(target: LatLng(-33.852, 151.211), zoom: 11.0);
+    CameraPosition(target: LatLng(-33.852, 151.211), zoom: 11.0);
 
 class MapClickPage extends StatelessWidget {
   //MapClickPage() : super(const Icon(icons.mouse), 'Map click');
@@ -66,9 +66,9 @@ class _MapClickBodyState extends State<_MapClickBody> {
           .add(Center(child: Text(lastTap, textAlign: TextAlign.center)));
       columnChildren.add(Center(
           child: Text(
-            lastLongPress,
-            textAlign: TextAlign.center,
-          )));
+        lastLongPress,
+        textAlign: TextAlign.center,
+      )));
     }
 
     return Column(
