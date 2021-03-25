@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
               );
           },
           child: Center(child: Text('LOG OUT')))
+          
     ]));
   }
 }
