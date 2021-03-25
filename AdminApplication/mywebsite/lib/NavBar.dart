@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:mywebsite/add new bus.dart';
 import 'package:flutter/material.dart';
+import 'package:mywebsite/AddTrip.dart';
 import 'package:mywebsite/auth.dart';
 //import 'package:transportapp/Pages/emergency.dart';
 
@@ -165,7 +166,13 @@ class MobileNavbar extends StatelessWidget {
                     ),
                    
                     SizedBox(width:50),
-                    Text('Add Trip',style:TextStyle(color: Colors.white), 
+                    MaterialButton(
+                        color:Colors.pink,
+                        onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>AddTrip()));
+                        },
+                        child: Text('New Bus',style:TextStyle(color: Colors.white), 
+                    ),
                     ),
                     SizedBox(width:50),
                    MaterialButton(
