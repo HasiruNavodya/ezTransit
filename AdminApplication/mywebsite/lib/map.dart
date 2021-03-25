@@ -20,7 +20,7 @@ void getMarkers(double lat, double long) {
     Marker marker = Marker(
         markerId: markerId,
         position: LatLng(lat, long),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+        icon: BitmapDescriptor.defaultMarker,
         infoWindow: InfoWindow(snippet: 'Address'));
     setState(() {
       markers[markerId] = marker;
@@ -42,7 +42,7 @@ void getMarkers(double lat, double long) {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
-
+    
         onTap: (tapped) async {
                     getMarkers(tapped.latitude, tapped.longitude);
                     await FirebaseFirestore.instance
@@ -54,21 +54,18 @@ void getMarkers(double lat, double long) {
                   },
 
         mapType: MapType.normal,
+        compassEnabled: true,
+        trafficEnabled: true,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+      
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('To the lake!'),
-        icon: Icon(Icons.directions_boat),
-      ),
+
+    
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
+ 
 }
