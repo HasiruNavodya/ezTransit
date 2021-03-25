@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:geofence_service/geofence_service.dart';
+import 'dart:async';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -14,6 +15,8 @@ double stopLat;
 double stopLng;
 String stopID;
 int geoGate = 0;
+
+StreamController<String> streamController = StreamController<String>();
 
 class TripControlView extends StatefulWidget {
   @override
