@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tma_bus/screens/home/trip.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TripNav extends StatefulWidget {
   @override
@@ -9,51 +10,35 @@ class TripNav extends StatefulWidget {
 class _TripNavState extends State<TripNav> {
 
   String trip = '1';
+  String pickup = '1';
+  Map buses;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('trips');
 
-    if(trip=='1'){
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("screen1"),
-        ),
-        body: Container(
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  trip = '2';
-                });
-              },
-              child: Text('screen2'),
-            ),
-          ),
-        ),
-      );
-    }
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc().get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
 
-    else{
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("screen2"),
-        ),
-        body: Container(
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () {
-                staetrfv();
-                setState(() {
-                  trip = '1';
-                });
-              },
-              child: Text('screen1'),
-            ),
-          ),
-        ),
-      );
-    }
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
 
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          return Text("Full Name: $data");
+        }
+
+        return Text("loading");
+      },
+    );
   }
 }
 
