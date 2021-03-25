@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             //AuthService().signOut();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MapSample()),
+                MaterialPageRoute(builder: (context) => MapClickPage()),
               );
           },
           child: Center(child: Text('LOG OUT')))
