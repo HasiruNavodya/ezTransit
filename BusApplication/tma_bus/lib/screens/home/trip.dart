@@ -18,6 +18,7 @@ String stopID;
 int geoGate = 0;
 String tripStatus = "off";
 String busNo = 'GE-3412';
+LocationData lastLocation;
 
 class TripControlView extends StatefulWidget {
   @override
@@ -26,10 +27,29 @@ class TripControlView extends StatefulWidget {
 
 class _TripControlViewState extends State<TripControlView> {
 
+  Location location = new Location();
+
   @override
   void initState() {
     super.initState();
     print(tripStatus);
+
+
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      if(currentLocation != lastLocation){
+        print(currentLocation);
+        FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
+          'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
+          });
+        lastLocation = currentLocation;
+      }
+
+
+      //lastLocation = currentLocation;
+      //FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
+      //'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
+      //});
+    });
 
 
   }
@@ -57,7 +77,7 @@ class _TripControlViewState extends State<TripControlView> {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text('Trip Info'),
+                title: Text('Current Trip Info'),
                 centerTitle: true,
                 backgroundColor: Colors.black,
               ),
@@ -205,120 +225,110 @@ class _TripControlViewState extends State<TripControlView> {
       },
     );
   }
-}
+  void sendLiveLocation(){
+    print('123123123123');
+    location.onLocationChanged.listen((LocationData currentLocation) {
+       print('cdshcbsjdhcb');
 
-void sendLiveLocation(){
-  Location location = new Location();
-  location.onLocationChanged.listen((LocationData currentLocation) {
-    print('qweqweqeqw');
-  });
-}
-
-storeUserLocation() {
-  print('qweqweqeqw');
-
-
-  //StreamSubscription<Position> positionStream = Geolocator.getPositionStream().listen((Position position) {
-    //print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-  //});
-  Location location = new Location();
-  LocationData lastLocation;
-  /*
-  FirebaseFirestore.instance.collection('buses').doc('eg2345').set({
-      'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
-    });
-   */
-  //
-}
-
-
-final geofenceService = GeofenceService(
-    interval: 5000,
-    accuracy: 100,
-    allowMockLocations: true
-);
-
-final geofenceList = <Geofence>[];
-
-void onGeofenceStatusChanged(Geofence geofence, GeofenceRadius geofenceRadius,
-    GeofenceStatus geofenceStatus) {
-  //print('geofence: ${geofence.toMap()}');
-  // print('geofenceRadius: ${geofenceRadius.toMap()}');
-  print('geofenceStatus: ${geofenceStatus.toString()}\n');
-
-  String geoStatus = geofenceStatus.toString();
-  int passed = int.parse(geofence.toMap()['id']);
-  print(passed);
-
-  if (geoStatus == 'GeofenceStatus.ENTER') {
-
-    FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
-      'lastStopPassed' : passed
+      //lastLocation = currentLocation;
+      //FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
+        //'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
+      //});
     });
 
   }
-}
+  final geofenceService = GeofenceService(
+      interval: 5000,
+      accuracy: 100,
+      allowMockLocations: true
+  );
 
-Future initTrip() async {
+  final geofenceList = <Geofence>[];
 
-  print(tripID);
+  void onGeofenceStatusChanged(Geofence geofence, GeofenceRadius geofenceRadius,
+      GeofenceStatus geofenceStatus) {
+    //print('geofence: ${geofence.toMap()}');
+    // print('geofenceRadius: ${geofenceRadius.toMap()}');
+    print('geofenceStatus: ${geofenceStatus.toString()}\n');
 
-  FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {querySnapshot.docs.forEach((stopDoc) {
-    print(stopDoc.data()['name']);
+    String geoStatus = geofenceStatus.toString();
+    int passed = int.parse(geofence.toMap()['id']);
+    print(passed);
 
-    stopID = stopDoc.id;
-    stopLat = stopDoc.data()['location'].latitude.toDouble();
-    stopLng = stopDoc.data()['location'].longitude.toDouble();
+    if (geoStatus == 'GeofenceStatus.ENTER') {
 
-    final geoNew = Geofence(
-      id: '$stopID',
-      latitude: stopLat,
-      longitude: stopLng,
-      radius: [
-        GeofenceRadius(id: 'bus_stop_radius', length: 100),
-      ],
-    );
+      FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
+        'lastStopPassed' : passed
+      });
 
-    geofenceList.add(geoNew);
-    print(geofenceList.length);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
-      geofenceService.setOnActivityChanged(onActivityChanged);
-      geofenceService.setOnStreamError(onError);
-      geofenceService.start(geofenceList).catchError(onError);
-    });
-
-  });
-  }).catchError((onError) {
-    print("Database Error!");
-    print(onError);
-  });
-
-  FirebaseFirestore.instance.collection('trips').doc('$tripID').get().then((DocumentSnapshot tripDoc) {
-    if (tripDoc.exists) {
-      print('Document exists on the database');
-      //lastStopPassed = tripDoc.data()['lastStopPassed'];
-      stopCount = tripDoc.data()['stopCount'];
     }
-  });
-
-  geoGate = 1;
-  print(geoGate);
-  sendLiveLocation();
-}
-
-void onActivityChanged(Activity prevActivity, Activity currActivity) {
-  print('prevActivity: ${prevActivity.toMap()}');
-  print('currActivity: ${currActivity.toMap()}\n');
-}
-
-void onError(dynamic error) {
-  final errorCode = getErrorCodesFromError(error);
-  if (errorCode == null) {
-    print('Undefined error: $error');
-    return;
   }
-  print('ErrorCode: $errorCode');
+
+  Future initTrip() async {
+
+    print(tripID);
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {querySnapshot.docs.forEach((stopDoc) {
+      print(stopDoc.data()['name']);
+
+      stopID = stopDoc.id;
+      stopLat = stopDoc.data()['location'].latitude.toDouble();
+      stopLng = stopDoc.data()['location'].longitude.toDouble();
+
+      final geoNew = Geofence(
+        id: '$stopID',
+        latitude: stopLat,
+        longitude: stopLng,
+        radius: [
+          GeofenceRadius(id: 'bus_stop_radius', length: 100),
+        ],
+      );
+
+      geofenceList.add(geoNew);
+      print(geofenceList.length);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
+        geofenceService.setOnActivityChanged(onActivityChanged);
+        geofenceService.setOnStreamError(onError);
+        geofenceService.start(geofenceList).catchError(onError);
+      });
+
+    });
+    }).catchError((onError) {
+      print("Database Error!");
+      print(onError);
+    });
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').get().then((DocumentSnapshot tripDoc) {
+      if (tripDoc.exists) {
+        print('Document exists on the database');
+        //lastStopPassed = tripDoc.data()['lastStopPassed'];
+        stopCount = tripDoc.data()['stopCount'];
+      }
+    });
+
+    geoGate = 1;
+    print(geoGate);
+    //sendLiveLocation();
+  }
+
+  void onActivityChanged(Activity prevActivity, Activity currActivity) {
+    print('prevActivity: ${prevActivity.toMap()}');
+    print('currActivity: ${currActivity.toMap()}\n');
+  }
+
+  void onError(dynamic error) {
+    final errorCode = getErrorCodesFromError(error);
+    if (errorCode == null) {
+      print('Undefined error: $error');
+      return;
+    }
+    print('ErrorCode: $errorCode');
+  }
+
 }
+
+
+
 
