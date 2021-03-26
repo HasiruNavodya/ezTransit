@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mywebsite/m.dart';
 
 class Trip extends StatefulWidget {
   @override
@@ -252,7 +253,8 @@ class _TripState extends State<Trip> {
 
                 ),
             Expanded(
-              child: new Stack(),
+              child: MapSample(),
+            
             )
           ],
         ),
