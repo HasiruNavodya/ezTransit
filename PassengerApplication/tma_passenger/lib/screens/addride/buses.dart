@@ -12,6 +12,9 @@ String numPlate;
 String luxaryLevel;
 String privatePub;
 String noplate;
+var seatcount;
+var ticketcount;
+var newseatcount;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -131,6 +134,9 @@ class _SelectBusState extends State<SelectBus> {
                           // print(documentSnapshot.data()['Luxury Level']);
                           luxaryLevel = documentSnapshot.data()['Luxury Level'];
                           privatePub= documentSnapshot.data()['Public or Private'];
+                          // seatcount=documentSnapshot.data()['Seat Count'];
+                          // newseatcount=seatcount-ticketcount;
+                          // print('hahahahahaaa'+newseatcount);
                           //print('sfdfvvbvbvb'+documentSnapshot.data()['Luxury Level']);
                           //return luxaryLevel;
 
@@ -138,8 +144,8 @@ class _SelectBusState extends State<SelectBus> {
                         }
                       }
                       );
-
-
+                        //
+                        // ticketcount=document.data()['ticket count'];
                       return Container(
 
                         child: Padding(
