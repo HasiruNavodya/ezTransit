@@ -146,10 +146,9 @@ class _TripState extends State<Trip> {
         child: Row(
           children: [
             Expanded(
-                child: new Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
+                child: new Column(children: [
+              Container(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
@@ -246,11 +245,8 @@ class _TripState extends State<Trip> {
                     ),
                   ),
                 ),
-                )]
-
-                )
-                
-            
+              )
+            ])
 
 //map
 
