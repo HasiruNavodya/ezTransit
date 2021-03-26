@@ -64,8 +64,6 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
     // Initialize the Tab Controller
     controller = TabController(length: 4, vsync: this);
-
-
   }
 
   @override
@@ -80,7 +78,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[PassengerMapView(), TripNav(), ReportEmergencyView(), Account()],
+        children: <Widget>[MapView(), TripControlView(), ReportEmergencyView(), Account()],
         // set the controller
         controller: controller,
       ),

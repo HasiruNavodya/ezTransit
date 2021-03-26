@@ -5,71 +5,45 @@ import 'package:location/location.dart';
 import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:geofence_service/geofence_service.dart';
 import 'dart:async';
+import 'package:geolocator/geolocator.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID = 'T3000';
+String tripID;
 String tripName;
 double stopLat;
 double stopLng;
 String stopID;
 int geoGate = 0;
-
-StreamController<String> streamController = StreamController<String>();
+String tripStatus = "off";
+String busNo = 'GE-3412';
 
 class TripControlView extends StatefulWidget {
-
-  TripControlView(this.title, this.stream);
-  final String title;
-  final Stream<int> stream;
-
   @override
   _TripControlViewState createState() => _TripControlViewState();
 }
 
 class _TripControlViewState extends State<TripControlView> {
-  String tripStatus = "off";
 
   @override
   void initState() {
     super.initState();
+    print(tripStatus);
 
-    void mySetState(int index) {
-      List statusList = ['A', 'B', 'C'];
-      setState(() {
-        statusName = statusList[index];
-      });
-    }
-
-    widget.stream.listen((index) {
-      mySetState(index);
-    });
-
-
-
-    FirebaseFirestore.instance.collection('trips').doc('$tripID').get().then((DocumentSnapshot tripDoc) {
-      if (tripDoc.exists) {
-        print('Document exists on the database');
-        //lastStopPassed = tripDoc.data()['lastStopPassed'];
-        stopCount = tripDoc.data()['stopCount'];
-      }
-    });
-
-    if(geoGate == 0){
-      initTrip();
-    }
-
-    //storeUserLocation();
 
   }
 
   @override
   Widget build(BuildContext context) {
-    if (tripStatus == "off") {
+    if (tripStatus == "on") {
+      if(geoGate == 0){
+        initTrip();
+        print('inittrip');
+      }
       return FutureBuilder<DocumentSnapshot>(
         future:
-            FirebaseFirestore.instance.collection('trips').doc('T3000').get(),
+            FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -87,16 +61,32 @@ class _TripControlViewState extends State<TripControlView> {
                 centerTitle: true,
                 backgroundColor: Colors.black,
               ),
-              body: Container(
-                child: Center(
+              body: Center(
+                child: Container(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(data['startCity']),
-                      Text(data['startTime']),
-                      Text(data['endCity']),
-                      Text(data['endTime']),
-                      Text('$lastStopPassed'),
-                      Text('$geofenceList')
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${data['startCity']}' + ' - ' + '${data['endCity']}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${data['startTime']}' + ' - ' + '${data['endTime']}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -108,21 +98,137 @@ class _TripControlViewState extends State<TripControlView> {
         },
       );
     } else {
-      return TripNav();
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Select Trip'),
+          centerTitle: true,
+          backgroundColor: Colors.black87,
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: busNo).snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new ListView(
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return Container(
+                    color: Colors.white70,
+                    margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: new OutlinedButton(
+                      onPressed: () {
+                        tripID = document.data()['tripID'];
+                        //print(tripID);
+                        showAlertDialog(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${document.data()['startTime'] ?? 'default'}' + ' ' + '-' + ' ' '${document.data()['endTime']??'default'}',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black87
+                              ),
+                            ),
+                            Text(
+                              document.data()['name']??'default',
+                              style: TextStyle(
+                                  color: Colors.black87
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                    //Card(child: Text(document.data()['name']??'default'),);
+                }).toList(),
+              ),
+            );
+          },
+        ),
+      );
     }
+  }
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Start",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.red
+        ),
+      ),
+      onPressed:  () {
+        tripStatus = 'on';
+        setState(() {});
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Close",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.grey
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Start Trip"),
+      content: Text("Are you sure you want to start this trip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 
-storeUserLocation() {
+void sendLiveLocation(){
   Location location = new Location();
+  location.onLocationChanged.listen((LocationData currentLocation) {
+    print('qweqweqeqw');
+  });
+}
+
+storeUserLocation() {
+  print('qweqweqeqw');
+
+
+  //StreamSubscription<Position> positionStream = Geolocator.getPositionStream().listen((Position position) {
+    //print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+  //});
+  Location location = new Location();
+  LocationData lastLocation;
   /*
   FirebaseFirestore.instance.collection('buses').doc('eg2345').set({
       'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
     });
    */
-  location.onLocationChanged.listen((LocationData currentLocation) {
-    print("*******");
-  });
+  //
 }
 
 
@@ -155,6 +261,8 @@ void onGeofenceStatusChanged(Geofence geofence, GeofenceRadius geofenceRadius,
 
 Future initTrip() async {
 
+  print(tripID);
+
   FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {querySnapshot.docs.forEach((stopDoc) {
     print(stopDoc.data()['name']);
 
@@ -186,7 +294,18 @@ Future initTrip() async {
     print("Database Error!");
     print(onError);
   });
+
+  FirebaseFirestore.instance.collection('trips').doc('$tripID').get().then((DocumentSnapshot tripDoc) {
+    if (tripDoc.exists) {
+      print('Document exists on the database');
+      //lastStopPassed = tripDoc.data()['lastStopPassed'];
+      stopCount = tripDoc.data()['stopCount'];
+    }
+  });
+
   geoGate = 1;
+  print(geoGate);
+  sendLiveLocation();
 }
 
 void onActivityChanged(Activity prevActivity, Activity currActivity) {
@@ -202,3 +321,4 @@ void onError(dynamic error) {
   }
   print('ErrorCode: $errorCode');
 }
+
