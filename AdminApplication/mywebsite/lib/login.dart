@@ -123,6 +123,7 @@ AuthService().signIn(email, password, context);
               } 
             },
             child: Container(
+              
                 height: 50.0,
                 child: Material(
                     borderRadius: BorderRadius.circular(25.0),
