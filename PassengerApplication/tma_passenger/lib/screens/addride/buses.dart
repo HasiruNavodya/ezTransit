@@ -172,12 +172,14 @@ class _SelectBusState extends State<SelectBus> {
                                 Text(''),
 
 
+
                               ],
 
                             ),
                           ),
                         ),
                       );
+
                     }).toList(),
                   );
                 },
@@ -185,7 +187,18 @@ class _SelectBusState extends State<SelectBus> {
             ),
           ],
         ),
+    floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
       );
+
+    },
+    child: Icon(Icons.arrow_forward_ios),
+    backgroundColor: Colors.black87,
+    ),
+    );
 
     }
 
