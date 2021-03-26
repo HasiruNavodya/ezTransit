@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/error_handler.dart';
-import 'package:mywebsite/home.dart';
+
 import 'package:mywebsite/login.dart';
 
 class AuthService {

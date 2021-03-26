@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tma_bus/screens/home/account.dart';
 import 'package:tma_bus/screens/home/map.dart';
@@ -8,6 +10,8 @@ import 'package:tma_bus/database/dbtasks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart';
+import 'dart:async';
+
 
 
 void main() async {
@@ -76,7 +80,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[PassengerMapView(), TripControlView(), ReportEmergencyView(), Account()],
+        children: <Widget>[PassengerMapView(), TripNav(), ReportEmergencyView(), Account()],
         // set the controller
         controller: controller,
       ),

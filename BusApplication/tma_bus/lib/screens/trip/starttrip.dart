@@ -22,26 +22,39 @@ class _TripNavState extends State<TripNav> {
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('trips');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: users.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Select Trip'),
+        centerTitle: true,
+        backgroundColor: Colors.black87,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: users.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
 
-        return new ListView(
-          children: snapshot.data.docs.map((DocumentSnapshot document) {
-            return new ListTile(
-              title: new Text(document.data()['name']),
-              subtitle: new Text(document.data()['time']),
-            );
-          }).toList(),
-        );
-      },
+          return new ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
+              return new OutlinedButton(
+                onPressed: () {
+                  // Respond to button press
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(document.data()['name']??'default'),
+                ),
+              );
+              //Card(child: Text(document.data()['name']??'default'),);
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }

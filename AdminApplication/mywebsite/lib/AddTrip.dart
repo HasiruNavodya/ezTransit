@@ -14,196 +14,131 @@ class _AddTripState extends State<AddTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _plateNumber ;
-  String _driverName ;  
-  String _licenseNumber ; 
-  String _color ; 
-  String _publicPrivate ; 
-  String _luxeryLevel ; 
-  String _seat ; 
+  String _stopName ;
+  String _arrivingTime ;  
+  String _timeDu ; 
+  String _latitude ; 
+  String _longitude ; 
+
 
 //get data from textformfield
-  TextEditingController plateNumber = new TextEditingController();
-   TextEditingController driverName = new TextEditingController();
-    TextEditingController licenseNumber = new TextEditingController();
-     TextEditingController color = new TextEditingController();
-      TextEditingController publicPrivate = new TextEditingController();
-       TextEditingController luxeryLevel = new TextEditingController();
-        TextEditingController seat = new TextEditingController();
+  TextEditingController stopName = new TextEditingController();
+   TextEditingController arrivingTime = new TextEditingController();
+    TextEditingController timeDu = new TextEditingController();
+     TextEditingController latitude = new TextEditingController();
+      TextEditingController longitude = new TextEditingController();
+       
 
-Widget _buildPlateNumber(){
+Widget _buildstopName(){
   return TextFormField(
-               controller: plateNumber,
+               controller: stopName,
                decoration: InputDecoration(
-               labelText: 'Plate Number',
+               labelText: 'Stop Name',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Plate Number is required';
+                    return 'Stop Name is required';
                  }
                },
                onSaved: (String value){
-                 _plateNumber = value;
+                 _stopName = value;
                },
                
    );
 }
 
   
-Widget _buildDriverName(){
+Widget _buildarrivingTime(){
   return TextFormField(
-                controller: driverName,
+                controller: arrivingTime,
                // maxLength: 30,
                decoration: InputDecoration(
-               labelText: 'Driver Name',
+               labelText: 'Arriving Time',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Driver Name is required';
+                    return 'Arriving Time is required';
                  }
                },
                onSaved: (String value){
-                 _driverName = value;
+                 _arrivingTime = value;
                },
                
    );
 }
 
 
-Widget _buildLicenseNumber(){
+Widget _buildtimeDu(){
   return TextFormField(
-               controller: licenseNumber,
+               controller: timeDu,
                decoration: InputDecoration(
-               labelText: 'Driver License Number',
+               labelText: 'Time Duration From Last Stop',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return 'Driver License Number is required';
+                    return 'Time Duration From Last Stop is required';
                  }
                },
                onSaved: (String value){
-                 _licenseNumber = value;
+                 _timeDu = value;
                },
                
    );
 }
 
-Widget _buildColor(){
+Widget _buildlatitude(){
   return TextFormField(
-               controller: color,
+               controller: latitude,
                decoration: InputDecoration(
-               labelText: 'Color',
+               labelText: 'latitude',
                border: OutlineInputBorder()),
 
                  validator:(String value) {
                  if(value.isEmpty){
-                    return ('Color is required');
+                    return ('latitude is required');
                  }
                },
                onSaved: (String value){
-                 _color = value;
+                 _latitude = value;
                },
                
    );
 }
 
-Widget _buildPublicPrivate(){
+Widget _buildlongitude(){
   return TextFormField(
-                controller: publicPrivate,
+                controller: longitude,
                decoration: InputDecoration(
-               labelText: 'Public / Private',
+               labelText: 'longitude',
                border: OutlineInputBorder()),
                // maxLength: 7,
                  validator:(String value) {
                  if(value.isEmpty){
-                    return ('This field is required');
+                    return ('longitude is required');
                  }
                },
                onSaved: (String value){
-                 _publicPrivate = value;
+                 _longitude = value;
                },
                
    );
 }
 
-Widget _buildLuxeryLevel(){
-  return TextFormField(
-               controller: luxeryLevel,
-               decoration: InputDecoration(
-               labelText: 'Luxery Level',
-               border: OutlineInputBorder()),
-               // maxLength: 15,
-                 validator:(String value) {
-                 if(value.isEmpty){
-                    return ('This field is required');
-                 }
-               },
-               onSaved: (String value){
-                 _luxeryLevel = value;
-               },
-               
-   );
-}
-
-
-Widget _buildSeat(){
-  return TextFormField(
-               controller:seat,
-               
-               decoration: InputDecoration(
-               labelText: 'Seat Count',
-               
-               border: OutlineInputBorder()),
-                keyboardType:TextInputType.number,
-               // maxLength: 3,
-
-                 validator:(String value) {
-                 if(value.isEmpty){
-                    return ('Seat count is required');
-                 }
-               },
-               onSaved: (String value){
-                 _seat = value;
-               },
-               
-   );
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
       appBar: AppBar(
-        title: Text('Add New Bus'),
+        title: Text('Add Stops'),
         backgroundColor: Colors.pink[400],
         
         elevation:0.0,
       ),
-      body:// Column(
-        
-       // children:[
-         /* child: DraggableScrollbar.semicircle(
-           controller: _controller, 
-           child: GridView.builder(
-             controller: _controller,
-             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-               crossAxisCount: 5,
-               ),
-               padding: EdgeInsets.zero,
-               itemCount: 1000,
-               itemBuilder:(context,index){
-                 return Container(
-                   alignment: Alignment.center,
-                   margin:EdgeInsets.all(2.0),
-                   color:Colors.grey[300],
-
-                 );
-               },
-           ),
-          ),*/
+      body:
         Container(
          
           
@@ -223,17 +158,11 @@ Widget _buildSeat(){
         
       ),
           
-      // height: MediaQuery.of(context).size.height*6,
-       //width:0.4 * MediaQuery.of(context).size.width,
+     
         padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 400.0),
        
       
-       /* child:Card(
-        
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-         // color: Colors.blue[400],
-         
-       elevation: 6.0,*/
+      
          child:Container(
             //: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
              constraints: BoxConstraints(maxHeight: 1500),
@@ -246,10 +175,7 @@ Widget _buildSeat(){
             
         Colors.blue[100],
             
-            //Colors.indigo[900],
-            //Colors.deepPurple[900],
-         //  Color.fromRGBO(195,20,50,1.0),
-       // Color.fromRGBO(36,11,54,1.0),
+            
         ]),
       ),
         child: Form(
@@ -265,126 +191,24 @@ Widget _buildSeat(){
             
             children : <Widget>[
               
-                _buildPlateNumber(),
+                _buildstopName(),
               SizedBox(height :10.0),
-              _buildDriverName(),
+              _buildarrivingTime(),
               SizedBox(height :10.0),
-              _buildLicenseNumber(),
+              _buildtimeDu(),
               SizedBox(height :10.0),
-              _buildColor(),
+              _buildlatitude(),
               SizedBox(height :10.0),
-              _buildPublicPrivate(),
+              _buildlongitude(),
               SizedBox(height :10.0),
-              _buildLuxeryLevel(),
-              SizedBox(height :10.0),
-              _buildSeat(),
-            SizedBox(height :10.0),
+             
               
-              
-              //SizedBox(height :10.0),
-              /* TextFormField(
-                controller: plateNumber,
-               validator: (val) => val.isEmpty ?'Enter the plate number':null,   
-               decoration: InputDecoration(
-               labelText: 'Plate Number',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                   setState(() => email = val);
-
-                 }
-               ),
-                SizedBox(height :10.0),
-              
-               TextFormField(
-                 controller: driverName,
-                 validator: (val) => val.isEmpty?'Enter the driver name':null,
-                // obscureText: true,
-                decoration: InputDecoration(
-               labelText: 'Driver Name',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                  controller: licenseNumber,
-                 validator: (val) => val.isEmpty?'Enter the driver license number':null,
-                
-                decoration: InputDecoration(
-               labelText: 'Driver License Number',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-
-               TextFormField(
-                 controller: color,
-                validator: (val) => val.isEmpty?'Enter the color':null,
-                decoration: InputDecoration(
-               labelText: 'Color',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                 controller: publicPrivate,
-                validator: (val) => val.isEmpty?'Enter private or public':null,
-                decoration: InputDecoration(
-               labelText: 'Private or Public',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                 controller: luxeryLevel,
-                  validator: (val) => val.isEmpty?'Enter luxery level':null,
-                decoration: InputDecoration(
-               labelText: 'Luxery Level',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),
-                  SizedBox(height :10.0),
-
-               TextFormField(
-                  controller: seat,
-                 validator: (val) => val.isEmpty?'Enter seat count':null,
-                decoration: InputDecoration(
-               labelText: 'Seat Count',
-               border: OutlineInputBorder()
-               
-             ),
-                 onChanged: (val){
-                     setState(() => password = val);
-                 }),*/
 SizedBox(height :5.0),
 Row(
   mainAxisAlignment: MainAxisAlignment.center,
              crossAxisAlignment: CrossAxisAlignment.center,
   children:[
   
-                     
-
-                 
       ElevatedButton(
           child:Text(
           'Submit',style: TextStyle(fontSize: 20),),
@@ -398,11 +222,11 @@ Row(
        
       // validate the form based on it's current state
 if(_formKey.currentState.validate()) {
-  Map <String, dynamic> data ={"Plate Number":plateNumber.text,"Driver Name":
-  driverName.text,"License Number":licenseNumber.text,"Color":color.text,
-  "Public or Private":publicPrivate.text,"Luxury Level":luxeryLevel.text,"Seat Count":seat.text,};
+  Map <String, dynamic> data ={"Stop Name":stopName.text,"Ariving Time":
+  arrivingTime.text,"Time Duration ":timeDu.text,"Latitude":latitude.text,
+  "Longitude":longitude.text,};
 
-  FirebaseFirestore.instance.collection('NewBus').add(data);
+  FirebaseFirestore.instance.collection('AddStops').add(data);
 
                      
                        showDialog(context: context, builder:(BuildContext context) {
@@ -425,101 +249,16 @@ SizedBox(width:50.0),
 
 
 
-                 ),],),],),),),),//)
+                 ),],),],),),
                  
-                  
+                 ),
+                 
+                 ), 
+                 
+              
           
-       /* Column(
-        mainAxisAlignment:MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width:0.4 * MediaQuery.of(context).size.width,
-           child: TextField(
-             decoration: InputDecoration(
-               labelText: 'Plate Number',
-               border: OutlineInputBorder()
-               
-             ),
-           )),
-           SizedBox(height:20),
-           
-            Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-           
-             children: [
-                  Container(
-            width:0.4 * MediaQuery.of(context).size.width,
-           child: TextField(
-             decoration: InputDecoration(
-               labelText: 'Driver Name',
-               border: OutlineInputBorder()
-               
-             ),
-           )),
-
-              
-             ],
-             
-           ),
-           SizedBox(height:20),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-           
-             children: [
-                  Container(
-            width:0.4 * MediaQuery.of(context).size.width,
-           child: TextField(
-             decoration: InputDecoration(
-               labelText: 'Driver License Number',
-               border: OutlineInputBorder()
-               
-             ),
-           )),
-
-              
-             ],
-             
-           ),
-           SizedBox(height:20),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-           
-             children: [
-                  Container(
-            width:0.4 * MediaQuery.of(context).size.width,
-           child: TextField(
-             decoration: InputDecoration(
-               labelText: 'Color',
-               border: OutlineInputBorder()
-               
-             ),
-           )),
-
-              
-             ],
-             
-           ),
-           SizedBox(height:20),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-           
-             children: [
-                  
-
-               RaisedButton(onPressed: (){}, child: Text('Submit')),
-               SizedBox(width:20),
-                RaisedButton(onPressed: (){}, child: Text('Cancel')),
-             ],
-             
-           ),
-        ],
-      ),*/
-        );//])
+      
+        );
   }
 }
  
