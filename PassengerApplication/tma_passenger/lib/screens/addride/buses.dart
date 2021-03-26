@@ -128,58 +128,57 @@ class _SelectBusState extends State<SelectBus> {
 
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
-                      FirebaseFirestore.instance.collection('NewBus').doc('${document.data()['bus']}').get().then((DocumentSnapshot documentSnapshot) {
-                        print('gg ' + document.data()['bus']);
-                        if (documentSnapshot.exists) {
-                          // print(documentSnapshot.data()['Luxury Level']);
-                          luxaryLevel = documentSnapshot.data()['Luxury Level'];
-                          privatePub= documentSnapshot.data()['Public or Private'];
-                          // seatcount=documentSnapshot.data()['Seat Count'];
-                          // newseatcount=seatcount-ticketcount;
-                          // print('hahahahahaaa'+newseatcount);
-                          //print('sfdfvvbvbvb'+documentSnapshot.data()['Luxury Level']);
-                          //return luxaryLevel;
+                      CollectionReference users = FirebaseFirestore.instance.collection('NewBus');
+
+                      return FutureBuilder<DocumentSnapshot>(
+                        future: users.doc(document.data()['bus']).get(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                          if (snapshot.hasError) {
+                            return Text("Something went wrong");
+                          }
+
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            Map<String, dynamic> data = snapshot.data.data();
+                            return Container(
+
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Card(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:',
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(''),
+
+                                      Text(document.data()['name']+'                          Standing:',
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(''),
+
+                                      Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(''),
+
+                                      Text('km'+'                     min                                 '+data['Public or Private'],
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(''),
 
 
-                        }
-                      }
+
+                                    ],
+
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+
+                          return Text("loading");
+                        },
                       );
-                        //
-                        // ticketcount=document.data()['ticket count'];
-                      return Container(
-
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Card(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:',
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-                                Text(document.data()['name']+'                          Standing:',
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-                                Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+luxaryLevel,
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-                                Text('km'+'                     min                                 '+privatePub,
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-
-
-                              ],
-
-                            ),
-                          ),
-                        ),
-                      );
-
                     }).toList(),
                   );
                 },
