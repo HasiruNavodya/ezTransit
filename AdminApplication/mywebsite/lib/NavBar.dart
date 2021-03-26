@@ -188,7 +188,7 @@ class MobileNavbar extends StatelessWidget {
 
                        onPressed: ()
                           { 
-                           // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
+                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
       //DocumentSnapshot variable = await FirebaseFirestore.instance.collection('New Bus').doc('GR944BdniaKIp0NdmqKz').get();
      // print(variable['color']);
                         
