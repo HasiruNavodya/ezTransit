@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:mywebsite/add new bus.dart';
 import 'package:flutter/material.dart';
 import 'package:mywebsite/AddTrip.dart';
+import 'package:mywebsite/Emergency.dart';
 import 'package:mywebsite/auth.dart';
 //import 'package:transportapp/Pages/emergency.dart';
 
@@ -108,7 +109,7 @@ class DesktopNavbar extends StatelessWidget {
 
                        onPressed: ()
                          async { 
-                         // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
       //DocumentSnapshot variable = await FirebaseFirestore.instance.collection('NewBus').doc('tvkvBAluBhI0QJ6Hjjeo').get();
   //print(variable['Color']);
   ;
