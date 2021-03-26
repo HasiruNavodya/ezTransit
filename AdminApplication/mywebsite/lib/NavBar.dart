@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mywebsite/AddTrip.dart';
 import 'package:mywebsite/Emergency.dart';
+import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
 //import 'package:transportapp/Pages/emergency.dart';
 
@@ -88,7 +89,7 @@ class DesktopNavbar extends StatelessWidget {
                 MaterialButton(
                         color:Colors.pink,
                         onPressed: (){
-                         // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>NewBus()));
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>NewBus()));
                         },
                         child: Text('New Bus',style:TextStyle(color: Colors.white), 
                     ),
@@ -97,7 +98,7 @@ class DesktopNavbar extends StatelessWidget {
                  MaterialButton(
                         color:Colors.pink,
                         onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Trip()));
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>AddTrip()));
                         },
                         child: Text('Add Trip',style:TextStyle(color: Colors.white), 
                     ),
@@ -176,7 +177,7 @@ class MobileNavbar extends StatelessWidget {
                     MaterialButton(
                         color:Colors.pink,
                         onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Trip()));
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>AddTrip()));
                         },
                         child: Text('Add Trip',style:TextStyle(color: Colors.white), 
                     ),
@@ -187,7 +188,7 @@ class MobileNavbar extends StatelessWidget {
 
                        onPressed: ()
                           { 
-                           // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
+                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Emergency()));
       //DocumentSnapshot variable = await FirebaseFirestore.instance.collection('New Bus').doc('GR944BdniaKIp0NdmqKz').get();
      // print(variable['color']);
                         
