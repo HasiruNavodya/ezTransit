@@ -125,12 +125,20 @@ class _SelectBusState extends State<SelectBus> {
 
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
+                      FirebaseFirestore.instance.collection('NewBus').doc('${document.data()['bus']}').get().then((DocumentSnapshot documentSnapshot) {
+                        print('gg ' + document.data()['bus']);
+                        if (documentSnapshot.exists) {
+                          // print(documentSnapshot.data()['Luxury Level']);
+                          luxaryLevel = documentSnapshot.data()['Luxury Level'];
+                          privatePub= documentSnapshot.data()['Public or Private'];
+                          //print('sfdfvvbvbvb'+documentSnapshot.data()['Luxury Level']);
+                          //return luxaryLevel;
 
 
+                        }
+                      }
+                      );
 
-                      numPlate=document.data()['bus'];
-                      print('fggfhf'+numPlate);
-                      noPlate();
 
                       return Container(
 
@@ -141,16 +149,22 @@ class _SelectBusState extends State<SelectBus> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                Text('Pickup At: '+document.data()['startTime']+'                    Free Seats:',
+                                Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:',
                                     style: TextStyle(fontWeight: FontWeight.w500)),
                                 Text(''),
 
-                                Text(document.data()['name']+'              Standing:',
+                                Text(document.data()['name']+'                          Standing:',
                                     style: TextStyle(fontWeight: FontWeight.w500)),
                                 Text(''),
 
-                                Text(document.data()['startTime']+'-'+document.data()['endTime'],
+                                Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+luxaryLevel,
                                     style: TextStyle(fontWeight: FontWeight.w500)),
+                                Text(''),
+
+                                Text('km'+'                     min                                 '+privatePub,
+                                    style: TextStyle(fontWeight: FontWeight.w500)),
+                                Text(''),
+
 
                               ],
 
@@ -185,26 +199,27 @@ class _SelectBusState extends State<SelectBus> {
 
   }
 
-  void noPlate(){
-    FirebaseFirestore.instance.collection('NewBus').doc('$numPlate').get().then((DocumentSnapshot documentSnapshot) {
-      print('gg '+numPlate);
-      if (documentSnapshot.exists) {
-        print(documentSnapshot.data()['Luxury Level']);
-        luxaryLevel = documentSnapshot.data()['luxaryLevel'];
-        print('jhjh'+luxaryLevel);
-
-
-
-      }
-    });
-  }
+  // String getLux(){
+  //   FirebaseFirestore.instance.collection('NewBus').doc('$numPlate').get().then((DocumentSnapshot documentSnapshot) {
+  //     // print('gg '+numPlate);
+  //     if (documentSnapshot.exists) {
+  //       // print(documentSnapshot.data()['Luxury Level']);
+  //       luxaryLevel = documentSnapshot.data()['Luxury Level'];
+  //       // print('sfdf'+luxaryLevel);
+  //       return luxaryLevel;
+  //
+  //
+  //
+  //     }
+  //   });
+  // }
 }
 
-String gg()
-{
-  String dfs='rakshi';
-  return dfs;
-}
+// String gg()
+// {
+//   String dfs='rakshi';
+//   return dfs;
+// }
 
 // void noPlate()
 // {
