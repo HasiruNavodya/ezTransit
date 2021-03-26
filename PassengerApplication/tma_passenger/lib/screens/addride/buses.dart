@@ -128,6 +128,7 @@ class _SelectBusState extends State<SelectBus> {
 
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
+                      ticketcount=document.data()['ticket count'];
                       CollectionReference users = FirebaseFirestore.instance.collection('NewBus');
 
                       return FutureBuilder<DocumentSnapshot>(
@@ -141,6 +142,9 @@ class _SelectBusState extends State<SelectBus> {
 
                           if (snapshot.connectionState == ConnectionState.done) {
                             Map<String, dynamic> data = snapshot.data.data();
+                            seatcount=data['Seat Count'];
+                            newseatcount=seatcount-ticketcount;
+                            print(newseatcount);
                             return Container(
 
                               child: Padding(
@@ -150,20 +154,20 @@ class _SelectBusState extends State<SelectBus> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
 
-                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:',
-                                          style: TextStyle(fontWeight: FontWeight.w900)),
+                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
                                       Text(''),
 
-                                      Text(document.data()['name']+'                          Standing:',
-                                          style: TextStyle(fontWeight: FontWeight.w900)),
+                                      Text(document.data()['name']+'                            Standing:',
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
                                       Text(''),
 
-                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                          style: TextStyle(fontWeight: FontWeight.w900)),
+                                      Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
                                       Text(''),
 
                                       Text('km'+'                     min                                 '+data['Public or Private'],
-                                          style: TextStyle(fontWeight: FontWeight.w900)),
+                                          style: TextStyle(fontWeight: FontWeight.w500)),
                                       Text(''),
 
 
