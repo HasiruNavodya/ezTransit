@@ -155,19 +155,19 @@ class _SelectBusState extends State<SelectBus> {
                                     children: [
 
                                       Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
                                       Text(document.data()['name']+'                            Standing:',
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
-                                      Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
                                       Text('km'+'                     min                                 '+data['Public or Private'],
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
 
