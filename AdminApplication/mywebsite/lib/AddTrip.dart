@@ -7,7 +7,7 @@ class Trip extends StatefulWidget {
   @override
   _TripState createState() => _TripState();
 }
-
+//sfxcz
 class AlertBox extends StatelessWidget {
   final title;
   AlertBox(this.title);
