@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Transport Management Application',
+     
       //home: MapClickPage(),
       home: AuthService().handleAuth(),
     );
