@@ -36,7 +36,7 @@ class MapSampleState extends State<MapSample> {
       child: Column(
         children: [
           SizedBox(
-              height: 700.0,
+              height: 750.0,
               child: GoogleMap(
                   onTap: (tapped) async {
                     getMarkers(tapped.latitude, tapped.longitude);
