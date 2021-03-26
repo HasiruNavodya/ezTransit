@@ -12,9 +12,9 @@ String numPlate;
 String luxaryLevel;
 String privatePub;
 String noplate;
-var seatcount;
-var ticketcount;
-var newseatcount;
+int seatcount;
+int ticketcount;
+int newseatcount;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -151,19 +151,19 @@ class _SelectBusState extends State<SelectBus> {
                                     children: [
 
                                       Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:',
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w900)),
                                       Text(''),
 
                                       Text(document.data()['name']+'                          Standing:',
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w900)),
                                       Text(''),
 
-                                      Text(document.data()['startTime']+'-'+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                          style: TextStyle(fontWeight: FontWeight.w900)),
                                       Text(''),
 
                                       Text('km'+'                     min                                 '+data['Public or Private'],
-                                          style: TextStyle(fontWeight: FontWeight.w500)),
+                                          style: TextStyle(fontWeight: FontWeight.w900)),
                                       Text(''),
 
 

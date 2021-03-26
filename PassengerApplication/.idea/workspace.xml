@@ -26,7 +26,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/buses.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/buses.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
