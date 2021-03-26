@@ -8,6 +8,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 String pnoSet = 'no';
 String partNameGlobal;
 String pno;
+String numPlate;
+String luxaryLevel;
+String privatePub;
+String noplate;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -60,6 +64,8 @@ class _SelectBusState extends State<SelectBus> {
     });
   }
 
+
+
   final spinkit = SpinKitFadingCircle(
     itemBuilder: (BuildContext context, int index) {
       return DecoratedBox(
@@ -106,8 +112,9 @@ class _SelectBusState extends State<SelectBus> {
             Expanded(
               flex: 3,
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('trips').where('parts', arrayContainsAny: [pno]).snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                stream:FirebaseFirestore.instance.collection('trips').where('parts', arrayContains: pno).snapshots(),
+                builder: (context,snapshot) {
                   if (snapshot.hasError) {
                     return Text('Something went wrong');
                   }
@@ -118,8 +125,38 @@ class _SelectBusState extends State<SelectBus> {
 
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
-                      return new ListTile(
-                        title: new Text(document.data()['name']),
+
+
+
+                      numPlate=document.data()['bus'];
+                      print('fggfhf'+numPlate);
+                      noPlate();
+
+                      return Container(
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Card(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Text('Pickup At: '+document.data()['startTime']+'                    Free Seats:',
+                                    style: TextStyle(fontWeight: FontWeight.w500)),
+                                Text(''),
+
+                                Text(document.data()['name']+'              Standing:',
+                                    style: TextStyle(fontWeight: FontWeight.w500)),
+                                Text(''),
+
+                                Text(document.data()['startTime']+'-'+document.data()['endTime'],
+                                    style: TextStyle(fontWeight: FontWeight.w500)),
+
+                              ],
+
+                            ),
+                          ),
+                        ),
                       );
                     }).toList(),
                   );
@@ -129,7 +166,10 @@ class _SelectBusState extends State<SelectBus> {
           ],
         ),
       );
+
     }
+
+
     else{
       return Scaffold(
         appBar: AppBar(
@@ -140,7 +180,38 @@ class _SelectBusState extends State<SelectBus> {
 
         body: spinkit,
       );
+
     }
+
+  }
+
+  void noPlate(){
+    FirebaseFirestore.instance.collection('NewBus').doc('$numPlate').get().then((DocumentSnapshot documentSnapshot) {
+      print('gg '+numPlate);
+      if (documentSnapshot.exists) {
+        print(documentSnapshot.data()['Luxury Level']);
+        luxaryLevel = documentSnapshot.data()['luxaryLevel'];
+        print('jhjh'+luxaryLevel);
+
+
+
+      }
+    });
   }
 }
+
+String gg()
+{
+  String dfs='rakshi';
+  return dfs;
+}
+
+// void noPlate()
+// {
+//   FirebaseFirestore.instance.collection('NewBus').doc('$partNameGlobal').get().then((DocumentSnapshot documentSnapshot) {
+//     if (documentSnapshot.exists) {
+//       print(documentSnapshot.data()['partNo']);
+//       pno = documentSnapshot.data()['partNo'];
+//       print(pno);
+//     }
 

@@ -29,9 +29,9 @@
       <change beforePath="$PROJECT_DIR$/../BusApplication/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BusApplication/tma_bus/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/tma_bus/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/buses.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/buses.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/addride/destination.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,8 +69,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../BusApplication" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -131,34 +131,34 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="652" y="260" key="#main.dart/0.0.1920.1050@0.0.1920.1050" timestamp="1615558408891" />
-    <state x="-4" y="117" width="1736" height="866" key="AVDManager" timestamp="1616684761747">
+    <state x="-4" y="117" width="1736" height="866" key="AVDManager" timestamp="1616763009936">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="-4" y="117" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1616684761747" />
-    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1616668324054">
+    <state x="-4" y="117" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1616763009936" />
+    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1616762578917">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1616668324054" />
-    <state width="1877" height="165" key="GridCell.Tab.0.bottom" timestamp="1616687288788">
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1616762578917" />
+    <state width="1877" height="143" key="GridCell.Tab.0.bottom" timestamp="1616767657842">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="165" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616687288788" />
-    <state width="1877" height="165" key="GridCell.Tab.0.center" timestamp="1616687288788">
+    <state width="1877" height="143" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616767657842" />
+    <state width="1877" height="143" key="GridCell.Tab.0.center" timestamp="1616767657842">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="165" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616687288788" />
-    <state width="1877" height="165" key="GridCell.Tab.0.left" timestamp="1616687288788">
+    <state width="1877" height="143" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616767657842" />
+    <state width="1877" height="143" key="GridCell.Tab.0.left" timestamp="1616767657842">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="165" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616687288788" />
-    <state width="1877" height="165" key="GridCell.Tab.0.right" timestamp="1616687288788">
+    <state width="1877" height="143" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616767657842" />
+    <state width="1877" height="143" key="GridCell.Tab.0.right" timestamp="1616767657842">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="165" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616687288788" />
-    <state x="461" y="169" key="SettingsEditor" timestamp="1616601943178">
+    <state width="1877" height="143" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616767657842" />
+    <state x="461" y="169" key="SettingsEditor" timestamp="1616704753254">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1616601943178" />
+    <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1616704753254" />
     <state x="616" y="243" key="run.anything.popup" timestamp="1616668646038">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
