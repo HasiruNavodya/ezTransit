@@ -27,10 +27,10 @@ class _InitializeTripState extends State<InitializeTrip> {
     return TextFormField(
       controller: tripID,
       decoration:
-          InputDecoration(labelText: 'trip ID', border: OutlineInputBorder()),
+          InputDecoration(labelText: 'Trip ID', border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'trip ID is required';
+          return 'Trip ID is required';
         }
       },
       onSaved: (String value) {

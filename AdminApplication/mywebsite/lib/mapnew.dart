@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mywebsite/AddTrip.dart';
+import 'package:mywebsite/initializeTrip.dart';
 //import 'page.dart';
 
 const CameraPosition _kInitialPosition =
@@ -22,6 +23,30 @@ class _MapClickBody extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _MapClickBodyState();
+}
+
+class AlertBox extends StatelessWidget {
+  final title;
+  AlertBox(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      //Round rectangle border
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+
+      title: Text('Alert'),
+      content: Text(title),
+      actions: <Widget>[
+        new TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Okay'))
+      ],
+    );
+  }
 }
 
 class _MapClickBodyState extends State<_MapClickBody> {
@@ -59,45 +84,73 @@ class _MapClickBodyState extends State<_MapClickBody> {
             child: Container(
               child: Column(
                 children: [
+                  SizedBox(height: 40.0),
                   TextFormField(
+                    controller: stopName,
                     decoration: InputDecoration(
                         labelText: 'Stop Name', border: OutlineInputBorder()),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Stop Name is required';
+                      }
+                    },
                     onSaved: (String value) {
                       _stopName = value;
                     },
                   ),
+                  SizedBox(height: 20.0),
                   TextFormField(
+                    controller: arrivingTime,
                     decoration: InputDecoration(
                         labelText: 'Arriving Time',
                         border: OutlineInputBorder()),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Arriving Time is required';
+                      }
+                    },
                     onSaved: (String value) {
                       _arrivingTime = value;
                     },
                   ),
+                  SizedBox(height: 20.0),
                   TextFormField(
+                    controller: timeDu,
                     decoration: InputDecoration(
                         labelText: 'Time Duration From Last Stop',
                         border: OutlineInputBorder()),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Time Duration From Last Stop is required';
+                      }
+                    },
                     onSaved: (String value) {
                       _timeDu = value;
                     },
                   ),
+                  SizedBox(height: 20.0),
                   TextFormField(
                     controller: cnlatitude,
                     decoration: InputDecoration(
                         labelText: 'Latitude', border: OutlineInputBorder()),
-                    /*onSaved: (String value) {
-                    _publicPrivate = value;
-                  },*/
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return ('latitude is required');
+                      }
+                    },
                   ),
+                  SizedBox(height: 20.0),
                   TextFormField(
                     controller: cnlongitude,
                     decoration: InputDecoration(
                         labelText: 'Longitude', border: OutlineInputBorder()),
-                    /*onSaved: (String value) {
-                      _publicPrivate = value;
-                    },*/
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return ('longitude is required');
+                      }
+                    },
                   ),
+                  SizedBox(height: 20.0),
                   ElevatedButton(
                       child: Text(
                         'Add',
@@ -109,7 +162,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                       ),
                       onPressed: () async {
                         // validate the form based on it's current state
-                        
+                        if (_formKey.currentState.validate()) {
                           Map<String, dynamic> data = {
                             "Stop Name": stopName.text,
                             "Ariving Time": arrivingTime.text,
@@ -127,7 +180,24 @@ class _MapClickBodyState extends State<_MapClickBody> {
                               builder: (BuildContext context) {
                                 return AlertBox('Successfully Inserted!');
                               });
-                        
+                        }
+                      }),
+                  SizedBox(height: 50.0),
+                  ElevatedButton(
+                      child: Text(
+                        'Finish',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pink[400], // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    InitializeTrip()));
                       }),
                 ],
               ),
