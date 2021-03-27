@@ -18,7 +18,8 @@ class UserDetails extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: 80,
-                //backgroundImage: AssetImage('images/protocoder.png'),
+                backgroundImage: AssetImage('assets/images.png'),
+
               ),
               Text(
                 '',
