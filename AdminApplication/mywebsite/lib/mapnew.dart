@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mywebsite/AddTrip.dart';
+import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/initializeTrip.dart';
 //import 'page.dart';
 
@@ -197,7 +198,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    InitializeTrip()));
+                                    Home()));
                       }),
                 ],
               ),
