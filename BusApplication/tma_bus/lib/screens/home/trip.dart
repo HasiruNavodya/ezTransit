@@ -6,6 +6,7 @@ import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:geofence_service/geofence_service.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -33,25 +34,6 @@ class _TripControlViewState extends State<TripControlView> {
   void initState() {
     super.initState();
     print(tripStatus);
-
-
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      if(currentLocation != lastLocation){
-        print(currentLocation);
-        FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
-          'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
-          });
-        lastLocation = currentLocation;
-      }
-
-
-      //lastLocation = currentLocation;
-      //FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
-      //'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
-      //});
-    });
-
-
   }
 
   @override

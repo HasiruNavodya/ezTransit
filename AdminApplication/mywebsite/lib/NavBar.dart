@@ -6,6 +6,7 @@ import 'package:mywebsite/AddTrip.dart';
 import 'package:mywebsite/Emergency.dart';
 import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
+import 'package:mywebsite/mapnew.dart';
 import 'package:mywebsite/initializeTrip.dart';
 //import 'package:transportapp/Pages/emergency.dart';
 
@@ -99,7 +100,7 @@ class DesktopNavbar extends StatelessWidget {
                  MaterialButton(
                         color:Colors.pink,
                         onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>InitializeTrip()));
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>MapClickPageNew()));
                         },
                         child: Text('Add Trip',style:TextStyle(color: Colors.white), 
                     ),

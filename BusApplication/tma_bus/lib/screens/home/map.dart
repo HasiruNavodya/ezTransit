@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -42,7 +42,29 @@ class MapViewState extends State<MapView> {
           ),
         ],
       ),
+      /*floatingActionButton: FloatingActionButton.extended(
+        onPressed: _currentLocation,
+        label: Text('My Location'),
+        icon: Icon(Icons.location_on),
+      ),*/
     );
   }
+  void _currentLocation() async {
+    final GoogleMapController controller = await _controller.future;
+    LocationData currentLocation;
+    var location = new Location();
+    try {
+      currentLocation = await location.getLocation();
+    } on Exception {
+      currentLocation = null;
+    }
 
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 0,
+        target: LatLng(currentLocation.latitude, currentLocation.longitude),
+        zoom: 17.0,
+      ),
+    ));
+  }
 }

@@ -63,7 +63,65 @@ class _RideDetailsState extends State<RideDetails> {
               child: Container(
                 child: Column(
                   children: [
-                    Text(bnum),
+                    Expanded(
+                      flex: 6,
+                      child: Container(
+                        //color: Colors.red,
+                        constraints: BoxConstraints.tightForFinite(height: 300),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Pettah" + " - " + "Kollupitiya",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text("08:00"+" - "+"08:20",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("Bus: Pettah - Kollupitiya",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("Plate No: EG-2345",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("Color: Red",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("Distance: 2 km",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text("ETA: 6 minutes",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

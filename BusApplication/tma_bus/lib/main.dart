@@ -77,6 +77,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         // Add tabs as widgets
         children: <Widget>[MapView(), TripControlView(), ReportEmergencyView(), Account()],
         // set the controller

@@ -16,7 +16,7 @@ class Emergency extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (!snapshot.hasData) {
-            return Text('yes');
+            return Text('Loading');
           }
 
           if (snapshot.hasError) {

@@ -28,7 +28,6 @@ class MapSampleState extends State<MapSample> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
