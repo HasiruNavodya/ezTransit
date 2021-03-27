@@ -16,6 +16,7 @@ int seatcount;
 int ticketcount;
 int newseatcount;
 int standingcount;
+String ticketprice;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -60,6 +61,8 @@ class _SelectBusState extends State<SelectBus> {
       if (documentSnapshot.exists) {
         print(documentSnapshot.data()['partNo']);
         pno = documentSnapshot.data()['partNo'];
+        ticketprice = documentSnapshot.data()['fare'];
+        print(ticketprice);
         print(pno);
         setState(() {
           pnoSet = 'yes';
@@ -190,6 +193,28 @@ class _SelectBusState extends State<SelectBus> {
                                       Text(''),
 
 
+                                     FlatButton(color:Colors.green, onPressed: () {
+                                       Navigator.push(
+                                         context,
+                                         MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
+                                       );
+                                     }, child: Text("Select Bus"),
+                                     ),
+
+                                     RaisedButton(color:Colors.red, onPressed: () {
+                                       Navigator.push(
+                                         context,
+                                         MaterialPageRoute(),
+                                       );
+                                     }, child: Text("Locate Bus")
+                                     ),
+
+
+
+
+
+
+
 
                                     ],
 
@@ -209,17 +234,17 @@ class _SelectBusState extends State<SelectBus> {
             ),
           ],
         ),
-    floatingActionButton: FloatingActionButton(
-    onPressed: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
-      );
-
-    },
-    child: Icon(Icons.arrow_forward_ios),
-    backgroundColor: Colors.black87,
-    ),
+    // floatingActionButton: FloatingActionButton(
+    // onPressed: () {
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
+    //   );
+    //
+    // },
+    // child: Icon(Icons.arrow_forward_ios),
+    // backgroundColor: Colors.black87,
+    // ),
     );
 
     }
