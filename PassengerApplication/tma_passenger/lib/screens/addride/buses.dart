@@ -12,6 +12,9 @@ String numPlate;
 String luxaryLevel;
 String privatePub;
 String noplate;
+int seatcount;
+int ticketcount;
+int newseatcount;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -125,38 +128,60 @@ class _SelectBusState extends State<SelectBus> {
 
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
+                      ticketcount=document.data()['ticket count'];
+                      CollectionReference users = FirebaseFirestore.instance.collection('NewBus');
+
+                      return FutureBuilder<DocumentSnapshot>(
+                        future: users.doc(document.data()['bus']).get(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                          if (snapshot.hasError) {
+                            return Text("Something went wrong");
+                          }
+
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            Map<String, dynamic> data = snapshot.data.data();
+                            seatcount=data['Seat Count'];
+                            newseatcount=seatcount-ticketcount;
+                            print(newseatcount);
+                            return Container(
+
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Card(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
+                                      Text(''),
+
+                                      Text(document.data()['name']+'                            Standing:',
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
+                                      Text(''),
+
+                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
+                                      Text(''),
+
+                                      Text('km'+'                     min                                 '+data['Public or Private'],
+                                          style: TextStyle(fontWeight: FontWeight.w800)),
+                                      Text(''),
 
 
 
-                      numPlate=document.data()['bus'];
-                      print('fggfhf'+numPlate);
-                      noPlate();
+                                    ],
 
-                      return Container(
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
 
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Card(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                Text('Pickup At: '+document.data()['startTime']+'                    Free Seats:',
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-                                Text(document.data()['name']+'              Standing:',
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-                                Text(''),
-
-                                Text(document.data()['startTime']+'-'+document.data()['endTime'],
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
-
-                              ],
-
-                            ),
-                          ),
-                        ),
+                          return Text("loading");
+                        },
                       );
                     }).toList(),
                   );
@@ -165,7 +190,18 @@ class _SelectBusState extends State<SelectBus> {
             ),
           ],
         ),
+    floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
       );
+
+    },
+    child: Icon(Icons.arrow_forward_ios),
+    backgroundColor: Colors.black87,
+    ),
+    );
 
     }
 
@@ -185,26 +221,27 @@ class _SelectBusState extends State<SelectBus> {
 
   }
 
-  void noPlate(){
-    FirebaseFirestore.instance.collection('NewBus').doc('$numPlate').get().then((DocumentSnapshot documentSnapshot) {
-      print('gg '+numPlate);
-      if (documentSnapshot.exists) {
-        print(documentSnapshot.data()['Luxury Level']);
-        luxaryLevel = documentSnapshot.data()['luxaryLevel'];
-        print('jhjh'+luxaryLevel);
-
-
-
-      }
-    });
-  }
+  // String getLux(){
+  //   FirebaseFirestore.instance.collection('NewBus').doc('$numPlate').get().then((DocumentSnapshot documentSnapshot) {
+  //     // print('gg '+numPlate);
+  //     if (documentSnapshot.exists) {
+  //       // print(documentSnapshot.data()['Luxury Level']);
+  //       luxaryLevel = documentSnapshot.data()['Luxury Level'];
+  //       // print('sfdf'+luxaryLevel);
+  //       return luxaryLevel;
+  //
+  //
+  //
+  //     }
+  //   });
+  // }
 }
 
-String gg()
-{
-  String dfs='rakshi';
-  return dfs;
-}
+// String gg()
+// {
+//   String dfs='rakshi';
+//   return dfs;
+// }
 
 // void noPlate()
 // {
