@@ -15,6 +15,7 @@ String noplate;
 int seatcount;
 int ticketcount;
 int newseatcount;
+int standingcount;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -147,6 +148,22 @@ class _SelectBusState extends State<SelectBus> {
                             print('$seatcount'+'-'+'$ticketcount');
                             newseatcount=seatcount-ticketcount;
                             print(newseatcount);
+                            if (ticketcount>=seatcount)
+                              {
+                                newseatcount=0;
+
+                              }
+
+                            if (ticketcount>seatcount)
+                            {
+                              standingcount=ticketcount-seatcount;
+                              print(standingcount);
+                            }
+                            else{
+                              standingcount=0;
+                            }
+
+
                             return Container(
 
                               child: Padding(
@@ -160,7 +177,7 @@ class _SelectBusState extends State<SelectBus> {
                                           style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
-                                      Text(document.data()['name']+'                            Standing:',
+                                      Text(document.data()['name']+'                            Standing:'+standingcount.toString(),
                                           style: TextStyle(fontWeight: FontWeight.w800)),
                                       Text(''),
 
