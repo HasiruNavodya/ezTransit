@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mywebsite/AddTrip.dart';
 
 class InitializeTrip extends StatefulWidget {
   @override
@@ -159,6 +160,9 @@ class _InitializeTripState extends State<InitializeTrip> {
                                                   return AlertBox(
                                                       'Successfully Inserted!');
                                                 });
+                                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>Trip()));
+                                                
+                                                ;
                                           }
                                         }),
                                    
