@@ -218,12 +218,16 @@ class _SelectBusState extends State<SelectBus> {
 
 
                                             ButtonTheme(child:
-                                            FlatButton(color:Colors.green, onPressed: () {
+                                            FlatButton(color:Colors.black87, onPressed: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
                                               );
-                                            }, child: Text("Select Bus"),
+                                            }, child: Text("Select Bus",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             ),
 
                                             ),
@@ -273,12 +277,16 @@ class _SelectBusState extends State<SelectBus> {
 
 
                                             ButtonTheme(child:
-                                            RaisedButton(color:Colors.red, onPressed: () {
+                                            RaisedButton(color:Colors.black87, onPressed: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(),
                                               );
-                                            }, child: Text("Locate Bus")
+                                            }, child: Text("Locate Bus",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             ),
                                             ),
 
