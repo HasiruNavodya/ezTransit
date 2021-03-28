@@ -25,7 +25,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="" />
+    <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BusApplication/tma_bus/lib/screens/home/account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/tma_bus/lib/screens/home/account.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

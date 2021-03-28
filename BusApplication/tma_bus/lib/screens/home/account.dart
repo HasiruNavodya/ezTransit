@@ -35,7 +35,7 @@ class Account extends StatelessWidget {
                     //   backgroundImage: AssetImage('assets/images.png'),
                     //
                     // ),
-                   
+                   Text(''),
                     Text(
                       'Welcome',
                       style: TextStyle(
@@ -94,7 +94,7 @@ class Account extends StatelessWidget {
                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                          child: ListTile(
                            leading: Icon(
-                             Icons.email,
+                             Icons.directions_bus_sharp,
                              color: Colors.teal[900],
                            ),
                            title: Text(
@@ -126,7 +126,7 @@ class Account extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
                             leading: Icon(
-                              Icons.perm_identity,
+                              Icons.directions_bus_sharp,
                               color: Colors.teal[900],
                             ),
                             title: Text(
@@ -159,7 +159,7 @@ class Account extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
                             leading: Icon(
-                              Icons.perm_identity,
+                              Icons.credit_card_rounded,
                               color: Colors.teal[900],
                             ),
                             title: Text(
@@ -191,7 +191,7 @@ class Account extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
                           leading: Icon(
-                            Icons.perm_identity,
+                            Icons.adjust_rounded,
                             color: Colors.teal[900],
                           ),
                           title: Text(
@@ -223,7 +223,7 @@ class Account extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
                           leading: Icon(
-                            Icons.perm_identity,
+                            Icons.directions_bus_outlined,
                             color: Colors.teal[900],
                           ),
                           title: Text(
