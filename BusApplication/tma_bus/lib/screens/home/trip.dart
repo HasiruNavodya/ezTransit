@@ -42,6 +42,7 @@ class _TripControlViewState extends State<TripControlView> {
       if(geoGate == 0){
         initTrip();
         print('inittrip');
+        sendLiveLocation2();
       }
       return FutureBuilder<DocumentSnapshot>(
         future:
@@ -147,6 +148,11 @@ class _TripControlViewState extends State<TripControlView> {
                                   color: Colors.black87
                               ),
                             ),
+                            ElevatedButton(
+                              onPressed: (){
+                                stopLocationStream();
+                              }
+                            ),
 
                           ],
                         ),
@@ -219,6 +225,21 @@ class _TripControlViewState extends State<TripControlView> {
     });
 
   }
+
+  void sendLiveLocation2() async{
+    Position lastPosition = await Geolocator.getLastKnownPosition();
+    StreamSubscription<Position> positionStream = Geolocator.getPositionStream().listen((Position position) {
+      if(position != lastPosition){
+        print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+      }
+    });
+  }
+
+  void stopLocationStream() {
+    StreamSubscription positionStream;
+    positionStream.cancel();
+  }
+
   final geofenceService = GeofenceService(
       interval: 5000,
       accuracy: 100,

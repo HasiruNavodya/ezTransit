@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tma_passenger/screens/auth/login.dart';
 
 class UserDetails extends StatelessWidget {
   @override
@@ -33,7 +34,7 @@ class UserDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
-                          radius: 80,
+                          radius: 60,
                           backgroundImage: AssetImage('assets/images.png'),
 
                         ),
@@ -122,7 +123,7 @@ class UserDetails extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
                             leading: Icon(
-                              Icons.perm_identity,
+                              Icons.account_circle,
                               color: Colors.teal[900],
                             ),
                             title: Text(
@@ -141,18 +142,35 @@ class UserDetails extends StatelessWidget {
                               ),
 
                             ),
+
                           ),
                         ),
+                        ElevatedButton(
 
-                      ],
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                            LoginPage()), (Route<dynamic> route) => false);
+                          },
+                          child: Text('Logout'),
+                        ),
+
+
+
+
+                  ],
+
 
 
                 );
+
                 //Card(child: Text(document.data()['name']??'default'),);
               }).toList(),
+
             ),
+
           );
         },
+        
       ),
     );
   }
