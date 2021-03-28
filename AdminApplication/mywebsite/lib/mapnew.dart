@@ -105,9 +105,14 @@ class _MapClickBodyState extends State<_MapClickBody> {
                     decoration: InputDecoration(
                         labelText: 'Arriving Time',
                         border: OutlineInputBorder()),
-                    validator: (val) =>val.isEmpty?'This field is required':null,
-                      
-                    
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Arriving Time is required';
+                      }
+                    },
+                    onSaved: (String value) {
+                      _arrivingTime = value;
+                    },
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
@@ -147,7 +152,6 @@ class _MapClickBodyState extends State<_MapClickBody> {
                     },
                   ),
                   SizedBox(height: 20.0),
-                  
                   ElevatedButton(
                       child: Text(
                         'Add',
