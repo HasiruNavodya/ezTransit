@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tma_passenger/main.dart';
+import 'package:tma_passenger/screens/auth/signup.dart';
 
 /*class MyApp extends StatelessWidget {
   @override
@@ -18,20 +21,20 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
-  String _name,_email,_nic;
+  String _name,_email,_nic,_password,_confirmPassword;
 
-  TextEditingController _password = TextEditingController();
-  TextEditingController _confirmPassword = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   TextEditingController fullName= new TextEditingController();
   TextEditingController email= new TextEditingController();
   TextEditingController nIC= new TextEditingController();
-  TextEditingController password= new TextEditingController();
-  TextEditingController confirmPassword= new TextEditingController();
+/*  TextEditingController password= new TextEditingController();
+  TextEditingController confirmPassword= new TextEditingController();*/
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Scaffold(
       body: SafeArea(
         child: Form(
@@ -42,7 +45,7 @@ class _RegisterState extends State<Register> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 80.0,),
-                  Text('REGISTER', style: TextStyle(fontSize: 20),),
+                  Text('Create Account', style: TextStyle(fontSize: 20),),
                 ],
               ),
               SizedBox(height: 60.0,),
@@ -70,7 +73,7 @@ class _RegisterState extends State<Register> {
                 validator: (String value){
                   if(value.isEmpty)
                   {
-                    return "Please Enter Name";
+                    return "Please Enter Email";
                   }
                   if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value))
                   {
@@ -117,7 +120,7 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 20.0,),
               TextFormField(
 
-                controller: _password,
+                controller: password,
 
                 validator: (String value){
                   if(value.isEmpty)
@@ -126,8 +129,8 @@ class _RegisterState extends State<Register> {
                   }
                   return null;
                 },
-                onSaved: (String nIC){
-                  _nic = nIC;
+                onSaved: (String password){
+                  _password = password;
                 },
 
                 obscureText: true,
@@ -140,20 +143,20 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0,),
               TextFormField(
-                controller: _confirmPassword,
+                controller: confirmPassword,
                 validator: (String value){
                   if(value.isEmpty)
                   {
                     return "Please Confirm Password";
                   }
-                  if(_password.text != _confirmPassword.text)
+                  if(password.text != confirmPassword.text)
                   {
                     return "Password do not Match";
                   }
                   return null;
                 },
-                onSaved: (String nIC){
-                  _nic = nIC;
+                onSaved: (String confirmPassword){
+                 _confirmPassword = confirmPassword;
                 },
                 obscureText: true,
                 decoration: InputDecoration(
@@ -170,12 +173,13 @@ class _RegisterState extends State<Register> {
                     height: 50,
                     disabledColor: Colors.grey,
                     child: RaisedButton(
-                      onPressed: (){
+                      onPressed:(){
 
                         if(_formkey.currentState.validate())
                           {
                             Map <String,dynamic> data= {"FullName": fullName.text,"Email": email.text, "NIC": nIC.text, "Password": password.text, "ConfirmPassword": confirmPassword.text};
                             FirebaseFirestore.instance.collection("passengers").doc(email.text).set(data);
+                            signUp();
                           }else
                             {
                               print("unsuccessfull");
@@ -183,7 +187,7 @@ class _RegisterState extends State<Register> {
 
 
                       },
-                      child: Text('Register',style: TextStyle(fontSize: 15, color: Colors.black)),
+                      child: Text('Sign Up',style: TextStyle(fontSize: 15, color: Colors.black)),
                     ),
                   )
                 ],
@@ -193,6 +197,24 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+    }
+  Future<void> signUp() async{
+
+    final formState = _formkey.currentState;
+    if(formState.validate()){
+      formState.save();
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _email,
+          password: _password,);
+        var future = Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+        print("alks;fjlkjd");
+      }catch(e) {
+        print("e.message");
+      }
+    }
+
   }
+
 }
 

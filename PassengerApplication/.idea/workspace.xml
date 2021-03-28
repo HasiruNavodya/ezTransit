@@ -28,6 +28,7 @@
     <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tma_passenger/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/android/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/signup.dart" afterDir="false" />
@@ -132,46 +133,48 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="652" y="260" key="#main.dart/0.0.1920.1050@0.0.1920.1050" timestamp="1615558408891" />
-    <state x="65" y="67" width="1230" height="634" key="AVDManager" timestamp="1616692485616">
+    <state x="65" y="67" width="1230" height="634" key="AVDManager" timestamp="1616942079855">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state x="65" y="67" width="1230" height="634" key="AVDManager/0.0.1360.768@0.0.1360.768" timestamp="1616692485616" />
+    <state x="65" y="67" width="1230" height="634" key="AVDManager/0.0.1360.768@0.0.1360.768" timestamp="1616942079855" />
     <state x="92" y="92" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1616512764094" />
     <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1616151829096">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1616151829096" />
-    <state width="1317" height="156" key="GridCell.Tab.0.bottom" timestamp="1616696538260">
+    <state width="1317" height="151" key="GridCell.Tab.0.bottom" timestamp="1616969233037">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1317" height="156" key="GridCell.Tab.0.bottom/0.0.1360.768@0.0.1360.768" timestamp="1616696538260" />
+    <state width="1317" height="151" key="GridCell.Tab.0.bottom/0.0.1360.768@0.0.1360.768" timestamp="1616969233037" />
     <state width="914" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
-    <state width="1317" height="156" key="GridCell.Tab.0.center" timestamp="1616696538258">
+    <state width="1317" height="151" key="GridCell.Tab.0.center" timestamp="1616969233036">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1317" height="156" key="GridCell.Tab.0.center/0.0.1360.768@0.0.1360.768" timestamp="1616696538258" />
+    <state width="1317" height="151" key="GridCell.Tab.0.center/0.0.1360.768@0.0.1360.768" timestamp="1616969233036" />
     <state width="914" height="239" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
-    <state width="1317" height="156" key="GridCell.Tab.0.left" timestamp="1616696538256">
+    <state width="1317" height="151" key="GridCell.Tab.0.left" timestamp="1616969233034">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1317" height="156" key="GridCell.Tab.0.left/0.0.1360.768@0.0.1360.768" timestamp="1616696538256" />
+    <state width="1317" height="151" key="GridCell.Tab.0.left/0.0.1360.768@0.0.1360.768" timestamp="1616969233034" />
     <state width="914" height="239" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
-    <state width="1317" height="156" key="GridCell.Tab.0.right" timestamp="1616696538260">
+    <state width="1317" height="151" key="GridCell.Tab.0.right" timestamp="1616969233037">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1317" height="156" key="GridCell.Tab.0.right/0.0.1360.768@0.0.1360.768" timestamp="1616696538260" />
+    <state width="1317" height="151" key="GridCell.Tab.0.right/0.0.1360.768@0.0.1360.768" timestamp="1616969233037" />
     <state width="914" height="239" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616517135152" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1615558406910">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1615558406910" />
-    <state x="616" y="243" key="run.anything.popup" timestamp="1616517200389">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="436" y="178" key="run.anything.popup" timestamp="1616965572096">
+      <screen x="0" y="0" width="1360" height="768" />
     </state>
+    <state x="436" y="178" key="run.anything.popup/0.0.1360.768@0.0.1360.768" timestamp="1616965572096" />
     <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616517200389" />
-    <state x="143" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1616231188892">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="101" y="166" width="672" height="496" key="search.everywhere.popup" timestamp="1616868773758">
+      <screen x="0" y="0" width="1360" height="768" />
     </state>
+    <state x="101" y="166" width="672" height="496" key="search.everywhere.popup/0.0.1360.768@0.0.1360.768" timestamp="1616868773758" />
     <state x="143" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616231188892" />
   </component>
 </project>

@@ -15,7 +15,7 @@ void main() async{
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Register()
+    home: LoginPage()
     ),
   );
 }
