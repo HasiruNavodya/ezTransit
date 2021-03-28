@@ -175,62 +175,120 @@ class _SelectBusState extends State<SelectBus> {
                                   color: Colors.white38,
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: Column(
+                                    child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
 
-                                        Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold)),
-                                        Text(''),
+                                        Expanded(
+                                          flex: 3,
+                                          child:Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
 
-                                        Text(document.data()['name']+'                          Standing:'+standingcount.toString(),
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold
-                                            )),
-                                        Text(''),
-
-                                        Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold
-                                            )),
-                                        Text(''),
-
-                                        Text('Km'+'                     Min                                 '+data['Public or Private'],
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold
-                                            )),
-                                        Text(''),
+                                            Text('Pickup At: '+document.data()['startTime'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            Text(''),
 
 
-                                        FlatButton(color:Colors.green, onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
-                                          );
-                                        }, child: Text("Select Bus"),
+                                            Text(document.data()['name'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text(document.data()['startTime']+' - '+document.data()['endTime'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text('Km'+'          Min ',
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+
+                                            ButtonTheme(child:
+                                            FlatButton(color:Colors.green, onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
+                                              );
+                                            }, child: Text("Select Bus"),
+                                            ),
+
+                                            ),
+
+
+
+                                          ],
+
+
+                                        ),
                                         ),
 
-                                        RaisedButton(color:Colors.red, onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(),
-                                          );
-                                        }, child: Text("Locate Bus")
+
+
+
+                                        Column(
+                                          children: [
+                                            Text('Free Seats:'+newseatcount.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            Text(''),
+
+
+                                            Text( 'Standing:'+standingcount.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text(data['Luxury Level'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text(data['Public or Private'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            ButtonTheme(child:
+                                            RaisedButton(color:Colors.red, onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(),
+                                              );
+                                            }, child: Text("Locate Bus")
+                                            ),
+                                            ),
+
+
+                                          ],
+
                                         ),
-
-
-
-
-
-
-
 
                                       ],
+
 
                                     ),
                                   ),

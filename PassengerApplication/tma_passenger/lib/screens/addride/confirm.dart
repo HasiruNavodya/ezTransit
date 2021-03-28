@@ -31,13 +31,7 @@ class ConfirmTicket extends StatelessWidget {
 
 
               children: <Widget>[
-                SizedBox(
-                  height: 20.0,
-                  width: 400,
-                  child: Divider(
-                    color: Colors.black87,
-                  ),
-                ),
+
 
               Expanded(
                 flex:1,
@@ -130,6 +124,7 @@ class ConfirmTicket extends StatelessWidget {
             ),
         ),
 
+
                 Expanded(
                   flex: 1,
                   child:Row(
@@ -146,6 +141,7 @@ class ConfirmTicket extends StatelessWidget {
                                }, child: Text("Yes"),
                             ),
                       ),
+
 
                       ButtonTheme(
                         minWidth: 100.0,
