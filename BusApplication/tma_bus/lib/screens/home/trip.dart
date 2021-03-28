@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:location/location.dart';
@@ -20,6 +21,7 @@ int geoGate = 0;
 String tripStatus = "off";
 String busNo = 'GE-3412';
 LocationData lastLocation;
+String test;
 
 class TripControlView extends StatefulWidget {
   @override
@@ -29,11 +31,17 @@ class TripControlView extends StatefulWidget {
 class _TripControlViewState extends State<TripControlView> {
 
   Location location = new Location();
+  StreamSubscription<Position> positionStream;
+
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     print(tripStatus);
+    myController.text = 'current';
+    myController2.text = 'previous';
   }
 
   @override
@@ -41,8 +49,7 @@ class _TripControlViewState extends State<TripControlView> {
     if (tripStatus == "on") {
       if(geoGate == 0){
         initTrip();
-        print('inittrip');
-        sendLiveLocation2();
+        //print('inittrip');
       }
       return FutureBuilder<DocumentSnapshot>(
         future:
@@ -90,6 +97,12 @@ class _TripControlViewState extends State<TripControlView> {
                           fontSize: 20.0,
                         ),
                       ),
+                      TextField(
+                        controller: myController,
+                      ),
+                      /*TextField(
+                        controller: myController2,
+                      ),*/
                     ],
                   ),
                 ),
@@ -100,7 +113,8 @@ class _TripControlViewState extends State<TripControlView> {
           return Text("loading");
         },
       );
-    } else {
+    }
+    else {
       return Scaffold(
         appBar: AppBar(
           title: Text('Select Trip'),
@@ -148,11 +162,7 @@ class _TripControlViewState extends State<TripControlView> {
                                   color: Colors.black87
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: (){
-                                stopLocationStream();
-                              }
-                            ),
+
 
                           ],
                         ),
@@ -166,104 +176,6 @@ class _TripControlViewState extends State<TripControlView> {
           },
         ),
       );
-    }
-  }
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text(
-        "Start",
-        style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.red
-        ),
-      ),
-      onPressed:  () {
-        tripStatus = 'on';
-        setState(() {});
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Close",
-        style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.grey
-        ),
-      ),
-      onPressed:  () {
-        Navigator.pop(context);
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Confirm Start Trip"),
-      content: Text("Are you sure you want to start this trip?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-  void sendLiveLocation(){
-    print('123123123123');
-    location.onLocationChanged.listen((LocationData currentLocation) {
-       print('cdshcbsjdhcb');
-
-      //lastLocation = currentLocation;
-      //FirebaseFirestore.instance.collection('buses').doc('eg2345').update({
-        //'location' : GeoPoint(currentLocation.latitude, currentLocation.longitude)
-      //});
-    });
-
-  }
-
-  void sendLiveLocation2() async{
-    Position lastPosition = await Geolocator.getLastKnownPosition();
-    StreamSubscription<Position> positionStream = Geolocator.getPositionStream().listen((Position position) {
-      if(position != lastPosition){
-        print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-      }
-    });
-  }
-
-  void stopLocationStream() {
-    StreamSubscription positionStream;
-    positionStream.cancel();
-  }
-
-  final geofenceService = GeofenceService(
-      interval: 5000,
-      accuracy: 100,
-      allowMockLocations: true
-  );
-
-  final geofenceList = <Geofence>[];
-
-  void onGeofenceStatusChanged(Geofence geofence, GeofenceRadius geofenceRadius,
-      GeofenceStatus geofenceStatus) {
-    //print('geofence: ${geofence.toMap()}');
-    // print('geofenceRadius: ${geofenceRadius.toMap()}');
-    print('geofenceStatus: ${geofenceStatus.toString()}\n');
-
-    String geoStatus = geofenceStatus.toString();
-    int passed = int.parse(geofence.toMap()['id']);
-    print(passed);
-
-    if (geoStatus == 'GeofenceStatus.ENTER') {
-
-      FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
-        'lastStopPassed' : passed
-      });
-
     }
   }
 
@@ -313,12 +225,79 @@ class _TripControlViewState extends State<TripControlView> {
 
     geoGate = 1;
     print(geoGate);
-    //sendLiveLocation();
+    //streamLiveLocation();
+
   }
 
+  void streamLiveLocation() async{
+    positionStream = Geolocator.getPositionStream().listen((Position position) {
+      print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+
+      FirebaseFirestore.instance.collection('testscoll').doc('123').set({
+        'lat': position.latitude.toString(),
+        'lng': position.longitude.toString(),
+        'status': test
+      });
+      print(test);
+
+    });
+  }
+
+  void pauseLocationStream() {
+    print('paused');
+    positionStream.pause();
+  }
+
+  void resumeLocationStream() {
+    print('resumed');
+    positionStream.resume();
+  }
+
+
+
+  final geofenceService = GeofenceService(
+      interval: 5000,
+      accuracy: 100,
+      allowMockLocations: true
+  );
+
+  final geofenceList = <Geofence>[];
+
+  void onGeofenceStatusChanged(Geofence geofence, GeofenceRadius geofenceRadius, GeofenceStatus geofenceStatus) {
+    //print('geofence: ${geofence.toMap()}');
+    // print('geofenceRadius: ${geofenceRadius.toMap()}');
+    print('geofenceStatus: ${geofenceStatus.toString()}\n');
+
+    String geoStatus = geofenceStatus.toString();
+    int passed = int.parse(geofence.toMap()['id']);
+    //print(passed);
+
+    if (geoStatus == 'GeofenceStatus.ENTER') {
+      FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
+        'lastStopPassed' : passed
+      });
+    }
+
+  }
+
+
   void onActivityChanged(Activity prevActivity, Activity currActivity) {
-    print('prevActivity: ${prevActivity.toMap()}');
+    //print('prevActivity: ${prevActivity.toMap()}');
     print('currActivity: ${currActivity.toMap()}\n');
+    myController.text = currActivity.type.toString() + currActivity.confidence.toString();
+    myController2.text = currActivity.type.toString() + currActivity.confidence.toString();
+
+    if(currActivity.type.toString() != 'ActivityType.STILL'){
+      if(positionStream.runtimeType != null){
+        positionStream.resume();
+      }
+      else{
+        streamLiveLocation();
+      }
+    }
+    else{
+      positionStream.pause();
+    }
   }
 
   void onError(dynamic error) {
@@ -330,8 +309,53 @@ class _TripControlViewState extends State<TripControlView> {
     print('ErrorCode: $errorCode');
   }
 
-}
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Start",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.red
+        ),
+      ),
+      onPressed:  () {
+        tripStatus = 'on';
+        setState(() {});
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Close",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.grey
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Start Trip"),
+      content: Text("Are you sure you want to start this trip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
+}
 
 
 
