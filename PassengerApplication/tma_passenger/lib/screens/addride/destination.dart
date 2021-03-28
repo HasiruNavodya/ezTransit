@@ -3,6 +3,7 @@ import 'package:tma_passenger/screens/addride/pickup.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tma_passenger/screens/home/add_ride.dart';
 
 
 
@@ -41,6 +42,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddRide()),
+              );
+            }
+
+        ),
         title: Text("Select Destination"),
         backgroundColor: Colors.black,
         centerTitle: true,
