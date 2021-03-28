@@ -27,7 +27,7 @@ class ConfirmTicket extends StatelessWidget {
       body: Center(
         child: Column(
 
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
 
 
               children: <Widget>[
@@ -133,12 +133,16 @@ class ConfirmTicket extends StatelessWidget {
                       ButtonTheme(
                         minWidth: 100.0,
                         height: 50.0,
-                              child: RaisedButton(color:Colors.green, onPressed: () {
+                              child: RaisedButton(color:Colors.black, onPressed: () {
                                  Navigator.push(
                                      context,
                                      MaterialPageRoute(builder: (context) => BuyTicket()),
                                  );
-                               }, child: Text("Yes"),
+                               }, child: Text("Yes",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              ),
                             ),
                       ),
 
@@ -146,12 +150,17 @@ class ConfirmTicket extends StatelessWidget {
                       ButtonTheme(
                         minWidth: 100.0,
                         height: 50.0,
-                        child:RaisedButton(color:Colors.red, onPressed: () {
+                        child:RaisedButton(color:Colors.black, onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectDestination()),
                           );
-                        }, child: Text("No")
+                        }, child: Text("No",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+
+                        ),
                         ),
                         ),
 
