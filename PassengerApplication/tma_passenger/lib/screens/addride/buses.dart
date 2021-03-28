@@ -172,53 +172,69 @@ class _SelectBusState extends State<SelectBus> {
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Card(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                                  color: Colors.white38,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
 
-                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
+                                        Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(''),
 
-                                      Text(document.data()['name']+'                            Standing:'+standingcount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
+                                        Text(document.data()['name']+'                          Standing:'+standingcount.toString(),
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold
+                                            )),
+                                        Text(''),
 
-                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
+                                        Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold
+                                            )),
+                                        Text(''),
 
-                                      Text('km'+'                     min                                 '+data['Public or Private'],
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
-
-
-                                     FlatButton(color:Colors.green, onPressed: () {
-                                       Navigator.push(
-                                         context,
-                                         MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
-                                       );
-                                     }, child: Text("Select Bus"),
-                                     ),
-
-                                     RaisedButton(color:Colors.red, onPressed: () {
-                                       Navigator.push(
-                                         context,
-                                         MaterialPageRoute(),
-                                       );
-                                     }, child: Text("Locate Bus")
-                                     ),
+                                        Text('Km'+'                     Min                                 '+data['Public or Private'],
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold
+                                            )),
+                                        Text(''),
 
 
+                                        FlatButton(color:Colors.green, onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
+                                          );
+                                        }, child: Text("Select Bus"),
+                                        ),
+
+                                        RaisedButton(color:Colors.red, onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(),
+                                          );
+                                        }, child: Text("Locate Bus")
+                                        ),
 
 
 
 
 
 
-                                    ],
 
+
+                                      ],
+
+                                    ),
                                   ),
+
                                 ),
                               ),
                             );

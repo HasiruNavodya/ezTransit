@@ -24,78 +24,129 @@ class ConfirmTicket extends StatelessWidget {
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
-      body: Center(
+      body: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+
+          crossAxisAlignment: CrossAxisAlignment.start,
 
 
               children: <Widget>[
+
               Expanded(
-                  flex:1,
-                child:Container(
+                flex:1,
+                child:Card(
+                  color: Colors.white,
+                  margin:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.account_box,
+                      color: Colors.teal[900],
+                    ),
+                  title: Text("Destination: $destinationloc",
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
 
-                 child: Text("Destination: $destinationloc",
-                   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-
-                 ),
-
-
-              ),
+                  ),
+                ),
+                ),
           ),
 
                 Expanded(
                  flex: 1,
-                 child:Container(
+                    child:Card(
+                      color: Colors.white,
+                      margin:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.account_box,
+                          color: Colors.teal[900],
+                        ),
+                      title: Text("Pickup Location: $pickuploc",
+                        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
 
-                    child: Text("Pickup Location: $pickuploc",
-                      style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                     ),
-
-            ),
+                ),
                 ),
 
+
         Expanded(
           flex: 1,
-          child:Container(
+            child:Card(
+              color: Colors.white,
+              margin:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.account_box,
+                  color: Colors.teal[900],
+                ),
+              title: Text("Bus: $bus ",
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+              ),
 
-            child: Text("Bus: $bus ",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
             ),
 
-          ),
+        ),
         ),
 
         Expanded(
           flex: 1,
-          child:Container(
-
-            child: Text("Pick Up At:",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            child:Card(
+              color: Colors.white,
+              margin:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.account_box,
+                  color: Colors.teal[900],
+                ),
+              title: Text("Pick Up At:",
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+              ),
             ),
-
-          ),
+        ),
         ),
 
         Expanded(
           flex: 1,
-          child:Container(
+            child:Card(
+              color: Colors.white,
+              margin:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.account_box,
+                  color: Colors.teal[900],
+                ),
+              title: Text("Dropping At:",
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+              ),
 
-            child: Text("Dropping At:",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            ),
             ),
 
-          ),
+
+
         ),
 
         Expanded(
           flex: 1,
-          child:Container(
-
-            child: Text("Ticket Price: $ticketprice",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            child:Card(
+              color: Colors.white,
+              margin:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.account_box,
+                  color: Colors.teal[900],
+                ),
+              title: Text("Ticket Price: $ticketprice",
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+              ),
             ),
-
-          ),
+        ),
         ),
 
                 Expanded(
