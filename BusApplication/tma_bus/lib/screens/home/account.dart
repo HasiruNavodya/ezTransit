@@ -35,13 +35,7 @@ class Account extends StatelessWidget {
                     //   backgroundImage: AssetImage('assets/images.png'),
                     //
                     // ),
-                    Text(
-                      '',
-                      style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        fontSize: 25,
-                      ),
-                    ),
+                   
                     Text(
                       'Welcome',
                       style: TextStyle(
