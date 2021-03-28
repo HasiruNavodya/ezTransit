@@ -34,8 +34,8 @@ class UserDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
-                          radius: 60,
-                          backgroundImage: AssetImage('assets/images.png'),
+                          radius: 70,
+                          backgroundImage: AssetImage('assets/profile.png'),
 
                         ),
                         Text(
@@ -71,7 +71,7 @@ class UserDetails extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.account_box,
-                                color: Colors.teal[900],
+                                color: Colors.black87,
                               ),
                               title: Text(
                                 'Name',
@@ -97,7 +97,7 @@ class UserDetails extends StatelessWidget {
                           child: ListTile(
                             leading: Icon(
                               Icons.email,
-                              color: Colors.teal[900],
+                              color: Colors.black87,
                             ),
                             title: Text(
                               'Email',
@@ -124,7 +124,7 @@ class UserDetails extends StatelessWidget {
                           child: ListTile(
                             leading: Icon(
                               Icons.account_circle,
-                              color: Colors.teal[900],
+                              color: Colors.black87,
                             ),
                             title: Text(
                               'NIC',
@@ -145,13 +145,22 @@ class UserDetails extends StatelessWidget {
 
                           ),
                         ),
-                        ElevatedButton(
 
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            LoginPage()), (Route<dynamic> route) => false);
-                          },
-                          child: Text('Logout'),
+                        ButtonTheme(
+                          minWidth: 100.0,
+                          height: 40.0,
+                         child: RaisedButton(color:Colors.black87,
+
+                            onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                  LoginPage()), (Route<dynamic> route) => false);
+                            },
+                            child: Text('Log Out',
+                              style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
+                              ),
+                            ),
+                          ),
+
                         ),
 
 
