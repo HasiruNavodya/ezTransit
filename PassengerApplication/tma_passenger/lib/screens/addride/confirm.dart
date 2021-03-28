@@ -24,64 +24,61 @@ class ConfirmTicket extends StatelessWidget {
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
-      body: Container(
+      body: Center(
         child: Column(
 
           crossAxisAlignment: CrossAxisAlignment.start,
 
 
               children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                  width: 400,
+                  child: Divider(
+                    color: Colors.black87,
+                  ),
+                ),
 
               Expanded(
                 flex:1,
-                child:Card(
-                  color: Colors.white,
-                  margin:
-                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.account_box,
-                      color: Colors.teal[900],
-                    ),
+                child:ListTile(
+                  leading: Icon(
+                    Icons.add_road,
+                    color: Colors.teal[900],
+                  ),
                   title: Text("Destination: $destinationloc",
                     style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
 
                   ),
                 ),
-                ),
+
+
+
+
+
           ),
 
                 Expanded(
                  flex: 1,
-                    child:Card(
-                      color: Colors.white,
-                      margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.account_box,
-                          color: Colors.teal[900],
-                        ),
+                    child:ListTile(
+                      leading: Icon(
+                        Icons.edit_road_outlined,
+                        color: Colors.teal[900],
+                      ),
                       title: Text("Pickup Location: $pickuploc",
                         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                       ),
 
                     ),
                 ),
-                ),
-
 
         Expanded(
           flex: 1,
-            child:Card(
-              color: Colors.white,
-              margin:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                leading: Icon(
-                  Icons.account_box,
-                  color: Colors.teal[900],
-                ),
+            child:ListTile(
+              leading: Icon(
+                Icons.directions_bus_outlined,
+                color: Colors.teal[900],
+              ),
               title: Text("Bus: $bus ",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
@@ -89,43 +86,32 @@ class ConfirmTicket extends StatelessWidget {
             ),
 
         ),
-        ),
 
         Expanded(
           flex: 1,
-            child:Card(
-              color: Colors.white,
-              margin:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                leading: Icon(
-                  Icons.account_box,
-                  color: Colors.teal[900],
-                ),
+            child:ListTile(
+              leading: Icon(
+                Icons.timer_rounded,
+                color: Colors.teal[900],
+              ),
               title: Text("Pick Up At:",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ),
         ),
-        ),
 
         Expanded(
           flex: 1,
-            child:Card(
-              color: Colors.white,
-              margin:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                leading: Icon(
-                  Icons.account_box,
-                  color: Colors.teal[900],
-                ),
+            child:ListTile(
+              leading: Icon(
+                Icons.access_time_outlined,
+                color: Colors.teal[900],
+              ),
               title: Text("Dropping At:",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
 
             ),
-            ),
 
 
 
@@ -133,20 +119,15 @@ class ConfirmTicket extends StatelessWidget {
 
         Expanded(
           flex: 1,
-            child:Card(
-              color: Colors.white,
-              margin:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                leading: Icon(
-                  Icons.account_box,
-                  color: Colors.teal[900],
-                ),
-              title: Text("Ticket Price: $ticketprice",
+            child:ListTile(
+              leading: Icon(
+                Icons.credit_card_sharp,
+                color: Colors.teal[900],
+              ),
+              title: Text("Ticket Price: Rs.$ticketprice",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ),
-        ),
         ),
 
                 Expanded(
@@ -154,21 +135,29 @@ class ConfirmTicket extends StatelessWidget {
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget> [
-
-                               FlatButton(color:Colors.green, onPressed: () {
+                      ButtonTheme(
+                        minWidth: 100.0,
+                        height: 50.0,
+                              child: RaisedButton(color:Colors.green, onPressed: () {
                                  Navigator.push(
                                      context,
                                      MaterialPageRoute(builder: (context) => BuyTicket()),
                                  );
                                }, child: Text("Yes"),
                             ),
-                             RaisedButton(color:Colors.red, onPressed: () {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => SelectDestination()),
-                               );
-                             }, child: Text("No")
-                           ),
+                      ),
+
+                      ButtonTheme(
+                        minWidth: 100.0,
+                        height: 50.0,
+                        child:RaisedButton(color:Colors.red, onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SelectDestination()),
+                          );
+                        }, child: Text("No")
+                        ),
+                        ),
 
 
                     ],
