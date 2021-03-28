@@ -123,7 +123,7 @@ class UserDetails extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
                             leading: Icon(
-                              Icons.perm_identity,
+                              Icons.account_circle,
                               color: Colors.teal[900],
                             ),
                             title: Text(
