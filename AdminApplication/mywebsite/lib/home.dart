@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mywebsite/auth.dart';
 //import 'package:mywebsite/auth.dart';
-import 'package:mywebsite/map.dart';
 
-import 'map.dart';
+
+
 
 
 class HomePage extends StatefulWidget {
@@ -25,11 +26,8 @@ class _HomePageState extends State<HomePage> {
       Text('You are logged in'),
       ElevatedButton(
           onPressed: () {
-            //AuthService().signOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MapClickPage()),
-              );
+            AuthService().signOut();
+             
           },
           child: Center(child: Text('LOG OUT')))
           
