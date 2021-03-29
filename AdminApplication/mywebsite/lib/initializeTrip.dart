@@ -8,7 +8,6 @@ class InitializeTrip extends StatefulWidget {
 }
 
 class _InitializeTripState extends State<InitializeTrip> {
-  ScrollController _controller = ScrollController();
 
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -180,7 +179,6 @@ class _InitializeTripState extends State<InitializeTrip> {
                                     .doc("initializeTrip")
                                     .set(data);
 
-
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -205,7 +203,12 @@ class _InitializeTripState extends State<InitializeTrip> {
                               primary: Colors.pink[400], // background
                               onPrimary: Colors.white, // foreground
                             ),
-                            onPressed: () async {}),
+                            onPressed: () {
+                              _formKey.currentState.reset();
+                            }
+                             
+                            
+                            ),
                       ],
                     ),
                   ],
