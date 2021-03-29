@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:location/location.dart';
-import 'package:tma_bus/screens/trip/starttrip.dart';
 import 'package:geofence_service/geofence_service.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
@@ -12,7 +10,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID;
+String tripID = 'T3000';
 String tripName;
 double stopLat;
 double stopLng;
@@ -23,12 +21,12 @@ String busNo = 'GE-3412';
 LocationData lastLocation;
 String test;
 
-class TripControlView extends StatefulWidget {
+class TripView extends StatefulWidget {
   @override
-  _TripControlViewState createState() => _TripControlViewState();
+  _TripViewState createState() => _TripViewState();
 }
 
-class _TripControlViewState extends State<TripControlView> {
+class _TripViewState extends State<TripView> {
 
   Location location = new Location();
   StreamSubscription<Position> positionStream;
@@ -46,16 +44,14 @@ class _TripControlViewState extends State<TripControlView> {
 
   @override
   Widget build(BuildContext context) {
-    if (tripStatus == "on") {
+    if (tripStatus == "off") {
       if(geoGate == 0){
         initTrip();
         //print('inittrip');
       }
       return FutureBuilder<DocumentSnapshot>(
-        future:
-            FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }
@@ -115,67 +111,7 @@ class _TripControlViewState extends State<TripControlView> {
       );
     }
     else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Select Trip'),
-          centerTitle: true,
-          backgroundColor: Colors.black87,
-        ),
-        body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: busNo).snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
-            }
-
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: new ListView(
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
-                  return Container(
-                    color: Colors.white70,
-                    margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                    child: new OutlinedButton(
-                      onPressed: () {
-                        tripID = document.data()['tripID'];
-                        //print(tripID);
-                        showAlertDialog(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              '${document.data()['startTime'] ?? 'default'}' + ' ' + '-' + ' ' '${document.data()['endTime']??'default'}',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.black87
-                              ),
-                            ),
-                            Text(
-                              document.data()['name']??'default',
-                              style: TextStyle(
-                                  color: Colors.black87
-                              ),
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                    //Card(child: Text(document.data()['name']??'default'),);
-                }).toList(),
-              ),
-            );
-          },
-        ),
-      );
+      return Container();
     }
   }
 
@@ -276,6 +212,9 @@ class _TripControlViewState extends State<TripControlView> {
       FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
         'lastStopPassed' : passed
       });
+      if(geofence.id == stopCount.toString()){
+        print('Your trip has ended');
+      }
     }
 
   }
@@ -307,52 +246,6 @@ class _TripControlViewState extends State<TripControlView> {
       return;
     }
     print('ErrorCode: $errorCode');
-  }
-
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text(
-        "Start",
-        style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.red
-        ),
-      ),
-      onPressed:  () {
-        tripStatus = 'on';
-        setState(() {});
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Close",
-        style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.grey
-        ),
-      ),
-      onPressed:  () {
-        Navigator.pop(context);
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Confirm Start Trip"),
-      content: Text("Are you sure you want to start this trip?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
 }

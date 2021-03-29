@@ -3,22 +3,73 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 
 String busNumber = 'eg2345';
 String tripStatus = '';
 String bnum = '';
 dynamic tripData = '';
-
+double lat;
+double lng;
 class RideDetails extends StatefulWidget {
   @override
   _RideDetailsState createState() => _RideDetailsState();
 }
 class _RideDetailsState extends State<RideDetails> {
 
+  TextEditingController distance = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    test();
+
+    Future<Position> _determinePosition() async {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        return Future.error('Location services are disabled.');
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.deniedForever) {
+          // Permissions are denied forever, handle appropriately.
+          return Future.error(
+              'Location permissions are permanently denied, we cannot request permissions.');
+        }
+
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied, next time you could try
+          // requesting permissions again (this is also where
+          // Android's shouldShowRequestPermissionRationale
+          // returned true. According to Android guidelines
+          // your App should show an explanatory UI now.
+          return Future.error(
+              'Location permissions are denied');
+        }
+      }
+      Position position = await Geolocator.getCurrentPosition();
+      lat = position.latitude;
+      lng = position.longitude;
+
+      // When we reach here, permissions are granted and we can
+      // continue accessing the position of the device.
+      return await Geolocator.getCurrentPosition();
+
+    }
+
+
+    _determinePosition();
+    listenToTripEnd();
+    getDistance();
+
   }
 
   GoogleMapController mapController;
@@ -31,6 +82,8 @@ class _RideDetailsState extends State<RideDetails> {
   
   @override
   Widget build(BuildContext context) {
+
+
 
     return Scaffold(
         appBar: AppBar(
@@ -82,11 +135,11 @@ class _RideDetailsState extends State<RideDetails> {
                                   fontSize: 16,
                                 ),
                               ),
-                              Text("",
+                              /*Text("",
                                 style: TextStyle(
                                   fontSize: 16,
                                 ),
-                              ),
+                              ),*/
                               Text("Bus: Pettah - Kollupitiya",
                                 style: TextStyle(
                                   fontSize: 16,
@@ -102,11 +155,11 @@ class _RideDetailsState extends State<RideDetails> {
                                   fontSize: 16,
                                 ),
                               ),
-                              Text("",
+                              /*Text("",
                                 style: TextStyle(
                                   fontSize: 16,
                                 ),
-                              ),
+                              ),*/
                               Text("Distance: 2 km",
                                 style: TextStyle(
                                   fontSize: 16,
@@ -116,6 +169,9 @@ class _RideDetailsState extends State<RideDetails> {
                                 style: TextStyle(
                                   fontSize: 16,
                                 ),
+                              ),
+                              TextField(
+                                controller: distance,
                               ),
                             ],
                           ),
@@ -144,7 +200,7 @@ class _RideDetailsState extends State<RideDetails> {
     });
   }
 
-  void _initMarker() {
+  void _initMarker() async {
 
     setState(() {
       FirebaseFirestore.instance.collection('buses').doc('eg2345').snapshots().listen((DocumentSnapshot documentSnapshot) {
@@ -172,17 +228,30 @@ class _RideDetailsState extends State<RideDetails> {
     });
   }
 
-  void test() async{
-    FirebaseFirestore.instance.collection('buses').doc('$busNumber').get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document data: ${documentSnapshot.data()}');
-        tripData = documentSnapshot.data();
-        print(tripData);
-        String bnum = documentSnapshot.data()['number'];
-        print(bnum);
-      } else {
-        print('Document does not exist on the database');
+  void listenToTripEnd(){
+    FirebaseFirestore.instance.collection('trips').doc('T3000').collection('stops').doc('3').snapshots().listen((DocumentSnapshot tripEndDoc) {
+      if(tripEndDoc.data()['passed'] == 'passed'){
+        print('Your Ride has ended');
       }
     });
   }
+
+  void getDistance() async{
+
+    double distanceInMeters;
+
+    //distanceInMeters = Geolocator.distanceBetween(52.2165157, 6.9437819, 52.3546274, 4.8285838);
+    //distance.text = distanceInMeters.toString();
+    print(lat);
+    print(lng);
+
+    FirebaseFirestore.instance.collection('buses').doc('eg2345').snapshots().listen((DocumentSnapshot busDistance) {
+      distanceInMeters = Geolocator.distanceBetween(lat, lng, busDistance.data()['location'].latitude, busDistance.data()['location'].longitude);
+      //distanceInMeters = Geolocator.distanceBetween(52.2165157, 6.9437819, 52.3546274, 4.8285838);
+      print(distanceInMeters);
+      distance.text = distanceInMeters.toString();
+    });
+  }
+
+
 }
