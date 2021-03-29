@@ -171,7 +171,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                           ),
                           onPressed: () async {
                             // validate the form based on it's current state
-                            if (_formKey.currentState.validate()) {
+                          
                               Map<String, dynamic> data = {
                                 "Stop Name": stopName.text,
                                 "Ariving Time": arrivingTime.text,
@@ -181,15 +181,18 @@ class _MapClickBodyState extends State<_MapClickBody> {
                               };
 
                               FirebaseFirestore.instance
-                                  .collection('Map data')
-                                  .add(data);
+                                    .collection("trips")
+                                    .doc("initializeTrip")
+                                    .collection("stop")
+                                    .doc("1")
+                                    .set(data);
 
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertBox('Successfully Inserted!');
                                   });
-                            }
+                            
                           }),
                       SizedBox(width: 50.0),
                       ElevatedButton(
