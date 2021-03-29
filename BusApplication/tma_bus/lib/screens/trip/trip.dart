@@ -6,6 +6,7 @@ import 'package:geofence_service/geofence_service.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tma_bus/main.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -16,7 +17,7 @@ double stopLat;
 double stopLng;
 String stopID;
 int geoGate = 0;
-String tripStatus = "off";
+String tripState = "on";
 String busNo = 'GE-3412';
 LocationData lastLocation;
 String test;
@@ -37,17 +38,15 @@ class _TripViewState extends State<TripView> {
   @override
   void initState() {
     super.initState();
-    print(tripStatus);
-    myController.text = 'current';
-    myController2.text = 'previous';
+    print(tripState);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (tripStatus == "off") {
+    if (tripState == 'on') {
       if(geoGate == 0){
         initTrip();
-        //print('inittrip');
+        streamLiveLocation();
       }
       return FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
@@ -62,11 +61,11 @@ class _TripViewState extends State<TripView> {
             lastStopPassed = data['lastStopPassed'];
 
             return Scaffold(
-              appBar: AppBar(
+              /*appBar: AppBar(
                 title: Text('Current Trip Info'),
                 centerTitle: true,
                 backgroundColor: Colors.black,
-              ),
+              ),*/
               body: Center(
                 child: Container(
                   child: Column(
@@ -93,12 +92,6 @@ class _TripViewState extends State<TripView> {
                           fontSize: 20.0,
                         ),
                       ),
-                      TextField(
-                        controller: myController,
-                      ),
-                      /*TextField(
-                        controller: myController2,
-                      ),*/
                     ],
                   ),
                 ),
@@ -106,12 +99,33 @@ class _TripViewState extends State<TripView> {
             );
           }
 
-          return Text("loading");
+          return Scaffold(
+            body: Container(
+              child: SpinKitDualRing(color: Colors.black87),
+            ),
+          );
         },
       );
     }
     else {
-      return Container();
+      return Scaffold(
+        body: Container(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'You Have Reached the Trip Destination. \nEnding Trip Now...\n\n\n',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SpinKitDualRing(color: Colors.black87),
+              ],
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -119,33 +133,34 @@ class _TripViewState extends State<TripView> {
 
     print(tripID);
 
-    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {querySnapshot.docs.forEach((stopDoc) {
-      print(stopDoc.data()['name']);
-
-      stopID = stopDoc.id;
-      stopLat = stopDoc.data()['location'].latitude.toDouble();
-      stopLng = stopDoc.data()['location'].longitude.toDouble();
-
-      final geoNew = Geofence(
-        id: '$stopID',
-        latitude: stopLat,
-        longitude: stopLng,
-        radius: [
-          GeofenceRadius(id: 'bus_stop_radius', length: 100),
-        ],
-      );
-
-      geofenceList.add(geoNew);
-      print(geofenceList.length);
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
-        geofenceService.setOnActivityChanged(onActivityChanged);
-        geofenceService.setOnStreamError(onError);
-        geofenceService.start(geofenceList).catchError(onError);
-      });
-
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {
+      querySnapshot.docs.forEach((stopDoc) {
+        print(stopDoc.data()['name']);
+  
+        stopID = stopDoc.id;
+        stopLat = stopDoc.data()['location'].latitude.toDouble();
+        stopLng = stopDoc.data()['location'].longitude.toDouble();
+  
+        final geoNew = Geofence(
+          id: '$stopID',
+          latitude: stopLat,
+          longitude: stopLng,
+          radius: [
+            GeofenceRadius(id: 'bus_stop_radius', length: 100),
+          ],
+        );
+  
+        geofenceList.add(geoNew);
+        print(geofenceList.length);
+  
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          geofenceService.setOnGeofenceStatusChanged(onGeofenceStatusChanged);
+          geofenceService.setOnActivityChanged(onActivityChanged);
+          geofenceService.setOnStreamError(onError);
+          geofenceService.start(geofenceList).catchError(onError);
+        });
     });
+      
     }).catchError((onError) {
       print("Database Error!");
       print(onError);
@@ -167,14 +182,13 @@ class _TripViewState extends State<TripView> {
 
   void streamLiveLocation() async{
     positionStream = Geolocator.getPositionStream().listen((Position position) {
-      print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+      print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-      FirebaseFirestore.instance.collection('testscoll').doc('123').set({
+      /*FirebaseFirestore.instance.collection('testscoll').doc('123').set({
         'lat': position.latitude.toString(),
         'lng': position.longitude.toString(),
         'status': test
-      });
-      print(test);
+      });*/
 
     });
   }
@@ -205,38 +219,69 @@ class _TripViewState extends State<TripView> {
     print('geofenceStatus: ${geofenceStatus.toString()}\n');
 
     String geoStatus = geofenceStatus.toString();
-    int passed = int.parse(geofence.toMap()['id']);
-    //print(passed);
 
     if (geoStatus == 'GeofenceStatus.ENTER') {
-      FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
+      /*FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
         'lastStopPassed' : passed
+      });*/
+
+      FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(geofence.id).update({
+        'passed' : 'true'
       });
+
       if(geofence.id == stopCount.toString()){
-        print('Your trip has ended');
+        setState(() {
+          tripState = 'off';
+        });
+        endTrip();
       }
     }
 
   }
 
-
   void onActivityChanged(Activity prevActivity, Activity currActivity) {
     //print('prevActivity: ${prevActivity.toMap()}');
     print('currActivity: ${currActivity.toMap()}\n');
-    myController.text = currActivity.type.toString() + currActivity.confidence.toString();
-    myController2.text = currActivity.type.toString() + currActivity.confidence.toString();
 
     if(currActivity.type.toString() != 'ActivityType.STILL'){
-      if(positionStream.runtimeType != null){
+      if(positionStream.isPaused){
         positionStream.resume();
-      }
-      else{
-        streamLiveLocation();
+        print('resumed');
       }
     }
     else{
-      positionStream.pause();
+      if(positionStream.isPaused){
+        positionStream.pause();
+        print('paused');
+      }
     }
+  }
+
+  void endTrip(){
+
+    positionStream.cancel();
+
+    setState(() {
+      tripState = 'off';
+    });
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {
+      querySnapshot.docs.forEach((stopDoc) {
+        FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(stopDoc.id).update({
+          'passed' : 'false'
+        });
+      });
+    });
+
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
+      'lastStopPassed' : 0
+    });
+
+
+    Future.delayed(const Duration(seconds: 3), () {
+      streamController.add(0);
+    });
+
   }
 
   void onError(dynamic error) {

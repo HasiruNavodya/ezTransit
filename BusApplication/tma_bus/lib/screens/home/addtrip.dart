@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:location/location.dart';
+//import 'package:location/location.dart';
 import 'package:geofence_service/geofence_service.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 String tripID;
 String busNo;
 int sval = 1;
 
 class AddTripView extends StatefulWidget {
+
   @override
   _AddTripViewState createState() => _AddTripViewState();
 }
 
 class _AddTripViewState extends State<AddTripView> {
+
+  @override
+  void initState() {
+    super.initState();
+    activityPermission();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -35,7 +44,11 @@ class _AddTripViewState extends State<AddTripView> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Scaffold(
+              body: Container(
+                child: SpinKitDualRing(color: Colors.black87),
+              ),
+            );
           }
 
           return Padding(
@@ -108,12 +121,11 @@ class _AddTripViewState extends State<AddTripView> {
         ),
       ),
       onPressed:  () {
-
+        Navigator.pop(context);
       },
     );
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("sdfgsdfgsdf"),
+      title: Text("Confirm Start Trip"),
       content: Text("Are you sure you want to start this trip?"),
       actions: [
         cancelButton,
@@ -128,4 +140,16 @@ class _AddTripViewState extends State<AddTripView> {
       },
     );
   }
+
+  void activityPermission() async{
+    if (await Permission.activityRecognition.request().isGranted) {
+    }
+
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.activityRecognition,
+    ].request();
+    print(statuses[Permission.activityRecognition]);
+  }
+
 }
