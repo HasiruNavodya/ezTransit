@@ -180,6 +180,7 @@ class _InitializeTripState extends State<InitializeTrip> {
                                     .doc("initializeTrip")
                                     .set(data);
 
+
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {

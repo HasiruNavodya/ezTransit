@@ -85,16 +85,15 @@ class _MapClickBodyState extends State<_MapClickBody> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
               child: Column(
-                
-                children: [
-                  
+                children: <Widget>[
                   SizedBox(height: 40.0),
                   TextFormField(
+                    //   key: ValueKey('stopName'),
                     controller: stopName,
                     decoration: InputDecoration(
                         labelText: 'Stop Name', border: OutlineInputBorder()),
                     validator: (String value) {
-                      if (_stopName.isEmpty) {
+                      if (value.isEmpty) {
                         return 'Stop Name is required';
                       }
                     },
@@ -104,6 +103,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //key: ValueKey('arrivingTime'),
                     controller: arrivingTime,
                     decoration: InputDecoration(
                         labelText: 'Arriving Time',
@@ -120,6 +120,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //  key: ValueKey('timeDu'),
                     controller: timeDu,
                     decoration: InputDecoration(
                         labelText: 'Time Duration From Last Stop',
@@ -135,6 +136,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //    key: ValueKey('cnlatitude'),
                     controller: cnlatitude,
                     decoration: InputDecoration(
                         labelText: 'Latitude', border: OutlineInputBorder()),
@@ -146,6 +148,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //   key: ValueKey('cnlongitude'),
                     controller: cnlongitude,
                     decoration: InputDecoration(
                         labelText: 'Longitude', border: OutlineInputBorder()),
@@ -171,7 +174,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                           ),
                           onPressed: () async {
                             // validate the form based on it's current state
-                          
+                           
                               Map<String, dynamic> data = {
                                 "Stop Name": stopName.text,
                                 "Ariving Time": arrivingTime.text,
@@ -181,17 +184,21 @@ class _MapClickBodyState extends State<_MapClickBody> {
                               };
 
                               FirebaseFirestore.instance
-                                    .collection("trips")
-                                    .doc("initializeTrip")
-                                    .collection("stop")
-                                    .doc("1")
-                                    .set(data);
+                                  .collection("trips")
+                                  .doc("initializeTrip")
+                                  .collection("stop")
+                                  .add(data);
 
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertBox('Successfully Inserted!');
                                   });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Home()));
                             
                           }),
                       SizedBox(width: 50.0),
