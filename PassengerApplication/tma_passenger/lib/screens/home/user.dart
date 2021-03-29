@@ -46,7 +46,7 @@ class UserDetails extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Welcome',
+                          'Profile Details',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

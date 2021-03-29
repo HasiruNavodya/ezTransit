@@ -24,7 +24,7 @@ class Account extends StatelessWidget {
           }
 
           return Padding(
-            padding: const EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(1.0),
             child: Stack(
               children: snapshot.data.docs.map((DocumentSnapshot document) {
                 return Column(
@@ -35,17 +35,7 @@ class Account extends StatelessWidget {
                     //   backgroundImage: AssetImage('assets/images.png'),
                     //
                     // ),
-                   Text(''),
-                    Text(
-                      'Welcome',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'SourceSansPro',
-                        color: Colors.black87,
-                        letterSpacing: 2.5,
-                      ),
-                    ),
+
                     SizedBox(
                       height: 0.0,
                       width: 200,
@@ -249,15 +239,23 @@ class Account extends StatelessWidget {
 
 
 
+                    ButtonTheme(
+                      minWidth: 100.0,
+                      height: 40.0,
+                      child: RaisedButton(color:Colors.black87,
 
-                    ElevatedButton(
+                        onPressed: () {
+                          // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          //     LoginPage()), (Route<dynamic> route) => false);
+                        },
+                        child: Text('Log Out',
+                          style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
+                          ),
+                        ),
+                      ),
 
-                      onPressed: () {
-                        // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                        //     LoginPage()), (Route<dynamic> route) => false);
-                      },
-                      child: Text('Logout'),
                     ),
+
 
 
 
