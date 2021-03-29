@@ -26,6 +26,7 @@ class TmaMainApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ViewController(streamController.stream),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

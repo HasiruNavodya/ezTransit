@@ -54,7 +54,7 @@ class Account extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(
                             Icons.account_box,
-                            color: Colors.teal[900],
+                            color: Colors.black87,
                           ),
                           title: Text(
                             'Name',
@@ -85,7 +85,7 @@ class Account extends StatelessWidget {
                          child: ListTile(
                            leading: Icon(
                              Icons.directions_bus_sharp,
-                             color: Colors.teal[900],
+                             color: Colors.black87,
                            ),
                            title: Text(
                              'Bus Number Plate',
@@ -117,7 +117,7 @@ class Account extends StatelessWidget {
                           child: ListTile(
                             leading: Icon(
                               Icons.directions_bus_sharp,
-                              color: Colors.teal[900],
+                              color: Colors.black87,
                             ),
                             title: Text(
                               'Bus Color',
@@ -150,7 +150,7 @@ class Account extends StatelessWidget {
                           child: ListTile(
                             leading: Icon(
                               Icons.credit_card_rounded,
-                              color: Colors.teal[900],
+                              color: Colors.black87,
                             ),
                             title: Text(
                               'License Number',
@@ -182,7 +182,7 @@ class Account extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(
                             Icons.adjust_rounded,
-                            color: Colors.teal[900],
+                            color: Colors.black87,
                           ),
                           title: Text(
                             'Luxury Level',
@@ -214,7 +214,7 @@ class Account extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(
                             Icons.directions_bus_outlined,
-                            color: Colors.teal[900],
+                            color: Colors.black87,
                           ),
                           title: Text(
                             'Bus Type',

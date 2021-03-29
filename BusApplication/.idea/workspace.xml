@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0be8ef7-8e2f-4054-a004-442b728eeb1a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tma_bus/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_bus/lib/screens/home/account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/lib/screens/home/account.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_bus/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PassengerApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PassengerApplication/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PassengerApplication/tma_passenger/lib/screens/home/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../PassengerApplication/tma_passenger/lib/screens/home/user.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
