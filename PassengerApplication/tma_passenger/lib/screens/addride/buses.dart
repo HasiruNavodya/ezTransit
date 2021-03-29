@@ -17,6 +17,9 @@ int ticketcount;
 int newseatcount;
 int standingcount;
 String ticketprice;
+String tripid;
+String startcity;
+String endcity;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -61,8 +64,12 @@ class _SelectBusState extends State<SelectBus> {
       if (documentSnapshot.exists) {
         print(documentSnapshot.data()['partNo']);
         pno = documentSnapshot.data()['partNo'];
+        startcity=documentSnapshot.data()['startin'];
+        endcity=documentSnapshot.data()['endin'];
         ticketprice = documentSnapshot.data()['fare'];
         print(ticketprice);
+        print('mmmmmm $startcity');
+        print('lllllll $endcity');
         print(pno);
         setState(() {
           pnoSet = 'yes';
@@ -146,6 +153,9 @@ class _SelectBusState extends State<SelectBus> {
 
                           if (snapshot.connectionState == ConnectionState.done) {
                             Map<String, dynamic> data = snapshot.data.data();
+
+                            tripid=document.data()['tripID'];
+                            print(tripid);
                             ticketcount=document.data()['ticket count'];
                             seatcount=data['Seat Count'];
                             print('$seatcount'+'-'+'$ticketcount');
@@ -221,7 +231,7 @@ class _SelectBusState extends State<SelectBus> {
                                             FlatButton(color:Colors.black87, onPressed: () {
                                               Navigator.push(
                                                 context,
-                                                MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
+                                                MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice,tripid,startcity,endcity)),
                                               );
                                             }, child: Text("Select Bus",
                                               style: TextStyle(
