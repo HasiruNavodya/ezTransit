@@ -8,6 +8,7 @@ import 'package:tma_bus/screens/trip/trip.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:location/location.dart';
 
+int appState = 0;
 StreamController<int> streamController = StreamController<int>();
 
 void main() async {
@@ -41,27 +42,27 @@ class ViewController extends StatefulWidget {
 
 class _ViewControllerState extends State<ViewController> {
 
-  int tripStatus = 0;
+
 
   @override
   void initState() {
     super.initState();
-    widget.stream.listen((tripStatusValue) {
-      mySetState(tripStatusValue);
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
     });
   }
 
-  void mySetState(int tripStatusValue) {
+  void mySetState(int appStateValue) {
     setState(() {
-      tripStatus = tripStatusValue;
+      appState = appStateValue;
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    if(tripStatus == 0){
-      print(tripStatus);
+    if(appState == 0){
+      print(appState);
       return HomeView();
     }
     else{
