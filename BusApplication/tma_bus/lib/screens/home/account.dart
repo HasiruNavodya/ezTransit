@@ -48,7 +48,7 @@ class Account extends StatelessWidget {
                     flex: 1,
                     child:
                     Card(
-                        color: Colors.white,
+                        color: Colors.white60,
                         margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
@@ -57,16 +57,16 @@ class Account extends StatelessWidget {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Name',
+                            'Name\n',
                             style:
                             TextStyle(fontFamily: 'BalooBhai',
-                                fontSize: 15.0,
+                                fontSize: 17.0,
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text('${document.data()['Driver Name']}',
                             style: TextStyle(
-                              fontSize: 14,
-                              //fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              // fontWeight: FontWeight.w900,
                               //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
                               //letterSpacing: 2.5,
@@ -79,7 +79,7 @@ class Account extends StatelessWidget {
                      flex: 1,
                        child:
                        Card(
-                         color: Colors.white,
+                         color: Colors.white60,
                          margin:
                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                          child: ListTile(
@@ -88,14 +88,14 @@ class Account extends StatelessWidget {
                              color: Colors.black87,
                            ),
                            title: Text(
-                             'Bus Number Plate',
-                             style: TextStyle(fontSize: 15.0,
+                             'Bus Number Plate\n',
+                             style: TextStyle(fontSize: 17.0,
                                  fontFamily: 'Neucha',
                                  fontWeight: FontWeight.bold),
                            ),
                            subtitle: Text('${document.data()['Plate Number']}',
                              style: TextStyle(
-                               fontSize: 14,
+                               fontSize: 17,
                                //fontWeight: FontWeight.bold,
                                //fontFamily: 'SourceSansPro',
                                color: Colors.black87,
@@ -111,7 +111,7 @@ class Account extends StatelessWidget {
                     Expanded(
                       flex: 1,
                         child:Card(
-                          color: Colors.white,
+                          color: Colors.white60,
                           margin:
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
@@ -120,14 +120,14 @@ class Account extends StatelessWidget {
                               color: Colors.black87,
                             ),
                             title: Text(
-                              'Bus Color',
-                              style: TextStyle(fontSize: 15.0,
+                              'Bus Color\n',
+                              style: TextStyle(fontSize: 17.0,
                                   fontFamily: 'Neucha',
                                   fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text('${document.data()['Color']}',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 17,
                                 //fontWeight: FontWeight.bold,
                                 //fontFamily: 'SourceSansPro',
                                 color: Colors.black87,
@@ -144,7 +144,7 @@ class Account extends StatelessWidget {
                     Expanded(
                       flex: 1,
                         child: Card(
-                          color: Colors.white,
+                          color: Colors.white60,
                           margin:
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                           child: ListTile(
@@ -153,14 +153,14 @@ class Account extends StatelessWidget {
                               color: Colors.black87,
                             ),
                             title: Text(
-                              'License Number',
-                              style: TextStyle(fontSize: 15.0,
+                              'License Number\n',
+                              style: TextStyle(fontSize: 17.0,
                                   fontFamily: 'Neucha',
                                   fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text('${document.data()['License Number']}',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 17,
                                 //fontWeight: FontWeight.bold,
                                 //fontFamily: 'SourceSansPro',
                                 color: Colors.black87,
@@ -176,7 +176,7 @@ class Account extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.white60,
                         margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
@@ -185,14 +185,14 @@ class Account extends StatelessWidget {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Luxury Level',
-                            style: TextStyle(fontSize: 15.0,
+                            'Luxury Level\n',
+                            style: TextStyle(fontSize: 17.0,
                                 fontFamily: 'Neucha',
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text('${document.data()['Luxury Level']}',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 17,
                               //fontWeight: FontWeight.bold,
                               //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
@@ -208,7 +208,7 @@ class Account extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.white60,
                         margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
@@ -217,14 +217,14 @@ class Account extends StatelessWidget {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Bus Type',
-                            style: TextStyle(fontSize: 15.0,
+                            'Bus Type\n',
+                            style: TextStyle(fontSize: 17.0,
                                 fontFamily: 'Neucha',
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text('${document.data()['Public or Private']}',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 17,
                               //fontWeight: FontWeight.bold,
                               //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
