@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
-
 class Home extends StatelessWidget {
   static const String id = 'home';
   @override

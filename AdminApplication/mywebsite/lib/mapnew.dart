@@ -87,17 +87,18 @@ class _MapClickBodyState extends State<_MapClickBody> {
         padding: const EdgeInsets.all(20.0),
         child: Card(
           elevation: 20.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(35),
-                  ),
-                ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(35),
+            ),
+          ),
           child: Row(
             children: [
               Expanded(
                 flex: 1,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
                   color: Colors.blue[200],
                   child: Column(
                     children: <Widget>[
@@ -106,7 +107,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         //   key: ValueKey('stopName'),
                         controller: stopName,
                         decoration: InputDecoration(
-                            labelText: 'Stop Name',labelStyle: TextStyle(fontSize: 16, color: Colors.black), border: OutlineInputBorder()),
+                            labelText: 'Stop Name',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Stop Name is required';
@@ -121,7 +125,9 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         //key: ValueKey('arrivingTime'),
                         controller: arrivingTime,
                         decoration: InputDecoration(
-                            labelText: 'Arriving Time',labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+                            labelText: 'Arriving Time',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
@@ -138,7 +144,9 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         //  key: ValueKey('timeDu'),
                         controller: timeDu,
                         decoration: InputDecoration(
-                            labelText: 'Time Duration From Last Stop',labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+                            labelText: 'Time Duration From Last Stop',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
@@ -154,7 +162,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         //    key: ValueKey('cnlatitude'),
                         controller: cnlatitude,
                         decoration: InputDecoration(
-                            labelText: 'Latitude', labelStyle: TextStyle(fontSize: 16, color: Colors.black),border: OutlineInputBorder()),
+                            labelText: 'Latitude',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
                             return ('latitude is required');
@@ -166,7 +177,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         //   key: ValueKey('cnlongitude'),
                         controller: cnlongitude,
                         decoration: InputDecoration(
-                            labelText: 'Longitude', labelStyle: TextStyle(fontSize: 16, color: Colors.black),border: OutlineInputBorder()),
+                            labelText: 'Longitude',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
                             return ('longitude is required');
@@ -212,7 +226,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (BuildContext context) => Home()));
+                                        builder: (BuildContext context) =>
+                                            Home()));
                               }),
                           SizedBox(width: 50.0),
                           ElevatedButton(
@@ -228,7 +243,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (BuildContext context) => Home()));
+                                        builder: (BuildContext context) =>
+                                            Home()));
                               }),
                         ],
                       )
@@ -264,8 +280,6 @@ class _MapClickBodyState extends State<_MapClickBody> {
         ),
       ),
     );
-    
-    
   }
 
   void onMapCreated(GoogleMapController controller) async {
