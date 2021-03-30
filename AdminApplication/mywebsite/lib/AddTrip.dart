@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mywebsite/m.dart';
 
 class Trip extends StatefulWidget {
+   static const String id = 'trip';
   @override
   _TripState createState() => _TripState();
 }

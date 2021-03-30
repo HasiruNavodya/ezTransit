@@ -5,35 +5,34 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
 
+class Complaints extends StatefulWidget {
+  static const String id = 'complaints';
+  @override
+  _ComplaintsState createState() => _ComplaintsState();
+}
 
+class _ComplaintsState extends State<Complaints> {
+  @override
+  Widget build(BuildContext context) {
 
- class Emergency extends StatefulWidget {
-
-   static const String id = 'emergency';
-   @override
-   _EmergencyState createState() => _EmergencyState();
- }
- 
- class _EmergencyState extends State<Emergency> {
-   SideBarWidget _sideBar = SideBarWidget();
-   @override
-   Widget build(BuildContext context) {
-     return AdminScaffold(
+    SideBarWidget _sideBar = SideBarWidget();
+    return  AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Transport Management System'),
       ),
-      sideBar: _sideBar.sideBarMenus(context, Emergency.id),
+      sideBar: _sideBar.sideBarMenus(context, Complaints.id),
       body: 
-         StreamBuilder (
-         stream: FirebaseFirestore.instance.collection('emergencies').snapshots(),
+        
+          StreamBuilder (
+         stream: FirebaseFirestore.instance.collection('complaints').snapshots(),
          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot ){
         if(!snapshot.hasData){
              return Text('No Value');
            }
            return 
             Padding(
-               padding: EdgeInsets.symmetric(vertical: 40, horizontal:50),
+               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 50),
              
               child:
              
@@ -46,7 +45,7 @@ import 'package:mywebsite/SideBar.dart';
                  padding: EdgeInsets.all(30),
                   
                     
-                  height:250,
+                  height:200,
                    decoration: BoxDecoration(
                      color: Colors.blue[200],
               borderRadius: BorderRadius.only(
@@ -57,49 +56,39 @@ import 'package:mywebsite/SideBar.dart';
           
                    child: Column(children: [
                      
-                   
-                  Row(children: [
-Text('Emergency Type : ', style: TextStyle(fontSize: 20),),
- 
- 
-   
-  Text(document.data()['type'].toString(), style: TextStyle(fontSize: 20),),
-  
-                     ],),
-                     SizedBox(height:10),
-   Row(children: [
+                    Row(children: [
 Text('Bus Plate Number : ',style: TextStyle(fontSize: 16),),
-Text(document.data()['busNo'].toString(),style: TextStyle(fontSize: 16),),
-
-   ],)  ,  
-   SizedBox(height:10),    
-     Row(children: [
-Text('Location : ',style: TextStyle(fontSize: 16),),
- Text(document.data()['location'].toString(),style: TextStyle(fontSize: 16),),
-   ],)  ,  
- SizedBox(height:10),
-  Row(children: [
-
-Text('Description : ',style: TextStyle(fontSize: 16),),
-
-
-
-   ],)  ,
+  Text(document.data()['Plate Number'].toString(),style: TextStyle(fontSize: 16),),
+   ],)  , 
+          SizedBox(height:10),         
+                                 
+                    Row(children: [
+Text('Complaint : ',style: TextStyle(fontSize: 16),),
    
-       Text(document.data()['text'].toString(),style: TextStyle(fontSize: 16),),  
+   ],)  ,
+   Text(document.data()['Complaint'].toString(),style: TextStyle(fontSize: 16),),       
+                 
+                   
+                 
                     
                  ],),
-
+              
                ),);},).toList(),
                 
            
      ),);}),
-          
         );
       
+
+
+
+
+ 
     
-     
-     
-     
-         }}
+  }
+}
+
+ 
+ 
+         
       

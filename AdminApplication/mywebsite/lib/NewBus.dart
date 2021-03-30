@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:mywebsite/SideBar.dart';
 
 class NewBus extends StatefulWidget {
+
+  static const String id = 'newbus';
   @override
   _NewBusState createState() => _NewBusState();
 }
 
 class _NewBusState extends State<NewBus> {
-  ScrollController _controller = ScrollController();
+  
 
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -48,7 +52,7 @@ class _NewBusState extends State<NewBus> {
   Widget _buildDriverName() {
     return TextFormField(
       controller: driverName,
-      // maxLength: 30,
+      maxLength: 30,
       decoration: InputDecoration(
           labelText: 'Driver Name', border: OutlineInputBorder()),
 
@@ -100,7 +104,7 @@ class _NewBusState extends State<NewBus> {
       controller: publicPrivate,
       decoration: InputDecoration(
           labelText: 'Public / Private', border: OutlineInputBorder()),
-      // maxLength: 7,
+       maxLength: 7,
       validator: (String value) {
         if (value.isEmpty) {
           return ('This field is required');
@@ -117,7 +121,7 @@ class _NewBusState extends State<NewBus> {
       controller: luxeryLevel,
       decoration: InputDecoration(
           labelText: 'Luxery Level', border: OutlineInputBorder()),
-      // maxLength: 15,
+      maxLength: 15,
       validator: (String value) {
         if (value.isEmpty) {
           return ('This field is required');
@@ -136,7 +140,7 @@ class _NewBusState extends State<NewBus> {
       decoration: InputDecoration(
           labelText: 'Seat Count', border: OutlineInputBorder()),
       keyboardType: TextInputType.number,
-      // maxLength: 3,
+       maxLength: 3,
 
       validator: (String value) {
         if (value.isEmpty) {
@@ -151,34 +155,27 @@ class _NewBusState extends State<NewBus> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    SideBarWidget _sideBar = SideBarWidget();
+    return AdminScaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Add New Bus'),
-        centerTitle: true,
-        backgroundColor: Colors.pink[400],
-        elevation: 0.0,
+        title: const Text('Transport Management System'),
       ),
-      body:Center( 
+      sideBar: _sideBar.sideBarMenus(context, NewBus.id),
+      body: Center( 
       child:SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 1.3 * MediaQuery.of(context).size.height,
+          height: 1.2 * MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Colors.blue[400],
-                  Colors.blue[600],
-                  Colors.blue[900],
-                  Colors.indigo[900],
-                  Colors.deepPurple[900],
-                ]),
+         
           ),
-          padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 400.0),
+          padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 350.0),
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
-            width: 0.4 * MediaQuery.of(context).size.width,
+            
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+            
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(40.0),
@@ -252,6 +249,8 @@ class _NewBusState extends State<NewBus> {
                                   builder: (BuildContext context) {
                                     return AlertBox('Successfully Inserted!');
                                   });
+
+                                  
                             }
                           }),
                       SizedBox(width: 50.0),
@@ -273,7 +272,12 @@ class _NewBusState extends State<NewBus> {
           ),
         ),
       ),),
-    );
+       
+        );
+      
+    
+    
+    
   }
 }
 

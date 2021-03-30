@@ -1,6 +1,12 @@
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mywebsite/AddTrip.dart';
+import 'package:mywebsite/Complaints.dart';
+import 'package:mywebsite/Emergency.dart';
+import 'package:mywebsite/Home%20View.dart';
+import 'package:mywebsite/LogOut.dart';
+import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
 
 
@@ -17,9 +23,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Transport Management Application',
+      theme: ThemeData( 
+        textTheme: GoogleFonts.latoTextTheme(
+      Theme.of(context).textTheme,),),
      
-      //home: MapClickPage(),
+  
       home: AuthService().handleAuth(),
+      routes:{
+        Home.id:(context) => Home(),
+NewBus.id:(context) => NewBus(),
+       Emergency.id:(context) => Emergency(),
+      Complaints.id:(context) => Complaints(),
+      Trip.id:(context) => Trip(),
+      LogOut.id:(context) => LogOut(),
+       
+      } 
     );
   }
 }

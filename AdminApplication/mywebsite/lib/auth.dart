@@ -22,6 +22,7 @@ class AuthService {
   //Sign out
   signOut() {
     FirebaseAuth.instance.signOut();
+    
   }
 
   //Sign In
