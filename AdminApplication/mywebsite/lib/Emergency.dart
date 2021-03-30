@@ -17,7 +17,7 @@ class _EmergencyState extends State<Emergency> {
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Transport Management System'),
+        title: const Text('Emergency'),
       ),
       sideBar: _sideBar.sideBarMenus(context, Emergency.id),
       body: StreamBuilder(

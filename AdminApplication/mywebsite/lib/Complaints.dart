@@ -19,7 +19,7 @@ class _ComplaintsState extends State<Complaints> {
     return  AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Transport Management System'),
+        title: const Text('Complaints'),
       ),
       sideBar: _sideBar.sideBarMenus(context, Complaints.id),
       body: 

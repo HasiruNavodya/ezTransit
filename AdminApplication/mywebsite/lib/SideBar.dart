@@ -14,7 +14,7 @@ class SideBarWidget {
     return SideBar(
       items: const [
         MenuItem(
-          title: 'Dashboard',
+          title: 'Welcome',
           route: Home.id,
           icon: Icons.dashboard,
         ),
@@ -24,7 +24,7 @@ class SideBarWidget {
           icon: CupertinoIcons.bus,
         ),
         MenuItem(
-          title: 'Add Trip',
+          title: 'Initialize Trip',
           route: InitializeTrip.id,
           icon: Icons.trip_origin_rounded,
         ),
