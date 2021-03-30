@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/buy.dart';
 
 import 'destination.dart';
+String gg='no';
 
-class ConfirmTicket extends StatelessWidget {
+class ConfirmTicket extends StatefulWidget {
   String destinationloc;
   String pickuploc;
   String bus;
@@ -12,8 +13,7 @@ class ConfirmTicket extends StatelessWidget {
   String tripid;
   String startcity;
   String endcity;
-  String pickupat;
-  String droppingat;
+
 
   ConfirmTicket(dloc, ploc, bs, ticketprice,tripid,startcity,endcity) {
     this.destinationloc = dloc;
@@ -25,39 +25,65 @@ class ConfirmTicket extends StatelessWidget {
     this.endcity=endcity;
   }
 
-  void getPickupAt(){
-    FirebaseFirestore.instance
-        .collection("trips")
-        .doc('$tripid')
-        .collection("stops").doc('$startcity')
-        .get()
-        .then((documentSnapshot)  {
-      if (documentSnapshot.exists) {
-        pickupat=documentSnapshot.data()['time'];
-        print('fffff $pickupat');
+  @override
+  _ConfirmTicketState createState() => _ConfirmTicketState();
+}
+
+class _ConfirmTicketState extends State<ConfirmTicket> {
+  String pickupat;
+
+  String droppingat;
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+
+    print('dfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+    if(gg == 'no'){
+      getPickupAt();
+      print(pickupat);
+    }
 
 
-        print('$startcity');
-        print('$endcity');
+
+  }
+
+  FutureBuilder getPickupAt(){
+      FirebaseFirestore.instance
+          .collection("trips")
+          .doc('${widget.tripid}')
+          .collection("stops").doc('${widget.startcity}')
+          .get()
+          .then((documentSnapshot)  {
+        if (documentSnapshot.exists) {
+          pickupat=documentSnapshot.data()['time'];
+          print('fffff $pickupat');
 
 
-      }
+          print('${widget.startcity}');
+          print('${widget.endcity}');
 
-    });
+
+        }
+
+      });
+
+
   }
 
   void getDroppingAt(){
     FirebaseFirestore.instance
         .collection("trips")
-        .doc('$tripid')
-        .collection("stops").doc('$endcity')
+        .doc('${widget.tripid}')
+        .collection("stops").doc('${widget.endcity}')
         .get()
         .then((documentSnapshot)  {
       if (documentSnapshot.exists) {
         droppingat=documentSnapshot.data()['time'];
         print('ggggg $droppingat');
-        print('$startcity');
-        print('$endcity');
+        print('${widget.startcity}');
+        print('${widget.endcity}');
 
 
       }
@@ -65,13 +91,12 @@ class ConfirmTicket extends StatelessWidget {
     });
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-    getPickupAt();
-    getDroppingAt();
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Confirm Your Ticket"),
@@ -113,7 +138,7 @@ class ConfirmTicket extends StatelessWidget {
                           Icons.add_road,
                           color: Colors.teal[900],
                         ),
-                        title: Text("Destination: $destinationloc",
+                        title: Text("Destination: ${widget.destinationloc}",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
 
@@ -130,7 +155,7 @@ class ConfirmTicket extends StatelessWidget {
                           Icons.edit_road_outlined,
                           color: Colors.teal[900],
                         ),
-                        title: Text("Pickup Location: $pickuploc",
+                        title: Text("Pickup Location: ${widget.pickuploc}",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -145,7 +170,7 @@ class ConfirmTicket extends StatelessWidget {
                           Icons.directions_bus_outlined,
                           color: Colors.teal[900],
                         ),
-                        title: Text("Bus: $bus ",
+                        title: Text("Bus: ${widget.bus} ",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -192,7 +217,7 @@ class ConfirmTicket extends StatelessWidget {
                           Icons.credit_card_sharp,
                           color: Colors.teal[900],
                         ),
-                        title: Text("Ticket Price: Rs.$ticketprice",
+                        title: Text("Ticket Price: Rs.${widget.ticketprice}",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
