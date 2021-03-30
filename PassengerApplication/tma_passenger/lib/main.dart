@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -32,20 +31,19 @@ class TmaPassengerApp extends StatelessWidget {
   }
 }
 
+
 class ViewController extends StatefulWidget {
 
   ViewController(this.stream);
   final Stream<int> stream;
 
-class MyHome extends StatefulWidget {
   @override
-  MyHomeState createState() => MyHomeState();
+  _ViewControllerState createState() => _ViewControllerState();
 }
 
-// SingleTickerProviderStateMixin is used for animation
-class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
-  // Create a tab controller
-  TabController controller;
+class _ViewControllerState extends State<ViewController> {
+
+
 
   @override
   void initState() {
