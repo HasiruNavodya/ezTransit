@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tma_passenger/main.dart';
+import 'package:tma_passenger/screens/auth/login.dart';
+import 'package:tma_passenger/screens/auth/signup.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -9,6 +12,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
@@ -24,11 +28,18 @@ class _RegisterState extends State<Register> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                SizedBox(height: 80.0,),
-                Text('REGISTER', style: TextStyle(fontSize: 20),),
+                SizedBox(
+                  height: 80.0,
+                ),
+                Text(
+                  'REGISTER',
+                  style: TextStyle(fontSize: 20),
+                ),
               ],
             ),
-            SizedBox(height: 60.0,),
+            SizedBox(
+              height: 60.0,
+            ),
             TextField(
               decoration: InputDecoration(
                 labelText: "Full Name",
@@ -36,7 +47,9 @@ class _RegisterState extends State<Register> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             TextField(
               decoration: InputDecoration(
                 labelText: "Email",
@@ -44,7 +57,9 @@ class _RegisterState extends State<Register> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             TextField(
               decoration: InputDecoration(
                 labelText: "NIC",
@@ -52,7 +67,9 @@ class _RegisterState extends State<Register> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -61,7 +78,9 @@ class _RegisterState extends State<Register> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -70,7 +89,9 @@ class _RegisterState extends State<Register> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Column(
               children: <Widget>[
                 ButtonTheme(
@@ -78,7 +99,8 @@ class _RegisterState extends State<Register> {
                   disabledColor: Colors.grey,
                   child: RaisedButton(
                     onPressed: null,
-                    child: Text('Register',style: TextStyle(fontSize: 15, color: Colors.black)),
+                    child: Text('Register',
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
                   ),
                 )
               ],
@@ -88,5 +110,23 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-}
 
+  Future<void> signUp() async {
+    final formState = _formkey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+        var future = Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        print("alks;fjlkjd");
+      } catch (e) {
+        print("e.message");
+      }
+    }
+  }
+}

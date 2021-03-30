@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mywebsite/m.dart';
+//import 'package:mywebsite/m.dart';
 
 class Trip extends StatefulWidget {
    static const String id = 'trip';
@@ -253,10 +253,10 @@ class _TripState extends State<Trip> {
 //map
 
                 ),
-            Expanded(
-              child: MapSample(),
+           // Expanded(
+         //     child: MapSample(),
             
-            )
+         //   )
           ],
         ),
       ),

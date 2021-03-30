@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-
-import 'package:tma_passenger/screens/home/bus_map.dart';
-import 'package:tma_passenger/screens/home/ride.dart';
-import 'package:tma_passenger/screens/home/user.dart';
-import 'package:tma_passenger/screens/home/add_ride.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'dart:async';
+import 'package:tma_passenger/screens/home/home.dart';
+import 'package:tma_passenger/screens/ride/ride.dart';
 import 'package:tma_passenger/screens/auth/login.dart';
+import 'package:tma_passenger/screens/auth/signup.dart';
 
+int appState = 3;
+StreamController<int> streamController = StreamController<int>();
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHome()
-  )
-  );
+  runApp(TmaPassengerApp());
 }
+
+class TmaPassengerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TMA Passenger',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ViewController(streamController.stream),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class ViewController extends StatefulWidget {
+
+  ViewController(this.stream);
+  final Stream<int> stream;
 
 class MyHome extends StatefulWidget {
   @override
@@ -33,53 +50,55 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // Initialize the Tab Controller
-    controller = TabController(length: 4, vsync: this);
+
+    void mySetState(int appStateValue) {
+      setState(() {
+        appState = appStateValue;
+      });
+    }
+
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
+    });
+
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+        mySetState(2);
+      } else {
+        print('User is signed in!');
+        mySetState(0);
+      }
+    });
+
   }
 
-  @override
-  void dispose() {
-    // Dispose of the Tab Controller
-    controller.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
-      body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
-        // Add tabs as widgets
-        children: <Widget>[MapView(), AddRide(), RideDetails(), UserDetails()],
-        // set the controller
-        controller: controller,
-      ),
-      // Set the bottom navigation bar
-      bottomNavigationBar: Material(
-        // set the color of the bottom navigation bar
-        color: Colors.black,
-        // set the tab bar as the child of bottom navigation bar
-        child: TabBar(
-          tabs: <Tab>[
-            Tab(
-              // set icon to the tab
-              icon: Icon(Icons.map),
-            ),
-            Tab(
-              icon: Icon(Icons.add),
-            ),
-            Tab(
-              icon: Icon(Icons.directions_bus),
-            ),
-            Tab(
-              icon: Icon(Icons.person),
-            ),
-          ],
-          // setup the controller
-          controller: controller,
+    if(appState == 0){
+      print(appState);
+      return HomeView();
+    }
+    else if(appState == 1){
+      print('tripStatus');
+      return RideView();
+    }
+    else if(appState == 2){
+      print(appState);
+      return LoginPage();
+    }
+    else{
+      return Scaffold(
+        body: Container(
+          child: SpinKitDualRing(color: Colors.black87),
         ),
-      ),
-    );
+      );
+    }
+
   }
 }

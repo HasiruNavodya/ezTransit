@@ -83,10 +83,12 @@ class _MapClickBodyState extends State<_MapClickBody> {
           Expanded(
             flex: 1,
             child: Container(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
               child: Column(
-                children: [
+                children: <Widget>[
                   SizedBox(height: 40.0),
                   TextFormField(
+                    //   key: ValueKey('stopName'),
                     controller: stopName,
                     decoration: InputDecoration(
                         labelText: 'Stop Name', border: OutlineInputBorder()),
@@ -101,6 +103,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //key: ValueKey('arrivingTime'),
                     controller: arrivingTime,
                     decoration: InputDecoration(
                         labelText: 'Arriving Time',
@@ -108,6 +111,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                     validator: (String value) {
                       if (value.isEmpty) {
                         return 'Arriving Time is required';
+                        //validator: (val) =>val.isEmpty?'This field is required':null,
                       }
                     },
                     onSaved: (String value) {
@@ -116,6 +120,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //  key: ValueKey('timeDu'),
                     controller: timeDu,
                     decoration: InputDecoration(
                         labelText: 'Time Duration From Last Stop',
@@ -131,6 +136,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //    key: ValueKey('cnlatitude'),
                     controller: cnlatitude,
                     decoration: InputDecoration(
                         labelText: 'Latitude', border: OutlineInputBorder()),
@@ -142,6 +148,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    //   key: ValueKey('cnlongitude'),
                     controller: cnlongitude,
                     decoration: InputDecoration(
                         labelText: 'Longitude', border: OutlineInputBorder()),
@@ -152,54 +159,66 @@ class _MapClickBodyState extends State<_MapClickBody> {
                     },
                   ),
                   SizedBox(height: 20.0),
-                  ElevatedButton(
-                      child: Text(
-                        'Add',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.pink[400], // background
-                        onPrimary: Colors.white, // foreground
-                      ),
-                      onPressed: () async {
-                        // validate the form based on it's current state
-                        if (_formKey.currentState.validate()) {
-                          Map<String, dynamic> data = {
-                            "Stop Name": stopName.text,
-                            "Ariving Time": arrivingTime.text,
-                            "Time Duration ": timeDu.text,
-                            "Latitude": cnlatitude.text,
-                            "Longitude": cnlongitude.text,
-                          };
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pink[400], // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () async {
+                            // validate the form based on it's current state
+                           
+                              Map<String, dynamic> data = {
+                                "Stop Name": stopName.text,
+                                "Ariving Time": arrivingTime.text,
+                                "Time Duration ": timeDu.text,
+                                "Latitude": cnlatitude.text,
+                                "Longitude": cnlongitude.text,
+                              };
 
-                          FirebaseFirestore.instance
-                              .collection('Map data')
-                              .add(data);
+                              FirebaseFirestore.instance
+                                  .collection("trips")
+                                  .doc("initializeTrip")
+                                  .collection("stop")
+                                  .add(data);
 
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertBox('Successfully Inserted!');
-                              });
-                        }
-                      }),
-                  SizedBox(height: 50.0),
-                  ElevatedButton(
-                      child: Text(
-                        'Finish',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.pink[400], // background
-                        onPrimary: Colors.white, // foreground
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    Home()));
-                      }),
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertBox('Successfully Inserted!');
+                                  });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Home()));
+                            
+                          }),
+                      SizedBox(width: 50.0),
+                      ElevatedButton(
+                          child: Text(
+                            'Finish',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pink[400], // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => Home()));
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),

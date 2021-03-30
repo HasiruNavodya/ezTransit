@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:async/async.dart';
 
+import 'destination.dart';
+
 
 class SelectPickup extends StatefulWidget {
   String destinationLocation;
@@ -34,6 +36,15 @@ class _SelectPickupState extends State<SelectPickup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SelectDestination()),
+              );
+            }
+        ),
         title: Text("Select Pickup Location"),
         backgroundColor: Colors.black,
         centerTitle: true,

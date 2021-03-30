@@ -17,6 +17,9 @@ int ticketcount;
 int newseatcount;
 int standingcount;
 String ticketprice;
+String tripid;
+String startcity;
+String endcity;
 
 class SelectBus extends StatefulWidget {
   String pickuLocation;
@@ -61,8 +64,12 @@ class _SelectBusState extends State<SelectBus> {
       if (documentSnapshot.exists) {
         print(documentSnapshot.data()['partNo']);
         pno = documentSnapshot.data()['partNo'];
+        startcity=documentSnapshot.data()['startin'];
+        endcity=documentSnapshot.data()['endin'];
         ticketprice = documentSnapshot.data()['fare'];
         print(ticketprice);
+        print('mmmmmm $startcity');
+        print('lllllll $endcity');
         print(pno);
         setState(() {
           pnoSet = 'yes';
@@ -146,6 +153,9 @@ class _SelectBusState extends State<SelectBus> {
 
                           if (snapshot.connectionState == ConnectionState.done) {
                             Map<String, dynamic> data = snapshot.data.data();
+
+                            tripid=document.data()['tripID'];
+                            print(tripid);
                             ticketcount=document.data()['ticket count'];
                             seatcount=data['Seat Count'];
                             print('$seatcount'+'-'+'$ticketcount');
@@ -172,53 +182,135 @@ class _SelectBusState extends State<SelectBus> {
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Card(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                                  color: Colors.white38,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
 
-                                      Text('Pickup At: '+document.data()['startTime']+'                                 Free Seats:'+newseatcount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
+                                        Expanded(
+                                          flex: 3,
+                                          child:Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
 
-                                      Text(document.data()['name']+'                            Standing:'+standingcount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
-
-                                      Text(document.data()['startTime']+' - '+document.data()['endTime']+'                                           '+data['Luxury Level'],
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
-
-                                      Text('km'+'                     min                                 '+data['Public or Private'],
-                                          style: TextStyle(fontWeight: FontWeight.w800)),
-                                      Text(''),
-
-
-                                     FlatButton(color:Colors.green, onPressed: () {
-                                       Navigator.push(
-                                         context,
-                                         MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice)),
-                                       );
-                                     }, child: Text("Select Bus"),
-                                     ),
-
-                                     RaisedButton(color:Colors.red, onPressed: () {
-                                       Navigator.push(
-                                         context,
-                                         MaterialPageRoute(),
-                                       );
-                                     }, child: Text("Locate Bus")
-                                     ),
+                                            Text('Pickup At: '+document.data()['startTime'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            Text(''),
 
 
+                                            Text(document.data()['name'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text(document.data()['startTime']+' - '+document.data()['endTime'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text('Km'+'          Min ',
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+
+                                            ButtonTheme(child:
+                                            FlatButton(color:Colors.black87, onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice,tripid,startcity,endcity)),
+                                              );
+                                            }, child: Text("Select Bus",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            ),
+
+                                            ),
+
+
+
+                                          ],
+
+
+                                        ),
+                                        ),
 
 
 
 
+                                        Column(
+                                          children: [
+                                            Text('Free Seats:'+newseatcount.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            Text(''),
 
 
-                                    ],
+                                            Text( 'Standing:'+standingcount.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
 
+
+                                            Text(data['Luxury Level'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            Text(data['Public or Private'],
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold
+                                                )),
+                                            Text(''),
+
+
+                                            ButtonTheme(child:
+                                            RaisedButton(color:Colors.black87, onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(),
+                                              );
+                                            }, child: Text("Locate Bus",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            ),
+                                            ),
+
+
+                                          ],
+
+                                        ),
+
+                                      ],
+
+
+                                    ),
                                   ),
+
                                 ),
                               ),
                             );

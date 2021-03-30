@@ -17,8 +17,15 @@ class AddRide extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "new ride \n\n\n",
-                style: TextStyle(),
+                "New Ride \n\n",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceSansPro',
+                  color: Colors.black87,
+                  letterSpacing: 2.5,
+
+                ),
               ),
               MaterialButton(
                 onPressed: () {
@@ -27,11 +34,11 @@ class AddRide extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SelectDestination()),
                   );
                 },
-                color: Colors.blue,
+                color: Colors.black,
                 textColor: Colors.white,
                 child: Icon(
                   Icons.add,
-                  size: 24,
+                  size:40,
                 ),
                 padding: EdgeInsets.all(16),
                 shape: CircleBorder(),

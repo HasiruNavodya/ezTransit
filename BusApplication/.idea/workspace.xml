@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0be8ef7-8e2f-4054-a004-442b728eeb1a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_bus/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PassengerApplication/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PassengerApplication/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PassengerApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PassengerApplication/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PassengerApplication/tma_passenger/lib/screens/addride/buses.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../PassengerApplication/tma_passenger/lib/screens/addride/buses.dart" afterDir="false" />
-    </list>
+    <list default="true" id="d0be8ef7-8e2f-4054-a004-442b728eeb1a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,33 +69,37 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="198" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616151882711" />
-    <state x="92" y="92" width="1736" height="866" key="AVDManager" timestamp="1616151820815">
+    <state x="92" y="92" width="1736" height="866" key="AVDManager" timestamp="1617005216071">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="92" y="92" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1616151820815" />
-    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1616684100923">
+    <state x="92" y="92" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1617005216071" />
+    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1617005121552">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1616684100923" />
-    <state width="1860" height="231" key="GridCell.Tab.0.bottom" timestamp="1616770092059">
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1617005121552" />
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom" timestamp="1617053069596">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1860" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616770092059" />
-    <state width="1860" height="231" key="GridCell.Tab.0.center" timestamp="1616770092059">
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1617053069596" />
+    <state width="1877" height="235" key="GridCell.Tab.0.center" timestamp="1617053069596">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1860" height="231" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616770092059" />
-    <state width="1860" height="231" key="GridCell.Tab.0.left" timestamp="1616770092058">
+    <state width="1877" height="235" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1617053069596" />
+    <state width="1877" height="235" key="GridCell.Tab.0.left" timestamp="1617053069596">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1860" height="231" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616770092058" />
-    <state width="1860" height="231" key="GridCell.Tab.0.right" timestamp="1616770092059">
+    <state width="1877" height="235" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1617053069596" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right" timestamp="1617053069596">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1860" height="231" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616770092059" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1617053069596" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1616152135561">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1616152135561" />
+    <state x="1050" y="371" width="672" height="678" key="search.everywhere.popup" timestamp="1616925557502">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1050" y="371" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616925557502" />
   </component>
 </project>
