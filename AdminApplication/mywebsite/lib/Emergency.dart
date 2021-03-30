@@ -75,7 +75,11 @@ Text(document.data()['busNo'].toString(),style: TextStyle(fontSize: 16),),
    SizedBox(height:10),    
      Row(children: [
 Text('Location : ',style: TextStyle(fontSize: 16),),
- Text(document.data()['location'].toString(),style: TextStyle(fontSize: 16),),
+ Text(document.data()['location'].latitude.toString(),style: TextStyle(fontSize: 16),),
+ Text('° N'),
+ SizedBox(width:5),
+ Text(document.data()['location'].longitude.toString(),style: TextStyle(fontSize: 16),),
+ Text('° E'),
    ],)  ,  
  SizedBox(height:10),
   Row(children: [
