@@ -4,15 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tma_passenger/main.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
-/*class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'register',
-      home: Register(),
-    );
-  }
-}*/
+
 class Register extends StatefulWidget {
 
   @override
@@ -36,6 +28,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context)  {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Form(
           key: _formkey,

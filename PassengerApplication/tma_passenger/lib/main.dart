@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +12,7 @@ import 'package:tma_passenger/screens/auth/login.dart';
 
 
 void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
@@ -33,6 +35,15 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+      }
+    });
     // Initialize the Tab Controller
     controller = TabController(length: 4, vsync: this);
   }
