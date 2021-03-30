@@ -37,7 +37,10 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: plateNumber,
       decoration: InputDecoration(
-          labelText: 'Plate Number', border: OutlineInputBorder()),
+        
+          labelText: 'Plate Number', 
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Plate Number is required';
@@ -54,7 +57,10 @@ class _NewBusState extends State<NewBus> {
       controller: driverName,
       maxLength: 30,
       decoration: InputDecoration(
-          labelText: 'Driver Name', border: OutlineInputBorder()),
+       
+          labelText: 'Driver Name', 
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          border: OutlineInputBorder()),
 
       validator: (String value) {
         if (value.isEmpty) {
@@ -71,7 +77,10 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: licenseNumber,
       decoration: InputDecoration(
-          labelText: 'Driver License Number', border: OutlineInputBorder()),
+       
+          labelText: 'Driver License Number', 
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Driver License Number is required';
@@ -87,7 +96,11 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: color,
       decoration:
-          InputDecoration(labelText: 'Color', border: OutlineInputBorder()),
+          InputDecoration(
+           
+            labelText: 'Color', 
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
           return ('Color is required');
@@ -103,7 +116,10 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: publicPrivate,
       decoration: InputDecoration(
-          labelText: 'Public / Private', border: OutlineInputBorder()),
+         
+          labelText: 'Public / Private', 
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          border: OutlineInputBorder()),
        maxLength: 7,
       validator: (String value) {
         if (value.isEmpty) {
@@ -120,7 +136,10 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: luxeryLevel,
       decoration: InputDecoration(
-          labelText: 'Luxery Level', border: OutlineInputBorder()),
+        
+          labelText: 'Luxery Level',
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+            border: OutlineInputBorder()),
       maxLength: 15,
       validator: (String value) {
         if (value.isEmpty) {
@@ -138,8 +157,13 @@ class _NewBusState extends State<NewBus> {
       controller: seat,
 
       decoration: InputDecoration(
-          labelText: 'Seat Count', border: OutlineInputBorder()),
-      keyboardType: TextInputType.number,
+       // fillColor: Colors.white,
+        //filled: true,
+          labelText: 'Seat Count',
+          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+           border: OutlineInputBorder(),
+          ),
+      
        maxLength: 3,
 
       validator: (String value) {
@@ -160,7 +184,7 @@ class _NewBusState extends State<NewBus> {
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Transport Management System'),
+        title: const Text('Add New Bus'),
       ),
       sideBar: _sideBar.sideBarMenus(context, NewBus.id),
       body: Center( 
@@ -172,101 +196,117 @@ class _NewBusState extends State<NewBus> {
          
           ),
           padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 350.0),
-          child: Container(
-            
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
-            
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40.0),
-                bottomRight: Radius.circular(40.0),
-                topLeft: Radius.circular(40.0),
-                topRight: Radius.circular(40.0),
-              ),
+          child: Center(
+           
+            child: Card(
+              color: Colors.blue[300],
+              elevation: 20.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(35),
+                ),
+               ),
+             // padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+              
+              /*decoration: BoxDecoration(
+               // color:Colors.blue[300],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40.0),
+                  bottomRight: Radius.circular(40.0),
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0),
+                  
+                ),
               gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.blue[400],
-                    Colors.blue[100],
-                  ]),
-            ),
-            child: Form(
-              //because of this global key we can acess build in validations
-              key: _formKey,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.blue[400],
+                      Colors.blue[100],
+                      Colors.blue[400],
+                    ]),
+              ),*/
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  //because of this global key we can acess build in validations
+                  key: _formKey,
 
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  _buildPlateNumber(),
-                  SizedBox(height: 10.0),
-                  _buildDriverName(),
-                  SizedBox(height: 10.0),
-                  _buildLicenseNumber(),
-                  SizedBox(height: 10.0),
-                  _buildColor(),
-                  SizedBox(height: 10.0),
-                  _buildPublicPrivate(),
-                  SizedBox(height: 10.0),
-                  _buildLuxeryLevel(),
-                  SizedBox(height: 10.0),
-                  _buildSeat(),
-                  SizedBox(height: 10.0),
-                  SizedBox(height: 5.0),
-                  Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[400], // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () async {
-                            // validate the form based on it's current state
-                            if (_formKey.currentState.validate()) {
-                              Map<String, dynamic> data = {
-                                "Plate Number": plateNumber.text,
-                                "Driver Name": driverName.text,
-                                "License Number": licenseNumber.text,
-                                "Color": color.text,
-                                "Public or Private": publicPrivate.text,
-                                "Luxury Level": luxeryLevel.text,
-                                "Seat Count": seat.text,
-                              };
+                    children: <Widget>[
+                      _buildPlateNumber(),
+                      SizedBox(height: 10.0),
+                      _buildDriverName(),
+                      SizedBox(height: 10.0),
+                      _buildLicenseNumber(),
+                      SizedBox(height: 10.0),
+                      _buildColor(),
+                      SizedBox(height: 10.0),
+                      _buildPublicPrivate(),
+                      SizedBox(height: 10.0),
+                      _buildLuxeryLevel(),
+                      SizedBox(height: 10.0),
+                      _buildSeat(),
+                      SizedBox(height: 10.0),
+                      SizedBox(height: 5.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.pink[400], // background
+                                onPrimary: Colors.white, // foreground
+                              ),
+                              onPressed: () async {
+                                // validate the form based on it's current state
+                                if (_formKey.currentState.validate()) {
+                                  Map<String, dynamic> data = {
+                                    "Plate Number": plateNumber.text,
+                                    "Driver Name": driverName.text,
+                                    "License Number": licenseNumber.text,
+                                    "Color": color.text,
+                                    "Public or Private": publicPrivate.text,
+                                    "Luxury Level": luxeryLevel.text,
+                                    "Seat Count": seat.text,
+                                  };
 
-                              FirebaseFirestore.instance
-                                  .collection('NewBus')
-                                  .add(data);
+                                  FirebaseFirestore.instance
+                                      .collection('NewBus')
+                                      .add(data);
 
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertBox('Successfully Inserted!');
-                                  });
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertBox('Successfully Inserted!');
+                                      });
 
-                                  
-                            }
-                          }),
-                      SizedBox(width: 50.0),
-                      ElevatedButton(
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[400], // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () async {}),
+                                      
+                                }
+                              }),
+                          SizedBox(width: 50.0),
+                          ElevatedButton(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.pink[400], // background
+                                onPrimary: Colors.white, // foreground
+                              ),
+                              onPressed: () async {
+                                _formKey.currentState.reset();
+                              }),
+                        ],
+                      ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

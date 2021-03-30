@@ -51,6 +51,7 @@ class Home extends StatelessWidget {
                   colors: [
                     Colors.blue[400],
                     Colors.blue[100],
+                    Colors.blue[400],
                   ]),
 
             ),

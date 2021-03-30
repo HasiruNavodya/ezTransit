@@ -8,6 +8,7 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/LogOut.dart';
 import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
+import 'package:mywebsite/initializeTrip.dart';
 
 
 void main() async{
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
 NewBus.id:(context) => NewBus(),
        Emergency.id:(context) => Emergency(),
       Complaints.id:(context) => Complaints(),
-      Trip.id:(context) => Trip(),
+      InitializeTrip.id:(context) => InitializeTrip(),
       LogOut.id:(context) => LogOut(),
        
       } 

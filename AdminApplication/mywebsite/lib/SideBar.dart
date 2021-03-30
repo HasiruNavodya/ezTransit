@@ -12,6 +12,8 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/LogOut.dart';
 import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
+import 'package:mywebsite/initializeTrip.dart';
+import 'package:mywebsite/login.dart';
 
 class SideBarWidget{
   sideBarMenus(context, selectedRoute){
@@ -31,7 +33,7 @@ class SideBarWidget{
 
           MenuItem(
             title: 'Add Trip',
-            route: Trip.id,
+            route: InitializeTrip.id,
             icon: Icons.trip_origin_rounded,
           ),
 
@@ -45,11 +47,8 @@ class SideBarWidget{
             route: Complaints.id,
             icon: Icons.messenger
           ),
-               MenuItem(
-            title: 'Log Out',
-            route: LogOut.id,
-            icon: Icons.logout
-          ),
+               
+           
          
         ],
             
@@ -79,7 +78,7 @@ class SideBarWidget{
             child:        ElevatedButton(
           onPressed: () {
             AuthService().signOut();
-             
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context )=>LoginPage()));
           },
           child: Center(child: Text('LOG OUT')))
           ),
