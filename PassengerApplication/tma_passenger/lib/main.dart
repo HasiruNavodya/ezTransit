@@ -16,9 +16,15 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
+<<<<<<< HEAD
     debugShowCheckedModeBanner: false,
     home: LoginPage()
     ),
+=======
+      debugShowCheckedModeBanner: false,
+      home: MyHome()
+  )
+>>>>>>> dd8f0caa1adef6af65c5316e699ef36933b59924
   );
 }
 
@@ -60,8 +66,9 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
 
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         // Add tabs as widgets
-        children: <Widget>[BusMapView(), AddRide(), RideDetails(), UserDetails()],
+        children: <Widget>[MapView(), AddRide(), RideDetails(), UserDetails()],
         // set the controller
         controller: controller,
       ),
@@ -93,5 +100,3 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     );
   }
 }
-
-

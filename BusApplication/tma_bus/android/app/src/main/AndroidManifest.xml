@@ -12,8 +12,15 @@
 
 
     <application
+
         android:label="tma_bus"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDxrRdgmin9mb_qIpcknuulRVrYOmRo9UQ"/>
+
+
         <service
             android:name="com.pravera.geofence_service.foreground_service.ForegroundService"
             android:stopWithTask="true"
@@ -46,10 +53,6 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-            <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyCXMQA_0o00N8KA7iSXA870zExtgQ-Fc-A"
-            />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

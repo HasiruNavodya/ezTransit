@@ -28,7 +28,11 @@ class BuyTicket extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => RideDetails()),
+                (Route<dynamic> route) => false,
+          );
         },
         child: Icon(Icons.arrow_forward_ios),
         backgroundColor: Colors.black87,

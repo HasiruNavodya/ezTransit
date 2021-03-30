@@ -26,10 +26,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5378f249-8539-4d03-b567-11b3f46fee8d" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_passenger/lib/screens/auth/signup.dart" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BusApplication/tma_bus/lib/screens/home/account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../BusApplication/tma_bus/lib/screens/home/account.dart" afterDir="false" />
+>>>>>>> dd8f0caa1adef6af65c5316e699ef36933b59924
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +58,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -68,8 +80,13 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../BusApplication" />
-    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\github\TMA\PassengerApplication\tma_passenger\assets" />
+    </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -129,6 +146,7 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="652" y="260" key="#main.dart/0.0.1920.1050@0.0.1920.1050" timestamp="1615558408891" />
+<<<<<<< HEAD
     <state x="65" y="67" width="1230" height="634" key="AVDManager" timestamp="1617095698095">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
@@ -172,5 +190,43 @@
     </state>
     <state x="101" y="166" width="672" height="496" key="search.everywhere.popup/0.0.1360.768@0.0.1360.768" timestamp="1616868773758" />
     <state x="143" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616231188892" />
+=======
+    <state x="-7" y="117" width="1736" height="866" key="AVDManager" timestamp="1616961392694">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="-7" y="117" width="1736" height="866" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1616961392694" />
+    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1617044842310">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1617044842310" />
+    <state width="1877" height="154" key="GridCell.Tab.0.bottom" timestamp="1617038305347">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="154" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1617038305347" />
+    <state width="1877" height="154" key="GridCell.Tab.0.center" timestamp="1617038305346">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="154" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1617038305346" />
+    <state width="1877" height="154" key="GridCell.Tab.0.left" timestamp="1617038305346">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="154" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1617038305346" />
+    <state width="1877" height="154" key="GridCell.Tab.0.right" timestamp="1617038305346">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="154" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1617038305346" />
+    <state x="461" y="169" key="SettingsEditor" timestamp="1616947284305">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="169" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1616947284305" />
+    <state x="616" y="243" key="run.anything.popup" timestamp="1616950033122">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616950033122" />
+    <state x="143" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1616961444752">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="143" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616961444752" />
+>>>>>>> dd8f0caa1adef6af65c5316e699ef36933b59924
   </component>
 </project>

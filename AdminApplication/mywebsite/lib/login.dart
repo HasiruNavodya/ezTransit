@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mywebsite/auth.dart';
 import 'package:mywebsite/reset.dart';
 import 'package:mywebsite/signup.dart';
+import 'package:mywebsite/Home View.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -115,9 +116,14 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(height: 50.0),
           GestureDetector(
             onTap: () {
-              if (checkFields()) AuthService().signIn(email, password, context);
+              if (checkFields()){
+AuthService().signIn(email, password, context);
+
+
+              } 
             },
             child: Container(
+              
                 height: 50.0,
                 child: Material(
                     borderRadius: BorderRadius.circular(25.0),
