@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
@@ -25,8 +26,6 @@ class TmaPassengerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     );
   }
-}
-
 
 class ViewController extends StatefulWidget {
 
@@ -44,17 +43,32 @@ class _ViewControllerState extends State<ViewController> {
   @override
   void initState() {
     super.initState();
-    widget.stream.listen((appStateValue) {
-      mySetState(appStateValue);
-    });
-  }
 
-  void mySetState(int appStateValue) {
+    void mySetState(int appStateValue) {
     setState(() {
       appState = appStateValue;
     });
   }
 
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      if (user == null) {
+        mySetState(1);
+        print('User is currently signed out!');
+      } else {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+      }
+    });
+
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
+    });
+  }
+
+  
+
+  
   @override
   Widget build(BuildContext context) {
 
@@ -62,9 +76,12 @@ class _ViewControllerState extends State<ViewController> {
       print(appState);
       return HomeView();
     }
-    else{
+    else(appState == 1){
       print('tripStatus');
       return RideView();
+    }
+    else(appState == 2){
+      return Login();
     }
 
   }
