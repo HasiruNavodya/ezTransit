@@ -1,85 +1,71 @@
 import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+import 'package:tma_passenger/screens/home/home.dart';
+import 'package:tma_passenger/screens/ride/ride.dart';
 
-import 'package:tma_passenger/screens/home/bus_map.dart';
-import 'package:tma_passenger/screens/home/ride.dart';
-import 'package:tma_passenger/screens/home/user.dart';
-import 'package:tma_passenger/screens/home/add_ride.dart';
+int appState = 1;
+StreamController<int> streamController = StreamController<int>();
 
-import 'package:tma_passenger/screens/auth/login.dart';
-
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHome()
-  )
-  );
+  runApp(TmaPassengerApp());
 }
 
-class MyHome extends StatefulWidget {
+class TmaPassengerApp extends StatelessWidget {
   @override
-  MyHomeState createState() => MyHomeState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TMA Passenger',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ViewController(streamController.stream),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
-// SingleTickerProviderStateMixin is used for animation
-class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
-  // Create a tab controller
-  TabController controller;
+
+class ViewController extends StatefulWidget {
+
+  ViewController(this.stream);
+  final Stream<int> stream;
+
+  @override
+  _ViewControllerState createState() => _ViewControllerState();
+}
+
+class _ViewControllerState extends State<ViewController> {
+
+
 
   @override
   void initState() {
     super.initState();
-    // Initialize the Tab Controller
-    controller = TabController(length: 4, vsync: this);
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
+    });
   }
 
-  @override
-  void dispose() {
-    // Dispose of the Tab Controller
-    controller.dispose();
-    super.dispose();
+  void mySetState(int appStateValue) {
+    setState(() {
+      appState = appStateValue;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
-      body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
-        // Add tabs as widgets
-        children: <Widget>[MapView(), AddRide(), RideDetails(), UserDetails()],
-        // set the controller
-        controller: controller,
-      ),
-      // Set the bottom navigation bar
-      bottomNavigationBar: Material(
-        // set the color of the bottom navigation bar
-        color: Colors.black,
-        // set the tab bar as the child of bottom navigation bar
-        child: TabBar(
-          tabs: <Tab>[
-            Tab(
-              // set icon to the tab
-              icon: Icon(Icons.map),
-            ),
-            Tab(
-              icon: Icon(Icons.add),
-            ),
-            Tab(
-              icon: Icon(Icons.directions_bus),
-            ),
-            Tab(
-              icon: Icon(Icons.person),
-            ),
-          ],
-          // setup the controller
-          controller: controller,
-        ),
-      ),
-    );
+    if(appState == 0){
+      print(appState);
+      return HomeView();
+    }
+    else{
+      print('tripStatus');
+      return RideView();
+    }
+
   }
 }
