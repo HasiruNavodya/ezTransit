@@ -152,8 +152,7 @@ class UserDetails extends StatelessWidget {
                          child: RaisedButton(color:Colors.black87,
 
                             onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                                  LoginPage()), (Route<dynamic> route) => false);
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage()), (Route<dynamic> route) => false);
                             },
                             child: Text('Log Out',
                               style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,

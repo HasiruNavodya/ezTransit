@@ -1,11 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:async';
 import 'package:tma_passenger/screens/home/home.dart';
 import 'package:tma_passenger/screens/ride/ride.dart';
+import 'package:tma_passenger/screens/auth/login.dart';
+import 'package:tma_passenger/screens/auth/signup.dart';
 
-int appState = 1;
+int appState = 3;
 StreamController<int> streamController = StreamController<int>();
 
 void main() async {
@@ -26,6 +29,8 @@ class TmaPassengerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
 
 class ViewController extends StatefulWidget {
 
@@ -45,30 +50,31 @@ class _ViewControllerState extends State<ViewController> {
     super.initState();
 
     void mySetState(int appStateValue) {
-    setState(() {
-      appState = appStateValue;
+      setState(() {
+        appState = appStateValue;
+      });
+    }
+
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
     });
-  }
 
     FirebaseAuth.instance
         .authStateChanges()
         .listen((User user) {
       if (user == null) {
-        mySetState(1);
         print('User is currently signed out!');
+        mySetState(2);
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+        print('User is signed in!');
+        mySetState(0);
       }
     });
 
-    widget.stream.listen((appStateValue) {
-      mySetState(appStateValue);
-    });
   }
 
-  
 
-  
+
   @override
   Widget build(BuildContext context) {
 
@@ -76,12 +82,20 @@ class _ViewControllerState extends State<ViewController> {
       print(appState);
       return HomeView();
     }
-    else(appState == 1){
+    else if(appState == 1){
       print('tripStatus');
       return RideView();
     }
-    else(appState == 2){
-      return Login();
+    else if(appState == 2){
+      print(appState);
+      return LoginPage();
+    }
+    else{
+      return Scaffold(
+        body: Container(
+          child: SpinKitDualRing(color: Colors.black87),
+        ),
+      );
     }
 
   }

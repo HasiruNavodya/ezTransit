@@ -4,6 +4,7 @@ import 'package:tma_passenger/main.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -84,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               GestureDetector(
                 child: Text("Sign Up Here", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blueAccent,letterSpacing: 2, fontSize: 17.0),textAlign: TextAlign.center,),
                 onTap: (){
+                  //streamController.add(0);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                 },
               ),
@@ -102,8 +104,8 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _email,
             password: _password,);
-        var future = Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
         print("alks;fjlkjd");
+        streamController.add(0);
       }catch(e) {
         print("e.message");
       }

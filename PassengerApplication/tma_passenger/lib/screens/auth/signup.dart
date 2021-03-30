@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/main.dart';
+import 'package:tma_passenger/screens/auth/login.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
 
@@ -200,7 +201,7 @@ class _RegisterState extends State<Register> {
         UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _email,
           password: _password,);
-        var future = Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+        var future = Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
         print("alks;fjlkjd");
       }catch(e) {
         print("e.message");
