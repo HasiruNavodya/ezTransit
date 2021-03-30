@@ -353,7 +353,7 @@ class _RideViewState extends State<RideView> {
   }
 
   void endRide() {
-    print('Ride Ended..........................');
+    print('Ride Ended>>>>>>>>>>>>>>>>>>>>>>>');
   }
 
   void getRideData(){

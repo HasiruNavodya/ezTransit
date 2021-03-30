@@ -44,7 +44,6 @@ class ViewController extends StatefulWidget {
 class _ViewControllerState extends State<ViewController> {
 
 
-
   @override
   void initState() {
     super.initState();
@@ -70,6 +69,7 @@ class _ViewControllerState extends State<ViewController> {
         mySetState(0);
       }
     });
+    mySetState(1);
 
   }
 
