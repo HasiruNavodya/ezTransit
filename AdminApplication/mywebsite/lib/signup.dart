@@ -54,7 +54,7 @@ class _SignupPageState extends State<SignupPage> {
               width: 200.0,
               child: Stack(
                 children: [
-                  Text('Signup!',
+                  Text('Signup As A New Admin',
                       style: TextStyle(fontFamily: 'Trueno', fontSize: 30.0)),
                   
                 ],
@@ -120,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Go back',
+                child: Text('Back',
                     style: TextStyle(
                         color: greenColor,
                         fontFamily: 'Trueno',
