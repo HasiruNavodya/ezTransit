@@ -4,15 +4,12 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class NewBus extends StatefulWidget {
-
   static const String id = 'newbus';
   @override
   _NewBusState createState() => _NewBusState();
 }
 
 class _NewBusState extends State<NewBus> {
-  
-
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -37,9 +34,8 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: plateNumber,
       decoration: InputDecoration(
-        
-          labelText: 'Plate Number', 
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          labelText: 'Plate Number',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
@@ -57,11 +53,9 @@ class _NewBusState extends State<NewBus> {
       controller: driverName,
       maxLength: 30,
       decoration: InputDecoration(
-       
-          labelText: 'Driver Name', 
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          labelText: 'Driver Name',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-
       validator: (String value) {
         if (value.isEmpty) {
           return 'Driver Name is required';
@@ -77,9 +71,8 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: licenseNumber,
       decoration: InputDecoration(
-       
-          labelText: 'Driver License Number', 
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          labelText: 'Driver License Number',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
@@ -95,11 +88,9 @@ class _NewBusState extends State<NewBus> {
   Widget _buildColor() {
     return TextFormField(
       controller: color,
-      decoration:
-          InputDecoration(
-           
-            labelText: 'Color', 
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+      decoration: InputDecoration(
+          labelText: 'Color',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
@@ -116,11 +107,10 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: publicPrivate,
       decoration: InputDecoration(
-         
-          labelText: 'Public / Private', 
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
+          labelText: 'Public / Private',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-       maxLength: 7,
+      maxLength: 7,
       validator: (String value) {
         if (value.isEmpty) {
           return ('This field is required');
@@ -136,10 +126,9 @@ class _NewBusState extends State<NewBus> {
     return TextFormField(
       controller: luxeryLevel,
       decoration: InputDecoration(
-        
           labelText: 'Luxery Level',
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
-            border: OutlineInputBorder()),
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
       maxLength: 15,
       validator: (String value) {
         if (value.isEmpty) {
@@ -155,17 +144,14 @@ class _NewBusState extends State<NewBus> {
   Widget _buildSeat() {
     return TextFormField(
       controller: seat,
-
       decoration: InputDecoration(
-       // fillColor: Colors.white,
+        // fillColor: Colors.white,
         //filled: true,
-          labelText: 'Seat Count',
-          labelStyle: TextStyle(fontSize: 16,color: Colors.black),
-           border: OutlineInputBorder(),
-          ),
-      
-       maxLength: 3,
-
+        labelText: 'Seat Count',
+        labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+        border: OutlineInputBorder(),
+      ),
+      maxLength: 3,
       validator: (String value) {
         if (value.isEmpty) {
           return ('Seat count is required');
@@ -179,7 +165,6 @@ class _NewBusState extends State<NewBus> {
 
   @override
   Widget build(BuildContext context) {
-
     SideBarWidget _sideBar = SideBarWidget();
     return AdminScaffold(
       backgroundColor: Colors.white,
@@ -187,27 +172,25 @@ class _NewBusState extends State<NewBus> {
         title: const Text('Add New Bus'),
       ),
       sideBar: _sideBar.sideBarMenus(context, NewBus.id),
-      body: Center( 
-      child:SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 1.2 * MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-         
-          ),
-          padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 350.0),
-          child: Center(
-           
-            child: Card(
-              color: Colors.blue[300],
-              elevation: 20.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(35),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 1.2 * MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(),
+            padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
+            child: Center(
+              child: Card(
+                color: Colors.blue[200],
+                elevation: 20.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(35),
+                  ),
                 ),
-               ),
-             // padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
-              
-              /*decoration: BoxDecoration(
+                // padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+
+                /*decoration: BoxDecoration(
                // color:Colors.blue[300],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40.0),
@@ -225,99 +208,94 @@ class _NewBusState extends State<NewBus> {
                       Colors.blue[400],
                     ]),
               ),*/
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
-                  //because of this global key we can acess build in validations
-                  key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    //because of this global key we can acess build in validations
+                    key: _formKey,
 
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      _buildPlateNumber(),
-                      SizedBox(height: 10.0),
-                      _buildDriverName(),
-                      SizedBox(height: 10.0),
-                      _buildLicenseNumber(),
-                      SizedBox(height: 10.0),
-                      _buildColor(),
-                      SizedBox(height: 10.0),
-                      _buildPublicPrivate(),
-                      SizedBox(height: 10.0),
-                      _buildLuxeryLevel(),
-                      SizedBox(height: 10.0),
-                      _buildSeat(),
-                      SizedBox(height: 10.0),
-                      SizedBox(height: 5.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              child: Text(
-                                'Submit',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () async {
-                                // validate the form based on it's current state
-                                if (_formKey.currentState.validate()) {
-                                  Map<String, dynamic> data = {
-                                    "Plate Number": plateNumber.text,
-                                    "Driver Name": driverName.text,
-                                    "License Number": licenseNumber.text,
-                                    "Color": color.text,
-                                    "Public or Private": publicPrivate.text,
-                                    "Luxury Level": luxeryLevel.text,
-                                    "Seat Count": seat.text,
-                                  };
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _buildPlateNumber(),
+                        SizedBox(height: 10.0),
+                        _buildDriverName(),
+                        SizedBox(height: 10.0),
+                        _buildLicenseNumber(),
+                        SizedBox(height: 10.0),
+                        _buildColor(),
+                        SizedBox(height: 10.0),
+                        _buildPublicPrivate(),
+                        SizedBox(height: 10.0),
+                        _buildLuxeryLevel(),
+                        SizedBox(height: 10.0),
+                        _buildSeat(),
+                        SizedBox(height: 10.0),
+                        SizedBox(height: 5.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.pink[400], // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () async {
+                                  // validate the form based on it's current state
+                                  if (_formKey.currentState.validate()) {
+                                    Map<String, dynamic> data = {
+                                      "Plate Number": plateNumber.text,
+                                      "Driver Name": driverName.text,
+                                      "License Number": licenseNumber.text,
+                                      "Color": color.text,
+                                      "Public or Private": publicPrivate.text,
+                                      "Luxury Level": luxeryLevel.text,
+                                      "Seat Count": seat.text,
+                                    };
 
-                                  FirebaseFirestore.instance
-                                      .collection('NewBus')
-                                      .add(data);
+                                    FirebaseFirestore.instance
+                                        .collection('NewBus')
+                                        .add(data);
 
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertBox('Successfully Inserted!');
-                                      });
-
-                                      
-                                }
-                              }),
-                          SizedBox(width: 50.0),
-                          ElevatedButton(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () async {
-                                _formKey.currentState.reset();
-                              }),
-                        ],
-                      ),
-                    ],
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertBox(
+                                              'Successfully Inserted!');
+                                        });
+                                  }
+                                }),
+                            SizedBox(width: 50.0),
+                            ElevatedButton(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.pink[400], // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () async {
+                                  _formKey.currentState.reset();
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ),),
-       
-        );
-      
-    
-    
-    
+      ),
+    );
   }
 }
 

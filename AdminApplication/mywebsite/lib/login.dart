@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mywebsite/auth.dart';
 import 'package:mywebsite/reset.dart';
 import 'package:mywebsite/signup.dart';
-import 'package:mywebsite/Home View.dart';
 
 class LoginPage extends StatefulWidget {
   

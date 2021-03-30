@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mywebsite/AddTrip.dart';
+
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/initializeTrip.dart';
 //import 'page.dart';
@@ -174,32 +174,30 @@ class _MapClickBodyState extends State<_MapClickBody> {
                           ),
                           onPressed: () async {
                             // validate the form based on it's current state
-                           
-                              Map<String, dynamic> data = {
-                                "Stop Name": stopName.text,
-                                "Ariving Time": arrivingTime.text,
-                                "Time Duration ": timeDu.text,
-                                "Latitude": cnlatitude.text,
-                                "Longitude": cnlongitude.text,
-                              };
 
-                              FirebaseFirestore.instance
-                                  .collection("trips")
-                                  .doc("initializeTrip")
-                                  .collection("stop")
-                                  .add(data);
+                            Map<String, dynamic> data = {
+                              "Stop Name": stopName.text,
+                              "Ariving Time": arrivingTime.text,
+                              "Time Duration ": timeDu.text,
+                              "Latitude": cnlatitude.text,
+                              "Longitude": cnlongitude.text,
+                            };
 
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertBox('Successfully Inserted!');
-                                  });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          Home()));
-                            
+                            FirebaseFirestore.instance
+                                .collection("trips")
+                                .doc("initializeTrip")
+                                .collection("stop")
+                                .add(data);
+
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertBox('Successfully Inserted!');
+                                });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => Home()));
                           }),
                       SizedBox(width: 50.0),
                       ElevatedButton(
