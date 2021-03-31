@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
                   children: [
                     Text(
                       'Welcome To Our Transport Management System',
-                      style: TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
                     ),
                     SizedBox(width: 50),
                     SizedBox(

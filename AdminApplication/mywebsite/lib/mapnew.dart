@@ -99,7 +99,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                 child: Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
-                  color: Colors.blue[200],
+                  color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 40.0),
@@ -187,65 +187,75 @@ class _MapClickBodyState extends State<_MapClickBody> {
                           }
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          ElevatedButton(
-                              child: Text(
-                                'Add',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () async {
-                                // validate the form based on it's current state
+                          SizedBox(width: 130,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20,),
+                                  child: Text(
+                                    'Add',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () async {
+                                  // validate the form based on it's current state
 
-                                Map<String, dynamic> data = {
-                                  "Stop Name": stopName.text,
-                                  "Ariving Time": arrivingTime.text,
-                                  "Time Duration ": timeDu.text,
-                                  "Latitude": cnlatitude.text,
-                                  "Longitude": cnlongitude.text,
-                                };
+                                  Map<String, dynamic> data = {
+                                    "Stop Name": stopName.text,
+                                    "Ariving Time": arrivingTime.text,
+                                    "Time Duration ": timeDu.text,
+                                    "Latitude": cnlatitude.text,
+                                    "Longitude": cnlongitude.text,
+                                  };
 
-                                FirebaseFirestore.instance
-                                    .collection("trips")
-                                    .doc("initializeTrip")
-                                    .collection("stop")
-                                    .add(data);
+                                  FirebaseFirestore.instance
+                                      .collection("trips")
+                                      .doc("initializeTrip")
+                                      .collection("stop")
+                                      .add(data);
 
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertBox('Successfully Inserted!');
-                                    });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            MapClickPageNew()));
-                              }),
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertBox('Successfully Inserted!');
+                                      });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              MapClickPageNew()));
+                                }),
+                          ),
                           SizedBox(width: 50.0),
-                          ElevatedButton(
-                              child: Text(
-                                'Finish',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Home()));
-                              }),
+                          SizedBox(width: 130,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20),
+                                  child: Text(
+                                    'Finish',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Home()));
+                                }),
+                          ),
                         ],
                       )
                     ],

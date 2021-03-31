@@ -4,7 +4,6 @@ import 'package:mywebsite/reset.dart';
 import 'package:mywebsite/signup.dart';
 
 class LoginPage extends StatefulWidget {
-  
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -14,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String email, password;
 
-  Color greenColor = Color(0xFF00AF19);
+ Color greenColor = Colors.blue;
 
   //To check fields during submit
   checkFields() {
@@ -48,7 +47,8 @@ class _LoginPageState extends State<LoginPage> {
 
   _buildLoginForm() {
     return Padding(
-        padding: const EdgeInsets.only(top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
+        padding: const EdgeInsets.only(
+            top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
         child: ListView(children: [
           SizedBox(height: 75.0),
           Container(
@@ -116,14 +116,11 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(height: 50.0),
           GestureDetector(
             onTap: () {
-              if (checkFields()){
-AuthService().signIn(email, password, context);
-
-
-              } 
+              if (checkFields()) {
+                AuthService().signIn(email, password, context);
+              }
             },
             child: Container(
-              
                 height: 50.0,
                 child: Material(
                     borderRadius: BorderRadius.circular(25.0),
@@ -135,8 +132,6 @@ AuthService().signIn(email, password, context);
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'Trueno'))))),
           ),
-         
-            
           SizedBox(height: 25.0),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text('SignUp as a new admin'),

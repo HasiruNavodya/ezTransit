@@ -14,9 +14,9 @@ class SideBarWidget {
     return SideBar(
       items: const [
         MenuItem(
-          title: 'Welcome',
+          title: 'Home',
           route: Home.id,
-          icon: Icons.dashboard,
+          icon: Icons.home,
         ),
         MenuItem(
           title: 'Add New Bus',

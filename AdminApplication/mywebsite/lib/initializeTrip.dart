@@ -128,14 +128,13 @@ class _InitializeTripState extends State<InitializeTrip> {
                 ),
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 350.0),
             child: Card(
-              color: Colors.blue[200],
+              color: Colors.blue[300],
               elevation: 20.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(35),
                 ),
               ),
-            
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Form(
@@ -153,64 +152,74 @@ class _InitializeTripState extends State<InitializeTrip> {
                       _buildstartCity(),
                       SizedBox(height: 10.0),
                       _buildendCity(),
-                      SizedBox(height: 10.0),
-                      SizedBox(height: 5.0),
+                      SizedBox(height: 30.0),
+                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          ElevatedButton(
-                              child: Text(
-                                'Submit',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () async {
-                                // validate the form based on it's current state
-                                if (_formKey.currentState.validate()) {
-                                  Map<String, dynamic> data = {
-                                    "Trip ID": tripID.text,
-                                    "Bus Name": busName.text,
-                                    "Start City": startCity.text,
-                                    "End City": endCity.text,
-                                  };
+                          SizedBox(width: 175,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20),
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () async {
+                                  // validate the form based on it's current state
+                                  if (_formKey.currentState.validate()) {
+                                    Map<String, dynamic> data = {
+                                      "Trip ID": tripID.text,
+                                      "Bus Name": busName.text,
+                                      "Start City": startCity.text,
+                                      "End City": endCity.text,
+                                    };
 
-                                  FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .set(data);
+                                    FirebaseFirestore.instance
+                                        .collection("trips")
+                                        .doc("initializeTrip")
+                                        .set(data);
 
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertBox(
-                                            'Successfully Inserted!');
-                                      });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              MapClickPageNew()));
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertBox(
+                                              'Successfully Inserted!');
+                                        });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                MapClickPageNew()));
 
-                                  ;
-                                }
-                              }),
-                          SizedBox(width: 50.0),
-                          ElevatedButton(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.pink[400], // background
-                                onPrimary: Colors.white, // foreground
-                              ),
-                              onPressed: () {
-                                _formKey.currentState.reset();
-                              }),
+                                    ;
+                                  }
+                                }),
+                          ),
+                          SizedBox(width: 90.0),
+                          SizedBox(width: 175,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20.0),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () {
+                                  _formKey.currentState.reset();
+                                }),
+                          ),
                         ],
                       ),
                     ],
@@ -224,7 +233,6 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 }
-
 
 class AlertBox extends StatelessWidget {
   final title;

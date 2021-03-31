@@ -39,7 +39,7 @@ class _EmergencyState extends State<Emergency> {
                         padding: EdgeInsets.all(30),
                         height: 250,
                         decoration: BoxDecoration(
-                          color: Colors.blue[200],
+                          color: Colors.blue[300],
                           borderRadius: BorderRadius.only(),
                         ),
                         child: Column(

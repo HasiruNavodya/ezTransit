@@ -39,7 +39,7 @@ class _ComplaintsState extends State<Complaints> {
                         padding: EdgeInsets.all(30),
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.blue[200],
+                          color: Colors.blue[300],
                           borderRadius: BorderRadius.only(),
                         ),
                         child: Column(

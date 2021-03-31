@@ -176,12 +176,12 @@ class _NewBusState extends State<NewBus> {
         child: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: 1.2 * MediaQuery.of(context).size.height,
+            height: 1.3 * MediaQuery.of(context).size.height,
             decoration: BoxDecoration(),
             padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
             child: Center(
               child: Card(
-                color: Colors.blue[200],
+                color: Colors.blue[300],
                 elevation: 20.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
@@ -231,59 +231,79 @@ class _NewBusState extends State<NewBus> {
                         _buildLuxeryLevel(),
                         SizedBox(height: 10.0),
                         _buildSeat(),
-                        SizedBox(height: 10.0),
-                        SizedBox(height: 5.0),
+                        SizedBox(height: 30.0),
+                        
                         Row(
+                          
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.pink[400], // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                onPressed: () async {
-                                  // validate the form based on it's current state
-                                  if (_formKey.currentState.validate()) {
-                                    Map<String, dynamic> data = {
-                                      "Plate Number": plateNumber.text,
-                                      "Driver Name": driverName.text,
-                                      "License Number": licenseNumber.text,
-                                      "Color": color.text,
-                                      "Public or Private": publicPrivate.text,
-                                      "Luxury Level": luxeryLevel.text,
-                                      "Seat Count": seat.text,
-                                    };
+                            Container(
+                            
+                              child: SizedBox(width: 175,
+                                child: ElevatedButton(
+                                  
+                                  
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical:12.0,horizontal: 20),
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.black87, // background
+                                      onPrimary: Colors.white, // foreground
+                                    ),
+                                    onPressed: () async {
+                                      // validate the form based on it's current state
+                                      if (_formKey.currentState.validate()) {
+                                        Map<String, dynamic> data = {
+                                          "Plate Number": plateNumber.text,
+                                          "Driver Name": driverName.text,
+                                          "License Number": licenseNumber.text,
+                                          "Color": color.text,
+                                          "Public or Private": publicPrivate.text,
+                                          "Luxury Level": luxeryLevel.text,
+                                          "Seat Count": seat.text,
+                                        };
 
-                                    FirebaseFirestore.instance
-                                        .collection('NewBus')
-                                        .add(data);
+                                        FirebaseFirestore.instance
+                                            .collection('NewBus')
+                                            .add(data);
 
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertBox(
-                                              'Successfully Inserted!');
-                                        });
-                                  }
-                                }),
-                            SizedBox(width: 50.0),
-                            ElevatedButton(
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.pink[400], // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                onPressed: () async {
-                                  _formKey.currentState.reset();
-                                }),
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertBox(
+                                                  'Successfully Inserted!');
+                                            });
+                                             _formKey.currentState.reset();
+                                      }
+                                    }),
+                              ),
+                            ),
+                            SizedBox(width: 80.0),
+                            SizedBox(width: 175,
+                              child: ElevatedButton(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal:20.0 ),
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black87, // background
+                                    onPrimary: Colors.white, // foreground
+                                  ),
+                                  onPressed: () async {
+                                    _formKey.currentState.reset();
+                                  }),
+                            ),
+
+                               
                           ],
                         ),
                       ],
