@@ -227,7 +227,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            Home()));
+                                            MapClickPageNew()));
                               }),
                           SizedBox(width: 50.0),
                           ElevatedButton(
