@@ -226,6 +226,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   location:
     dependency: "direct main"
     description:
@@ -268,6 +275,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  payhere_flutter:
+    dependency: "direct main"
+    description:
+      name: payhere_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
+  payhere_mobilesdk_flutter:
+    dependency: "direct main"
+    description:
+      name: payhere_mobilesdk_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -293,7 +314,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   stack_trace:
     dependency: transitive
     description:
@@ -336,6 +357,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
+  toast:
+    dependency: "direct main"
+    description:
+      name: toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   typed_data:
     dependency: transitive
     description:

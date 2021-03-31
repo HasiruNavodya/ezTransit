@@ -82,9 +82,9 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               SizedBox(height: 30.0,),
-              GestureDetector(
-                child: Text("Sign Up Here", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blueAccent,letterSpacing: 2, fontSize: 17.0),textAlign: TextAlign.center,),
-                onTap: (){
+              TextButton(
+                child: Text("Sign Up"),
+                onPressed: (){
                   //streamController.add(0);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                 },
