@@ -6,7 +6,8 @@
 
    <application
         android:label="tma_passenger"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:label">
 
 
        <meta-data
