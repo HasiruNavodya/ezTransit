@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _email,
             password: _password,);
-        print("alks;fjlkjd");
+        print("Logged In");
         streamController.add(0);
       }catch(e) {
         print("e.message");

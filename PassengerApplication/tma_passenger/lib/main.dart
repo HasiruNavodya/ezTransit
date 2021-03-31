@@ -8,7 +8,7 @@ import 'package:tma_passenger/screens/ride/ride.dart';
 import 'package:tma_passenger/screens/auth/login.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
-int appState = 1;
+int appState = 0;
 StreamController<int> streamController = StreamController<int>();
 
 void main() async {
