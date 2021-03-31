@@ -6,6 +6,7 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class AlertBox extends StatelessWidget {
+  
   final title;
   AlertBox(this.title);
 
@@ -30,6 +31,8 @@ class AlertBox extends StatelessWidget {
 }
 
 class Partial extends StatelessWidget {
+
+  static const String id = 'partial routes';
   String _startIn;
   String _endIN;
   String _partNoF;
