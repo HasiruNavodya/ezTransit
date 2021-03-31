@@ -16,10 +16,10 @@ class ConfirmTicket extends StatefulWidget {
   String startcity;
   String endcity;
 
-  ConfirmTicket(dloc, ploc, bs, ticketprice, tripid, startcity, endcity) {
-    this.destinationloc = dloc;
-    this.pickuploc = ploc;
-    this.bus = bs;
+  ConfirmTicket(destinationloc, pickuploc, bus, ticketprice, tripid, startcity, endcity) {
+    this.destinationloc = destinationloc;
+    this.pickuploc = pickuploc;
+    this.bus = bus;
     this.ticketprice = ticketprice;
     this.tripid = tripid;
     this.startcity = startcity;
@@ -27,7 +27,7 @@ class ConfirmTicket extends StatefulWidget {
   }
 
   @override
-  _ConfirmTicketState createState() => _ConfirmTicketState();
+  _ConfirmTicketState createState() => _ConfirmTicketState(destinationloc, pickuploc, bus, ticketprice, tripid, startcity, endcity);
 }
 
 class _ConfirmTicketState extends State<ConfirmTicket> {
@@ -35,6 +35,25 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
   String pickupat;
   String droppingat;
   String loading = 'yes';
+
+  String destinationloc;
+  String pickuploc;
+  String bus;
+  String ticketprice;
+  String tripid;
+  String startcity;
+  String endcity;
+
+  _ConfirmTicketState(String destinationloc, String pickuploc, String bus, String ticketprice, String tripid, String startcity, String endcity)
+  {
+    this.destinationloc = destinationloc;
+    this.pickuploc = pickuploc;
+    this.bus = bus;
+    this.ticketprice = ticketprice;
+    this.tripid = tripid;
+    this.startcity = startcity;
+    this.endcity = endcity;
+  }
 
   void getPickupAt() {
     FirebaseFirestore.instance
@@ -106,6 +125,10 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
 
       PayHere.startPayment(paymentObject, (paymentId) {
         print("One Time Payment Success. Payment Id: $paymentId");
+
+        FirebaseFirestore.instance.collection("tickets").add({"busNo": bus,"endCity":endcity,"endTime":droppingat,"fare":ticketprice,"passenger":'',"startCity":startcity,"startTime":pickupat,"ticketID":'',"tripID":tripid})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
       }, (error) {
         print("One Time Payment Failed. Error: $error");
         Toast.show(
