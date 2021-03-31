@@ -188,7 +188,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                           Icons.timer_rounded,
                           color: Colors.teal[900],
                         ),
-                        title: Text('$pickupat',
+                        title: Text('Pickup At: $pickupat',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -202,7 +202,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                           Icons.access_time_outlined,
                           color: Colors.teal[900],
                         ),
-                        title: Text('$droppingat',
+                        title: Text('Dropping At: $droppingat',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
