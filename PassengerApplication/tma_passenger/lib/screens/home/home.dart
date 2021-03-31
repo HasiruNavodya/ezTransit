@@ -5,6 +5,8 @@ import 'package:tma_passenger/screens/home/ride.dart';
 import 'package:tma_passenger/screens/home/user.dart';
 import 'package:tma_passenger/screens/home/add_ride.dart';
 
+import 'complains.dart';
+
 
 class HomeView extends StatefulWidget {
   @override
@@ -17,7 +19,7 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -32,7 +34,7 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
 
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[MapView(), AddRide(), UserDetails()],
+        children: <Widget>[MapView(), AddRide(), Complaints(),UserDetails()],
         controller: controller,
       ),
 
@@ -45,6 +47,9 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
             ),
             Tab(
               icon: Icon(Icons.directions_bus),
+            ),
+            Tab(
+              icon: Icon(Icons.feedback),
             ),
             Tab(
               icon: Icon(Icons.person),

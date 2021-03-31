@@ -4,6 +4,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tma_passenger/screens/home/add_ride.dart';
+import 'package:tma_passenger/screens/home/home.dart';
 
 
 
@@ -47,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddRide()),
+                MaterialPageRoute(builder: (context) => HomeView()),
               );
             }
 
