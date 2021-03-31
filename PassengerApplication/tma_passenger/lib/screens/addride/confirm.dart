@@ -74,7 +74,7 @@ class ConfirmTicket extends StatelessWidget {
             "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
         "notify_url": "http://sample.com/notify",
         "order_id": "ItemNo12345",
-        "items": "Hello from Flutter!",
+        "items": "bus fare",
         "amount": ticketprice,
         "currency": "LKR",
         "first_name": "Saman",
@@ -242,7 +242,7 @@ class ConfirmTicket extends StatelessWidget {
                               color: Colors.black,
                               onPressed: () => {PayHerePay()},
                               child: Text(
-                                "Yes",
+                                "Pay",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -263,7 +263,7 @@ class ConfirmTicket extends StatelessWidget {
                                 );
                               },
                               child: Text(
-                                "No",
+                                "Back",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
