@@ -31,9 +31,7 @@ class TmaPassengerApp extends StatelessWidget {
   }
 }
 
-
 class ViewController extends StatefulWidget {
-
   ViewController(this.stream);
   final Stream<int> stream;
 
@@ -42,8 +40,6 @@ class ViewController extends StatefulWidget {
 }
 
 class _ViewControllerState extends State<ViewController> {
-
-
   @override
   void initState() {
     super.initState();
@@ -58,9 +54,7 @@ class _ViewControllerState extends State<ViewController> {
       mySetState(appStateValue);
     });
 
-/*    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User user) {
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
         mySetState(2);
@@ -68,34 +62,26 @@ class _ViewControllerState extends State<ViewController> {
         print('User is signed in!');
         mySetState(0);
       }
-    });*/
-
+    });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-
-    if(appState == 0){
+    if (appState == 0) {
       print(appState);
       return HomeView();
-    }
-    else if(appState == 1){
-      print('tripStatus');
+    } else if (appState == 1) {
+      print(appState);
       return RideView();
-    }
-    else if(appState == 2){
+    } else if (appState == 2) {
       print(appState);
       return LoginPage();
-    }
-    else{
+    } else {
       return Scaffold(
         body: Container(
           child: SpinKitDualRing(color: Colors.black87),
         ),
       );
     }
-
   }
 }
