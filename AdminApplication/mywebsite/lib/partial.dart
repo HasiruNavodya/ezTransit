@@ -101,7 +101,7 @@ class Partial extends StatelessWidget {
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'End IN is required';
+                            return 'End In is required';
                             //validator: (val) =>val.isEmpty?'This field is required':null,
                           }
                         },
