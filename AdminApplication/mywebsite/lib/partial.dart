@@ -122,23 +122,11 @@ class Partial extends StatelessWidget {
                           _endIn = value;
                         },
                       ),
-                      SizedBox(height: 20.0),
-
-
-                      TextFormField(
-                          controller: name,
-                          decoration: InputDecoration(
-                              labelText: 'Name',
-                              labelStyle:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                              border: OutlineInputBorder()),
-                          autofillHints: {
-                            _name = '${['startIn']}' + ' - ' + '${['endIn']}'
-                          }),
+                
 
 
 
-                          
+
                       SizedBox(height: 20.0),
                       TextFormField(
                         //  key: ValueKey('timeDu'),
@@ -205,7 +193,7 @@ class Partial extends StatelessWidget {
                                     "fare": fare.text,
                                     "partNo ": partNoF.text,
                                     "startin": startIn.text,
-                                    "name": name.text,
+                                    "name":  startIn.text + ' - ' + endIn.text,
                                   };
 
                                   FirebaseFirestore.instance
