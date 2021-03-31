@@ -35,7 +35,7 @@ class Partial extends StatelessWidget {
   String _endIn;
   String _partNoF;
   String _fare;
-  String _tripId = 'T3500';
+  String _tripID = 'T3500';
   String _partNoS;
   String _name;
 
@@ -44,7 +44,7 @@ class Partial extends StatelessWidget {
   TextEditingController endIn = new TextEditingController();
   TextEditingController partNoF = new TextEditingController();
   TextEditingController fare = new TextEditingController();
-  TextEditingController tripId = new TextEditingController();
+  TextEditingController tripID = new TextEditingController();
   TextEditingController partNoS = new TextEditingController();
   TextEditingController name = new TextEditingController();
 
@@ -194,13 +194,6 @@ class Partial extends StatelessWidget {
                                   FirebaseFirestore.instance
                                       .collection("partialroutes")
                                       .add(data);
-
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertBox(
-                                            'Successfully Inserted!');
-                                      });
                                 }),
                           ),
                           SizedBox(width: 50.0),
@@ -230,7 +223,7 @@ class Partial extends StatelessWidget {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
-                        controller: tripId,
+                        controller: tripID,
                         decoration: InputDecoration(
                             labelText: 'Trip Id',
                             labelStyle:
@@ -242,7 +235,7 @@ class Partial extends StatelessWidget {
                           }
                         },
                         onSaved: (String value) {
-                          _tripId = value;
+                          _tripID = value;
                         },
                       ),
                       SizedBox(height: 20.0),
@@ -288,16 +281,16 @@ class Partial extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   // validate the form based on it's current state
-
-                                  
+                                  Map<String, dynamic> data = {
+                                    "Trip Id": tripID.text,
+                                    "Part No ": partNoS.text,
+                                  };
 
                                   FirebaseFirestore.instance
                                       .collection('trips')
-                                      .doc('$tripId')
-                                      .update({
-                                        "Trip Id": tripId.text,
-                                    "Part No ": partNoS.text,
-                                      });
+                                      .doc('$tripID')
+                                      .update({"Trip Id": tripID.text,
+                                    "Part No ": partNoS.text,});
 
                                   showDialog(
                                       context: context,
@@ -305,6 +298,12 @@ class Partial extends StatelessWidget {
                                         return AlertBox(
                                             'Successfully Inserted!');
                                       });
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Partial()));
                                 }),
                           ),
                         ],
