@@ -138,7 +138,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.add_road,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text("Destination: ${widget.destinationloc}",
                           style: TextStyle(
@@ -155,7 +155,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.edit_road_outlined,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text("Pickup Location: ${widget.pickuploc}",
                           style: TextStyle(
@@ -170,7 +170,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.directions_bus_outlined,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text("Bus: ${widget.bus} ",
                           style: TextStyle(
@@ -186,7 +186,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.timer_rounded,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text('Pickup At: $pickupat',
                           style: TextStyle(
@@ -200,7 +200,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.access_time_outlined,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text('Dropping At: $droppingat',
                           style: TextStyle(
@@ -217,7 +217,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                       child: ListTile(
                         leading: Icon(
                           Icons.credit_card_sharp,
-                          color: Colors.teal[900],
+                          color: Colors.black87,
                         ),
                         title: Text("Ticket Price: Rs.${widget.ticketprice}",
                           style: TextStyle(
