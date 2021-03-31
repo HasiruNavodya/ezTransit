@@ -6,7 +6,6 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class AlertBox extends StatelessWidget {
-  
   final title;
   AlertBox(this.title);
 
@@ -31,7 +30,6 @@ class AlertBox extends StatelessWidget {
 }
 
 class Partial extends StatelessWidget {
-
   static const String id = 'partial routes';
   String _startIn;
   String _endIn;
@@ -76,15 +74,18 @@ class Partial extends StatelessWidget {
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 40.0,width: 30.0,),
+                      
                       SizedBox(
-                       
-                         child: Text(
-                                    'Create Partial Routes',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
+                        height: 40.0,
+                        width: 30.0,
+                      ),
+                      SizedBox(
+                        child: Text(
+                          'Create Partial Routes',
+                          style: TextStyle(fontSize: 20),
                         ),
-                        SizedBox(height: 45.0),
+                      ),
+                      SizedBox(height: 45.0),
                       TextFormField(
                         controller: startIn,
                         decoration: InputDecoration(
@@ -203,7 +204,6 @@ class Partial extends StatelessWidget {
                                 }),
                           ),
                           SizedBox(width: 50.0),
-                 
                         ],
                       )
                     ],
@@ -216,21 +216,19 @@ class Partial extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Container(
-                 padding: const EdgeInsets.only(
-            top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
+                  padding: const EdgeInsets.only(
+                      top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 30.0),
                       SizedBox(
-                       
-                         child: Text(
-                                    'Add Partial Routes to Trips',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
+                        child: Text(
+                          'Add Partial Routes to Trips',
+                          style: TextStyle(fontSize: 20),
                         ),
-                        SizedBox(height: 20.0),
-
+                      ),
+                      SizedBox(height: 20.0),
                       TextFormField(
                         controller: tripId,
                         decoration: InputDecoration(
@@ -248,7 +246,6 @@ class Partial extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 20.0),
-
                       TextFormField(
                         //key: ValueKey('arrivingTime'),
                         controller: partNoS,
@@ -267,7 +264,6 @@ class Partial extends StatelessWidget {
                           _endIn = value;
                         },
                       ),
-                      
                       SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -295,9 +291,7 @@ class Partial extends StatelessWidget {
 
                                   Map<String, dynamic> data = {
                                     "Trip Id": tripId.text,
-                                   
                                     "Part No ": partNoS.text,
-                                 
                                   };
 
                                   FirebaseFirestore.instance
@@ -314,8 +308,6 @@ class Partial extends StatelessWidget {
                                       });
                                 }),
                           ),
-                          
-
                         ],
                       )
                     ],
