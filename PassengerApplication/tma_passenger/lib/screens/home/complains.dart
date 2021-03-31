@@ -64,16 +64,6 @@ class _complaintsState extends State<Complaints> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeView()),
-              );
-            }
-
-        ),
         centerTitle: true,
         title: Text('User Complaints'),
         backgroundColor: Colors.black,

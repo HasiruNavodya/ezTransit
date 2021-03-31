@@ -8,6 +8,9 @@ import 'package:tma_bus/screens/home/report.dart';
 import 'package:tma_bus/screens/trip/trip.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:location/location.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'screens/home/addtrip.dart';
 
 int appState = 3;
 StreamController<int> streamController = StreamController<int>();
@@ -19,6 +22,7 @@ void main() async {
 }
 
 class TmaMainApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,9 +50,23 @@ class _ViewControllerState extends State<ViewController> {
   @override
   void initState() {
     super.initState();
+
     widget.stream.listen((appStateValue) {
       mySetState(appStateValue);
     });
+
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      if (user == null) {
+        mySetState(2);
+        print('User is currently signed out!');
+      } else {
+        mySetState(0);
+        print('User is signed in!');
+      }
+    });
+
   }
 
   void mySetState(int appStateValue) {

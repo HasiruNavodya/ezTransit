@@ -12,7 +12,7 @@ import 'package:tma_bus/main.dart';
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID = 'T3000';
+String tripID;
 String tripName;
 double stopLat;
 double stopLng;
@@ -24,8 +24,16 @@ LocationData lastLocation;
 String test;
 String startCity;
 String endCity;
+String busEmail;
+String bus;
+
+StreamController<String> getTripID = StreamController<String>();
 
 class TripView extends StatefulWidget {
+
+  TripView(this.stream);
+  final Stream<String> stream;
+
   @override
   _TripViewState createState() => _TripViewState();
 }
@@ -41,7 +49,28 @@ class _TripViewState extends State<TripView> {
   @override
   void initState() {
     super.initState();
+
+    widget.stream.listen((tripid) {
+      setTripID(tripid);
+    });
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      busEmail = auth.currentUser.email;
+      List list = busEmail.split('@');
+      bus = list[0].toString().toUpperCase();
+      print(bus);
+    }
+
+
+
     print(tripState);
+  }
+
+  void setTripID(String tripid) {
+    tripID = tripid;
   }
 
   @override
@@ -64,11 +93,11 @@ class _TripViewState extends State<TripView> {
             lastStopPassed = data['lastStopPassed'];
 
             return Scaffold(
-              /*appBar: AppBar(
+              appBar: AppBar(
                 title: Text('Current Trip Info'),
                 centerTitle: true,
                 backgroundColor: Colors.black,
-              ),*/
+              ),
               body: Center(
                 child: Container(
                   child: Column(
