@@ -16,6 +16,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenLocal()
+        maven {
+            url  "https://dl.bintray.com/payhere/payhere-android-payment"
+        }
     }
 }
 
