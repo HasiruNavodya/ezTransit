@@ -37,6 +37,7 @@ class Partial extends StatelessWidget {
   String _fare;
   String _tripId;
   String _partNoS;
+  String _name;
 
 //get data from textformfield
   TextEditingController startIn = new TextEditingController();
@@ -45,6 +46,7 @@ class Partial extends StatelessWidget {
   TextEditingController fare = new TextEditingController();
   TextEditingController tripId = new TextEditingController();
   TextEditingController partNoS = new TextEditingController();
+  TextEditingController name = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,6 @@ class Partial extends StatelessWidget {
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      
                       SizedBox(
                         height: 40.0,
                         width: 30.0,
@@ -121,6 +122,23 @@ class Partial extends StatelessWidget {
                           _endIn = value;
                         },
                       ),
+                      SizedBox(height: 20.0),
+
+
+                      TextFormField(
+                          controller: name,
+                          decoration: InputDecoration(
+                              labelText: 'Name',
+                              labelStyle:
+                                  TextStyle(fontSize: 16, color: Colors.black),
+                              border: OutlineInputBorder()),
+                          autofillHints: {
+                            _name = '${['startIn']}' + ' - ' + '${['endIn']}'
+                          }),
+
+
+
+                          
                       SizedBox(height: 20.0),
                       TextFormField(
                         //  key: ValueKey('timeDu'),
@@ -183,17 +201,17 @@ class Partial extends StatelessWidget {
                                   // validate the form based on it's current state
 
                                   Map<String, dynamic> data = {
-                                    "Start In": startIn.text,
-                                    "End IN": endIn.text,
-                                    "Part No ": partNoF.text,
-                                    "Fare": fare.text,
+                                    "endin": endIn.text,
+                                    "fare": fare.text,
+                                    "partNo ": partNoF.text,
+                                    "startin": startIn.text,
+                                    "name": name.text,
                                   };
 
                                   FirebaseFirestore.instance
                                       .collection("trips")
                                       .doc("initializeTrip")
-                                      .collection("stop")
-                                      .add(data);
+                                      .set(data);
 
                                   showDialog(
                                       context: context,
@@ -211,7 +229,7 @@ class Partial extends StatelessWidget {
                 ),
               ),
 
-              // ***********************
+              // ***********************right side
 
               Expanded(
                 flex: 2,
@@ -297,8 +315,7 @@ class Partial extends StatelessWidget {
                                   FirebaseFirestore.instance
                                       .collection("trips")
                                       .doc("initializeTrip")
-                                      .collection("stop")
-                                      .add(data);
+                                      .set(data);
 
                                   showDialog(
                                       context: context,
