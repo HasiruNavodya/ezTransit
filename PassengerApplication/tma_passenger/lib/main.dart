@@ -8,7 +8,7 @@ import 'package:tma_passenger/screens/ride/ride.dart';
 import 'package:tma_passenger/screens/auth/login.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
-int appState = 3;
+int appState = 1;
 StreamController<int> streamController = StreamController<int>();
 
 void main() async {
@@ -58,7 +58,7 @@ class _ViewControllerState extends State<ViewController> {
       mySetState(appStateValue);
     });
 
-    FirebaseAuth.instance
+/*    FirebaseAuth.instance
         .authStateChanges()
         .listen((User user) {
       if (user == null) {
@@ -68,8 +68,7 @@ class _ViewControllerState extends State<ViewController> {
         print('User is signed in!');
         mySetState(0);
       }
-    });
-    mySetState(1);
+    });*/
 
   }
 

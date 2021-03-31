@@ -17,7 +17,7 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -32,7 +32,7 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
 
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[MapView(), AddRide(), RideDetails(), UserDetails()],
+        children: <Widget>[MapView(), AddRide(), UserDetails()],
         controller: controller,
       ),
 
@@ -42,9 +42,6 @@ class HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin 
           tabs: <Tab>[
             Tab(
               icon: Icon(Icons.map),
-            ),
-            Tab(
-              icon: Icon(Icons.add),
             ),
             Tab(
               icon: Icon(Icons.directions_bus),

@@ -6,8 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-double lat;
-double lng;
+import '../../main.dart';
+
+double pickupLat;
+double pickupLng;
+double distanceInMeters;
 String rideState = 'fetching';
 String ticketID = 'tck1000';
 Map ticketData;
@@ -21,7 +24,7 @@ class RideView extends StatefulWidget {
 
 class _RideViewState extends State<RideView> {
 
-  TextEditingController distance = TextEditingController();
+  BitmapDescriptor busicon;
 
   @override
   void initState() {
@@ -30,44 +33,25 @@ class _RideViewState extends State<RideView> {
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
       LocationPermission permission;
-
-      // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        // Location services are not enabled don't continue
-        // accessing the position and request users of the
-        // App to enable the location services.
         return Future.error('Location services are disabled.');
       }
-
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.deniedForever) {
-          // Permissions are denied forever, handle appropriately.
-          return Future.error(
-              'Location permissions are permanently denied, we cannot request permissions.');
+          return Future.error('Location permissions are permanently denied, we cannot request permissions.');
         }
-
         if (permission == LocationPermission.denied) {
-          // Permissions are denied, next time you could try
-          // requesting permissions again (this is also where
-          // Android's shouldShowRequestPermissionRationale
-          // returned true. According to Android guidelines
-          // your App should show an explanatory UI now.
-          return Future.error(
-              'Location permissions are denied');
+          return Future.error('Location permissions are denied');
         }
       }
       Position position = await Geolocator.getCurrentPosition();
-      lat = position.latitude;
-      lng = position.longitude;
-
-      // When we reach here, permissions are granted and we can
-      // continue accessing the position of the device.
       return await Geolocator.getCurrentPosition();
-
     }
+
+    setMapMarker();
 
   }
 
@@ -76,13 +60,17 @@ class _RideViewState extends State<RideView> {
   LatLng _lastPostion = _initialPosition;
   final Set<Marker> _markers = {};
 
+
   dynamic data;
+
+  final ValueNotifier<int> distance = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
 
     if(rideState == 'waiting'){
-
+      listenToRideStart();
+      listenToRidepEnd();
       return Scaffold(
         appBar: AppBar(
           title: Text("Wait For Your Bus"),
@@ -104,6 +92,7 @@ class _RideViewState extends State<RideView> {
                     compassEnabled: true,
                     onCameraMove: _onCameraMove,
                     markers: _markers,
+
                   ),
                 ],
               ),
@@ -126,6 +115,7 @@ class _RideViewState extends State<RideView> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Card(
+                                color: Colors.white70,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -141,7 +131,7 @@ class _RideViewState extends State<RideView> {
                                                 fontSize: 20,
                                               ),
                                             ),
-                                            Text("  -  ",
+                                            Text(" to ",
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -165,13 +155,14 @@ class _RideViewState extends State<RideView> {
                                 ),
                               ),
                               Card(
+                                color: Colors.white70,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     width: 400,
                                     child: Column(
                                       children: [
-                                        Text("Bus: "+tripData['startCity'] + ' to ' +tripData['endCity'],
+                                        Text("Bus: "+tripData['startCity'] + ' - ' +tripData['endCity'],
                                           style: TextStyle(
                                             fontSize: 16,
                                           ),
@@ -192,16 +183,34 @@ class _RideViewState extends State<RideView> {
                                 ),
                               ),
                               Card(
+                                color: Colors.white70,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     width: 400,
                                     child: Column(
                                       children: [
-                                        Text("Distance: 2 km",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text("Distance to Pickup Location : ",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            ValueListenableBuilder<int>(
+                                              valueListenable: distance,
+                                              builder: (BuildContext context, distance, Widget child) {
+                                                return Text("$distance");
+                                              }
+                                            ),
+                                            Text(" m",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -232,7 +241,7 @@ class _RideViewState extends State<RideView> {
     else if(rideState == 'onbus'){
       return Scaffold(
         appBar: AppBar(
-          title: Text("Current Ride"),
+          title: Text("On the Bus"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -257,7 +266,7 @@ class _RideViewState extends State<RideView> {
             ),
 
             Expanded(
-              flex: 10,
+              flex: 7,
               child: Container(
                 child: Column(
                   children: [
@@ -269,54 +278,101 @@ class _RideViewState extends State<RideView> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Pettah" + " - " + "Kollupitiya",
-                                style: TextStyle(
-                                  fontSize: 20,
+                              Card(
+                                color: Colors.white70,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 400,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text("Ticket ID: " + ticketData['ticketID'],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Text("08:00"+" - "+"08:20",
-                                style: TextStyle(
-                                  fontSize: 16,
+                              Card(
+                                color: Colors.white70,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 400,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text(ticketData['pickup'],
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                            Text(" to ",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                            Text(ticketData['drop'],
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                              /*Text("",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),*/
-                              Text("Bus: Pettah - Kollupitiya",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text("Plate No: EG-2345",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text("Color: Red",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              /*Text("",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),*/
-                              Text("Distance: 2 km",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text("ETA: 6 minutes",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              TextField(
-                                controller: distance,
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: (){},
+                                    child: Text(
+                                      'Stop Ride Early',
+                                      style: TextStyle(color: Colors.indigo[900]),
+                                    ),
+                                  ),
+ /*                                 TextButton(
+                                    onPressed: (){},
+                                    child: Text(
+                                      'Extend Ride',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),*/
+                                  TextButton(
+                                    onPressed: (){},
+                                    child: Text(
+                                      'Report Complaint',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -354,6 +410,7 @@ class _RideViewState extends State<RideView> {
 
   void endRide() {
     print('Ride Ended>>>>>>>>>>>>>>>>>>>>>>>');
+    streamController.add(0);
   }
 
   void getRideData(){
@@ -363,33 +420,38 @@ class _RideViewState extends State<RideView> {
         ticketData = ticket.data();
         print(ticketData);
 
-        //if(ticketData['tripID'] != null){
+        if(ticketData['tripID'] != null){
           FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).get().then((DocumentSnapshot trip) {
             if (trip.exists) {
               tripData = trip.data();
               print(tripData);
+              FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupLoc) {
+                if (trip.exists) {
+                  pickupLat = pickupLoc.data()['location'].latitude;
+                  pickupLng = pickupLoc.data()['location'].longitude;
+                }
+              });
             }
           });
-        //}
+        }
 
-        //if(ticketData['bus'] != null){
+        if(ticketData['bus'] != null){
           FirebaseFirestore.instance.collection('buses').doc(ticketData['bus']).get().then((DocumentSnapshot bus) {
             if (bus.exists) {
               busData = bus.data();
-              print(busData);
               setState(() {
                 rideState = 'waiting';
               });
             }
           });
-        //}
+        }
 
       }
     });
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    _initMarker();
+    showBusLocation();
     setState(() {
       mapController = controller;
     });
@@ -401,57 +463,55 @@ class _RideViewState extends State<RideView> {
     });
   }
 
-  void _initMarker() async {
+  void showBusLocation() async {
 
     setState(() {
-      FirebaseFirestore.instance.collection('buses').doc('eg2345').snapshots().listen((DocumentSnapshot documentSnapshot) {
+      FirebaseFirestore.instance.collection('buses').doc(tripData['bus']).snapshots().listen((DocumentSnapshot busLocation) {
 
         print("location updated");
 
         _markers.add(
-            Marker(
-              markerId: MarkerId('bus'),
-              position: LatLng(documentSnapshot.data()['location'].latitude,documentSnapshot.data()['location'].longitude),
-              infoWindow: InfoWindow(
-                title: 'name',
-                snippet: "",
-              ),
-              icon: BitmapDescriptor.defaultMarker,
-            ));
+          Marker(
+            markerId: MarkerId('bus'),
+            position: LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
+            icon: busicon,
+          ));
 
         mapController?.animateCamera(
           CameraUpdate.newLatLng(
-            LatLng(documentSnapshot.data()['location'].latitude,documentSnapshot.data()['location'].longitude),
+            LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
           ),
         );
+
+        distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+        distance.value = distanceInMeters.round();
 
       });
     });
   }
 
-  void listenToTripEnd(){
-    FirebaseFirestore.instance.collection('trips').doc('T3000').collection('stops').doc('3').snapshots().listen((DocumentSnapshot tripEndDoc) {
-      if(tripEndDoc.data()['passed'] == 'passed'){
-        print('Your Ride has ended');
+  void listenToRideStart(){
+    FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).snapshots().listen((DocumentSnapshot tripStartDoc) {
+      if(tripStartDoc.data()['passed'] == 'true'){
+        setState(() {
+          rideState = 'onbus';
+        });
       }
     });
   }
 
-  void getDistance() async{
-
-    double distanceInMeters;
-
-    //distanceInMeters = Geolocator.distanceBetween(52.2165157, 6.9437819, 52.3546274, 4.8285838);
-    //distance.text = distanceInMeters.toString();
-    print(lat);
-    print(lng);
-
-    FirebaseFirestore.instance.collection('buses').doc('eg2345').snapshots().listen((DocumentSnapshot busDistance) {
-      //distanceInMeters = Geolocator.distanceBetween(lat, lng, busDistance.data()['location'].latitude, busDistance.data()['location'].longitude);
-      //distanceInMeters = Geolocator.distanceBetween(52.2165157, 6.9437819, 52.3546274, 4.8285838);
-      //print(distanceInMeters);
-      //distance.text = distanceInMeters.toString();
+  void listenToRidepEnd(){
+    FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['drop']).snapshots().listen((DocumentSnapshot tripEndDoc) {
+      if(tripEndDoc.data()['passed'] == 'true'){
+        setState(() {
+          rideState = 'ending';
+        });
+      }
     });
+  }
+
+  void setMapMarker() async{
+    busicon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(60,60)), 'assets/bus.png');
   }
 
 

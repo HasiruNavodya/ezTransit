@@ -21,6 +21,8 @@ String tripState = "on";
 String busNo = 'GE-3412';
 LocationData lastLocation;
 String test;
+String startCity;
+String endCity;
 
 class TripView extends StatefulWidget {
   @override
@@ -171,6 +173,8 @@ class _TripViewState extends State<TripView> {
         print('Document exists on the database');
         //lastStopPassed = tripDoc.data()['lastStopPassed'];
         stopCount = tripDoc.data()['stopCount'];
+        startCity = tripDoc.data()['startCity'];
+        endCity = tripDoc.data()['endCity'];
       }
     });
 
@@ -184,12 +188,9 @@ class _TripViewState extends State<TripView> {
     positionStream = Geolocator.getPositionStream().listen((Position position) {
       print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-      /*FirebaseFirestore.instance.collection('testscoll').doc('123').set({
-        'lat': position.latitude.toString(),
-        'lng': position.longitude.toString(),
-        'status': test
-      });*/
-
+      FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+        'location' : GeoPoint(position.latitude, position.longitude)
+      });
     });
   }
 
@@ -229,7 +230,7 @@ class _TripViewState extends State<TripView> {
         'passed' : 'true'
       });
 
-      if(geofence.id == stopCount.toString()){
+      if(geofence.id == endCity){
         setState(() {
           tripState = 'off';
         });
