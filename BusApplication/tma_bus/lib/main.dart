@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:tma_bus/screens/auth/login.dart';
 import 'package:tma_bus/screens/home/account.dart';
 import 'package:tma_bus/screens/home/home.dart';
 import 'package:tma_bus/screens/home/map.dart';
@@ -8,7 +9,7 @@ import 'package:tma_bus/screens/trip/trip.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:location/location.dart';
 
-int appState = 0;
+int appState = 3;
 StreamController<int> streamController = StreamController<int>();
 
 void main() async {
@@ -60,12 +61,13 @@ class _ViewControllerState extends State<ViewController> {
   Widget build(BuildContext context) {
 
     if(appState == 0){
-      print(appState);
       return HomeView();
     }
-    else{
-      print('tripStatus');
+    else if(appState == 1){
       return TripView();
+    }
+    else{
+      return LoginPage();
     }
 
   }

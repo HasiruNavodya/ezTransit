@@ -14,7 +14,7 @@ class _InitializeTripState extends State<InitializeTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _tripID;
+  String _tripID='T3500';
   String _bus;
   String _startCity;
   String _startTime;
@@ -253,7 +253,7 @@ class _InitializeTripState extends State<InitializeTrip> {
 
                                     FirebaseFirestore.instance
                                         .collection("trips")
-                                        .doc("initializeTrip")
+                                        .doc("$tripID")
                                         .set(data);
 
                                     showDialog(
