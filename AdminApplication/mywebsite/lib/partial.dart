@@ -34,7 +34,7 @@ class Partial extends StatelessWidget {
 
   static const String id = 'partial routes';
   String _startIn;
-  String _endIN;
+  String _endIn;
   String _partNoF;
   String _fare;
   String _tripId;
@@ -42,7 +42,7 @@ class Partial extends StatelessWidget {
 
 //get data from textformfield
   TextEditingController startIn = new TextEditingController();
-  TextEditingController endIN = new TextEditingController();
+  TextEditingController endIn = new TextEditingController();
   TextEditingController partNoF = new TextEditingController();
   TextEditingController fare = new TextEditingController();
   TextEditingController tripId = new TextEditingController();
@@ -76,7 +76,7 @@ class Partial extends StatelessWidget {
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 40.0),
+                      SizedBox(height: 40.0,width: 30.0,),
                       SizedBox(
                        
                          child: Text(
@@ -84,7 +84,7 @@ class Partial extends StatelessWidget {
                                     style: TextStyle(fontSize: 20),
                                   ),
                         ),
-                        SizedBox(height: 40.0),
+                        SizedBox(height: 45.0),
                       TextFormField(
                         controller: startIn,
                         decoration: InputDecoration(
@@ -104,9 +104,9 @@ class Partial extends StatelessWidget {
                       SizedBox(height: 20.0),
                       TextFormField(
                         //key: ValueKey('arrivingTime'),
-                        controller: endIN,
+                        controller: endIn,
                         decoration: InputDecoration(
-                            labelText: 'End IN',
+                            labelText: 'End In',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
@@ -117,7 +117,7 @@ class Partial extends StatelessWidget {
                           }
                         },
                         onSaved: (String value) {
-                          _endIN = value;
+                          _endIn = value;
                         },
                       ),
                       SizedBox(height: 20.0),
@@ -183,7 +183,7 @@ class Partial extends StatelessWidget {
 
                                   Map<String, dynamic> data = {
                                     "Start In": startIn.text,
-                                    "End IN": endIN.text,
+                                    "End IN": endIn.text,
                                     "Part No ": partNoF.text,
                                     "Fare": fare.text,
                                   };
@@ -221,6 +221,7 @@ class Partial extends StatelessWidget {
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
+                      SizedBox(height: 30.0),
                       SizedBox(
                        
                          child: Text(
@@ -263,7 +264,7 @@ class Partial extends StatelessWidget {
                           }
                         },
                         onSaved: (String value) {
-                          _endIN = value;
+                          _endIn = value;
                         },
                       ),
                       
@@ -313,7 +314,7 @@ class Partial extends StatelessWidget {
                                       });
                                 }),
                           ),
-                          SizedBox(width: 50.0),
+                          
 
                         ],
                       )
