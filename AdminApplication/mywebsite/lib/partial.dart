@@ -6,7 +6,6 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class AlertBox extends StatelessWidget {
-  
   final title;
   AlertBox(this.title);
 
@@ -31,22 +30,23 @@ class AlertBox extends StatelessWidget {
 }
 
 class Partial extends StatelessWidget {
-
   static const String id = 'partial routes';
   String _startIn;
-  String _endIN;
+  String _endIn;
   String _partNoF;
   String _fare;
-  String _tripId;
+  String _tripID = 'T3500';
   String _partNoS;
+  String _name;
 
 //get data from textformfield
   TextEditingController startIn = new TextEditingController();
-  TextEditingController endIN = new TextEditingController();
+  TextEditingController endIn = new TextEditingController();
   TextEditingController partNoF = new TextEditingController();
   TextEditingController fare = new TextEditingController();
-  TextEditingController tripId = new TextEditingController();
+  TextEditingController tripID = new TextEditingController();
   TextEditingController partNoS = new TextEditingController();
+  TextEditingController name = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,17 @@ class Partial extends StatelessWidget {
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 40.0),
+                      SizedBox(
+                        height: 40.0,
+                        width: 30.0,
+                      ),
+                      SizedBox(
+                        child: Text(
+                          'Create Partial Routes',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(height: 45.0),
                       TextFormField(
                         controller: startIn,
                         decoration: InputDecoration(
@@ -96,9 +106,9 @@ class Partial extends StatelessWidget {
                       SizedBox(height: 20.0),
                       TextFormField(
                         //key: ValueKey('arrivingTime'),
-                        controller: endIN,
+                        controller: endIn,
                         decoration: InputDecoration(
-                            labelText: 'End IN',
+                            labelText: 'End In',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
@@ -109,7 +119,7 @@ class Partial extends StatelessWidget {
                           }
                         },
                         onSaved: (String value) {
-                          _endIN = value;
+                          _endIn = value;
                         },
                       ),
                       SizedBox(height: 20.0),
@@ -174,28 +184,19 @@ class Partial extends StatelessWidget {
                                   // validate the form based on it's current state
 
                                   Map<String, dynamic> data = {
-                                    "Start In": startIn.text,
-                                    "End IN": endIN.text,
-                                    "Part No ": partNoF.text,
-                                    "Fare": fare.text,
+                                    "endin": endIn.text,
+                                    "fare": fare.text,
+                                    "partNo ": partNoF.text,
+                                    "startin": startIn.text,
+                                    "name": startIn.text + ' - ' + endIn.text,
                                   };
 
                                   FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .collection("stop")
+                                      .collection("partialroutes")
                                       .add(data);
-
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertBox(
-                                            'Successfully Inserted!');
-                                      });
                                 }),
                           ),
                           SizedBox(width: 50.0),
-                 
                         ],
                       )
                     ],
@@ -203,19 +204,26 @@ class Partial extends StatelessWidget {
                 ),
               ),
 
-              // ***********************
+              // ***********************right side
 
               Expanded(
                 flex: 2,
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
+                  padding: const EdgeInsets.only(
+                      top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 40.0),
+                      SizedBox(height: 30.0),
+                      SizedBox(
+                        child: Text(
+                          'Add Partial Routes to Trips',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
                       TextFormField(
-                        controller: tripId,
+                        controller: tripID,
                         decoration: InputDecoration(
                             labelText: 'Trip Id',
                             labelStyle:
@@ -227,30 +235,28 @@ class Partial extends StatelessWidget {
                           }
                         },
                         onSaved: (String value) {
-                          _tripId = value;
+                          _tripID = value;
                         },
                       ),
                       SizedBox(height: 20.0),
-
                       TextFormField(
                         //key: ValueKey('arrivingTime'),
                         controller: partNoS,
                         decoration: InputDecoration(
-                            labelText: 'End IN',
+                            labelText: 'Part No',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'End IN is required';
+                            return 'Part No is required';
                             //validator: (val) =>val.isEmpty?'This field is required':null,
                           }
                         },
                         onSaved: (String value) {
-                          _endIN = value;
+                          _endIn = value;
                         },
                       ),
-                      
                       SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -275,19 +281,16 @@ class Partial extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   // validate the form based on it's current state
-
                                   Map<String, dynamic> data = {
-                                    "Trip Id": tripId.text,
-                                   
+                                    "Trip Id": tripID.text,
                                     "Part No ": partNoS.text,
-                                 
                                   };
 
                                   FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .collection("stop")
-                                      .add(data);
+                                      .collection('trips')
+                                      .doc('$tripID')
+                                      .update({"Trip Id": tripID.text,
+                                    "Part No ": partNoS.text,});
 
                                   showDialog(
                                       context: context,
@@ -295,10 +298,14 @@ class Partial extends StatelessWidget {
                                         return AlertBox(
                                             'Successfully Inserted!');
                                       });
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Partial()));
                                 }),
                           ),
-                          SizedBox(width: 50.0),
-
                         ],
                       )
                     ],

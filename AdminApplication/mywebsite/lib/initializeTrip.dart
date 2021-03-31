@@ -14,16 +14,22 @@ class _InitializeTripState extends State<InitializeTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _tripID;
-  String _busName;
+  String _tripID='T3500';
+  String _bus;
   String _startCity;
+  String _startTime;
   String _endCity;
+  String _endTime;
+  String _stopCount;
 
 //get data from textformfield
   TextEditingController tripID = new TextEditingController();
-  TextEditingController busName = new TextEditingController();
+  TextEditingController bus = new TextEditingController();
   TextEditingController startCity = new TextEditingController();
+  TextEditingController startTime = new TextEditingController();
   TextEditingController endCity = new TextEditingController();
+  TextEditingController endTime = new TextEditingController();
+    TextEditingController stopCount = new TextEditingController();
 
   Widget _buildtripID() {
     return TextFormField(
@@ -45,10 +51,10 @@ class _InitializeTripState extends State<InitializeTrip> {
 
   Widget _buildbusName() {
     return TextFormField(
-      controller: busName,
+      controller: bus,
       // maxLength: 30,
       decoration: InputDecoration(
-          labelText: 'Bus Name',
+          labelText: 'Bus',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
 
@@ -58,7 +64,7 @@ class _InitializeTripState extends State<InitializeTrip> {
         }
       },
       onSaved: (String value) {
-        _busName = value;
+        _bus = value;
       },
     );
   }
@@ -81,6 +87,24 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 
+  Widget _buildstartTime() {
+    return TextFormField(
+      controller: startTime,
+      decoration: InputDecoration(
+          labelText: 'Start Time',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Start Time is required';
+        }
+      },
+      onSaved: (String value) {
+        _startTime = value;
+      },
+    );
+  }
+
   Widget _buildendCity() {
     return TextFormField(
       controller: endCity,
@@ -95,6 +119,42 @@ class _InitializeTripState extends State<InitializeTrip> {
       },
       onSaved: (String value) {
         _endCity = value;
+      },
+    );
+  }
+
+  Widget _buildendTime() {
+    return TextFormField(
+      controller: endTime,
+      decoration: InputDecoration(
+          labelText: 'End Time',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return ('End Time is required');
+        }
+      },
+      onSaved: (String value) {
+        _endTime = value;
+      },
+    );
+  }
+
+    Widget _buildstopCount() {
+    return TextFormField(
+      controller: stopCount,
+      decoration: InputDecoration(
+          labelText: 'Stop Count',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return ('Stop Count is required');
+        }
+      },
+      onSaved: (String value) {
+        _stopCount = value;
       },
     );
   }
@@ -151,17 +211,24 @@ class _InitializeTripState extends State<InitializeTrip> {
                       SizedBox(height: 10.0),
                       _buildstartCity(),
                       SizedBox(height: 10.0),
+                      _buildstartTime(),
+                      SizedBox(height: 10.0),
                       _buildendCity(),
                       SizedBox(height: 30.0),
-                      
+                      _buildendTime(),
+                      SizedBox(height: 30.0),
+                      _buildstopCount(),
+                      SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 175,
+                          SizedBox(
+                            width: 175,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20),
                                   child: Text(
                                     'Submit',
                                     style: TextStyle(fontSize: 20),
@@ -176,14 +243,17 @@ class _InitializeTripState extends State<InitializeTrip> {
                                   if (_formKey.currentState.validate()) {
                                     Map<String, dynamic> data = {
                                       "Trip ID": tripID.text,
-                                      "Bus Name": busName.text,
+                                      "Bus Name": bus.text,
                                       "Start City": startCity.text,
+                                      "Start Time": startTime.text,
                                       "End City": endCity.text,
+                                      "End Time": endTime.text,
+                                      "Stop Count": stopCount.text,
                                     };
 
                                     FirebaseFirestore.instance
                                         .collection("trips")
-                                        .doc("initializeTrip")
+                                        .doc("$tripID")
                                         .set(data);
 
                                     showDialog(
@@ -203,10 +273,12 @@ class _InitializeTripState extends State<InitializeTrip> {
                                 }),
                           ),
                           SizedBox(width: 90.0),
-                          SizedBox(width: 175,
+                          SizedBox(
+                            width: 175,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20.0),
                                   child: Text(
                                     'Cancel',
                                     style: TextStyle(fontSize: 20),
