@@ -1,87 +1,69 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
-import 'package:mywebsite/AddTrip.dart';
-import 'package:mywebsite/Complaints.dart';
-import 'package:mywebsite/Emergency.dart';
-import 'package:mywebsite/NavBar.dart';
-import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/SideBar.dart';
-import 'package:mywebsite/auth.dart';
-import 'package:mywebsite/initializeTrip.dart';
-
 
 class Home extends StatelessWidget {
   static const String id = 'home';
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
-    
+
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Transport Management System'),
-        
-
       ),
       sideBar: _sideBar.sideBarMenus(context, Home.id),
-      body:  Center( 
-      child:SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 600,
-          decoration: BoxDecoration(
-       
-          ),
-          padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 50.0),
+      body: Center(
+        child: SingleChildScrollView(
           child: Container(
-            
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
-            
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40.0),
-                bottomRight: Radius.circular(40.0),
-                topLeft: Radius.circular(40.0),
-                topRight: Radius.circular(40.0),
+            width: MediaQuery.of(context).size.width,
+            height: 600,
+            decoration: BoxDecoration(),
+            padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40.0),
+                  bottomRight: Radius.circular(40.0),
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0),
+                ),
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.blue[400],
+                      Colors.blue[100],
+                      Colors.blue[400],
+                    ]),
               ),
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.blue[400],
-                    Colors.blue[100],
-                    Colors.blue[400],
-                  ]),
-
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 100, horizontal: 20),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Text(
+                      'Welcome To Our Transport Management System',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    SizedBox(width: 50),
+                    SizedBox(
+                      height: 400,
+                      width: 400,
+                      child: Image(
+                        image: AssetImage('assets/bus1.png'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child:Container(  
-            
-              
-              padding: EdgeInsets.symmetric(vertical:100, horizontal:20),
-             
-              alignment: Alignment.center,
-child: Row(children: [
-Text('Welcome To Our Transport Management System', style:TextStyle(fontSize: 25),),
-SizedBox(width:50),
-SizedBox(height:400, width:400,child:Image
-(
-  
-  image: AssetImage('assets/bus1.png'),
-  ),),
-
- 
-    
-
-              
-],),
-            
-         
-                  
-            ),
-    ),),),),);
+          ),
+        ),
+      ),
+    );
   }
 }
-    
-    
-    

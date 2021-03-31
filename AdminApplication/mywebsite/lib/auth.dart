@@ -17,12 +17,10 @@ class AuthService {
             return LoginPage();
         });
   }
-  
-  
+
   //Sign out
   signOut() {
     FirebaseAuth.instance.signOut();
-    
   }
 
   //Sign In
@@ -36,7 +34,6 @@ class AuthService {
     });
   }
 
-  
   //Signup a new user
   signUp(String email, String password) {
     return FirebaseAuth.instance

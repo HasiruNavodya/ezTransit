@@ -10,7 +10,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   final formKey = new GlobalKey<FormState>();
 
-  String email, password, fname, nid, conNo ;
+  String email, password, fname, nid, conNo;
 
   Color greenColor = Color(0xFF00AF19);
 
@@ -46,7 +46,8 @@ class _SignupPageState extends State<SignupPage> {
 
   _buildSignupForm() {
     return Padding(
-        padding: const EdgeInsets.only(top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
+        padding: const EdgeInsets.only(
+            top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
         child: ListView(children: [
           SizedBox(height: 75.0),
           Container(
@@ -54,13 +55,11 @@ class _SignupPageState extends State<SignupPage> {
               width: 200.0,
               child: Stack(
                 children: [
-                  Text('Signup!',
+                  Text('Signup As A New Admin',
                       style: TextStyle(fontFamily: 'Trueno', fontSize: 30.0)),
-                  
                 ],
               )),
           SizedBox(height: 25.0),
-         
           TextFormField(
               decoration: InputDecoration(
                   labelText: 'EMAIL',
@@ -120,7 +119,7 @@ class _SignupPageState extends State<SignupPage> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Go back',
+                child: Text('Back',
                     style: TextStyle(
                         color: greenColor,
                         fontFamily: 'Trueno',

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mywebsite/AddTrip.dart';
+
 import 'package:mywebsite/Home%20View.dart';
+import 'package:mywebsite/SideBar.dart';
 import 'package:mywebsite/initializeTrip.dart';
 //import 'page.dart';
 
@@ -74,179 +76,208 @@ class _MapClickBodyState extends State<_MapClickBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    SideBarWidget _sideBar = SideBarWidget();
+    return AdminScaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Add Stops'),
+        title: const Text('Transport Management System'),
       ),
-      body: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 40.0),
-                  TextFormField(
-                    //   key: ValueKey('stopName'),
-                    controller: stopName,
-                    decoration: InputDecoration(
-                        labelText: 'Stop Name', border: OutlineInputBorder()),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Stop Name is required';
-                      }
-                    },
-                    onSaved: (String value) {
-                      _stopName = value;
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    //key: ValueKey('arrivingTime'),
-                    controller: arrivingTime,
-                    decoration: InputDecoration(
-                        labelText: 'Arriving Time',
-                        border: OutlineInputBorder()),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Arriving Time is required';
-                        //validator: (val) =>val.isEmpty?'This field is required':null,
-                      }
-                    },
-                    onSaved: (String value) {
-                      _arrivingTime = value;
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    //  key: ValueKey('timeDu'),
-                    controller: timeDu,
-                    decoration: InputDecoration(
-                        labelText: 'Time Duration From Last Stop',
-                        border: OutlineInputBorder()),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Time Duration From Last Stop is required';
-                      }
-                    },
-                    onSaved: (String value) {
-                      _timeDu = value;
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    //    key: ValueKey('cnlatitude'),
-                    controller: cnlatitude,
-                    decoration: InputDecoration(
-                        labelText: 'Latitude', border: OutlineInputBorder()),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return ('latitude is required');
-                      }
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    //   key: ValueKey('cnlongitude'),
-                    controller: cnlongitude,
-                    decoration: InputDecoration(
-                        labelText: 'Longitude', border: OutlineInputBorder()),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return ('longitude is required');
-                      }
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          child: Text(
-                            'Add',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[400], // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () async {
-                            // validate the form based on it's current state
-                           
-                              Map<String, dynamic> data = {
-                                "Stop Name": stopName.text,
-                                "Ariving Time": arrivingTime.text,
-                                "Time Duration ": timeDu.text,
-                                "Latitude": cnlatitude.text,
-                                "Longitude": cnlongitude.text,
-                              };
+      sideBar: _sideBar.sideBarMenus(context, Home.id),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Card(
+          elevation: 20.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(35),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
+                  color: Colors.blue[200],
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 40.0),
+                      TextFormField(
+                        //   key: ValueKey('stopName'),
+                        controller: stopName,
+                        decoration: InputDecoration(
+                            labelText: 'Stop Name',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Stop Name is required';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _stopName = value;
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        //key: ValueKey('arrivingTime'),
+                        controller: arrivingTime,
+                        decoration: InputDecoration(
+                            labelText: 'Arriving Time',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Arriving Time is required';
+                            //validator: (val) =>val.isEmpty?'This field is required':null,
+                          }
+                        },
+                        onSaved: (String value) {
+                          _arrivingTime = value;
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        //  key: ValueKey('timeDu'),
+                        controller: timeDu,
+                        decoration: InputDecoration(
+                            labelText: 'Time Duration From Last Stop',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Time Duration From Last Stop is required';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _timeDu = value;
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        //    key: ValueKey('cnlatitude'),
+                        controller: cnlatitude,
+                        decoration: InputDecoration(
+                            labelText: 'Latitude',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return ('latitude is required');
+                          }
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        //   key: ValueKey('cnlongitude'),
+                        controller: cnlongitude,
+                        decoration: InputDecoration(
+                            labelText: 'Longitude',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return ('longitude is required');
+                          }
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              child: Text(
+                                'Add',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.pink[400], // background
+                                onPrimary: Colors.white, // foreground
+                              ),
+                              onPressed: () async {
+                                // validate the form based on it's current state
 
-                              FirebaseFirestore.instance
-                                  .collection("trips")
-                                  .doc("initializeTrip")
-                                  .collection("stop")
-                                  .add(data);
+                                Map<String, dynamic> data = {
+                                  "Stop Name": stopName.text,
+                                  "Ariving Time": arrivingTime.text,
+                                  "Time Duration ": timeDu.text,
+                                  "Latitude": cnlatitude.text,
+                                  "Longitude": cnlongitude.text,
+                                };
 
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertBox('Successfully Inserted!');
-                                  });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          Home()));
-                            
-                          }),
-                      SizedBox(width: 50.0),
-                      ElevatedButton(
-                          child: Text(
-                            'Finish',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[400], // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) => Home()));
-                          }),
+                                FirebaseFirestore.instance
+                                    .collection("trips")
+                                    .doc("initializeTrip")
+                                    .collection("stop")
+                                    .add(data);
+
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertBox('Successfully Inserted!');
+                                    });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()));
+                              }),
+                          SizedBox(width: 50.0),
+                          ElevatedButton(
+                              child: Text(
+                                'Finish',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.pink[400], // background
+                                onPrimary: Colors.white, // foreground
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()));
+                              }),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Stack(
-              children: [
-                GoogleMap(
-                  onMapCreated: onMapCreated,
-                  initialCameraPosition: _kInitialPosition,
-                  onTap: (LatLng pos) {
-                    cnlatitude.text = pos.latitude.toString();
-                    cnlongitude.text = pos.longitude.toString();
-                    setState(() {
-                      _lastTap = pos;
-                    });
-                  },
-                  onLongPress: (LatLng pos) {
-                    setState(() {
-                      _lastLongPress = pos;
-                    });
-                  },
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                      onMapCreated: onMapCreated,
+                      initialCameraPosition: _kInitialPosition,
+                      onTap: (LatLng pos) {
+                        cnlatitude.text = pos.latitude.toString();
+                        cnlongitude.text = pos.longitude.toString();
+                        setState(() {
+                          _lastTap = pos;
+                        });
+                      },
+                      onLongPress: (LatLng pos) {
+                        setState(() {
+                          _lastLongPress = pos;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
