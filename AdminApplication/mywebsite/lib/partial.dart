@@ -35,7 +35,7 @@ class Partial extends StatelessWidget {
   String _endIn;
   String _partNoF;
   String _fare;
-  String _tripId;
+  String _tripId = 'T3500';
   String _partNoS;
   String _name;
 
@@ -122,11 +122,6 @@ class Partial extends StatelessWidget {
                           _endIn = value;
                         },
                       ),
-                
-
-
-
-
                       SizedBox(height: 20.0),
                       TextFormField(
                         //  key: ValueKey('timeDu'),
@@ -193,13 +188,12 @@ class Partial extends StatelessWidget {
                                     "fare": fare.text,
                                     "partNo ": partNoF.text,
                                     "startin": startIn.text,
-                                    "name":  startIn.text + ' - ' + endIn.text,
+                                    "name": startIn.text + ' - ' + endIn.text,
                                   };
 
                                   FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .set(data);
+                                      .collection("partialroutes")
+                                      .add(data);
 
                                   showDialog(
                                       context: context,
@@ -256,13 +250,13 @@ class Partial extends StatelessWidget {
                         //key: ValueKey('arrivingTime'),
                         controller: partNoS,
                         decoration: InputDecoration(
-                            labelText: 'End In',
+                            labelText: 'Part No',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'End In is required';
+                            return 'Part No is required';
                             //validator: (val) =>val.isEmpty?'This field is required':null,
                           }
                         },
@@ -295,15 +289,15 @@ class Partial extends StatelessWidget {
                                 onPressed: () async {
                                   // validate the form based on it's current state
 
-                                  Map<String, dynamic> data = {
-                                    "Trip Id": tripId.text,
-                                    "Part No ": partNoS.text,
-                                  };
+                                  
 
                                   FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .set(data);
+                                      .collection('trips')
+                                      .doc('$tripId')
+                                      .update({
+                                        "Trip Id": tripId.text,
+                                    "Part No ": partNoS.text,
+                                      });
 
                                   showDialog(
                                       context: context,
