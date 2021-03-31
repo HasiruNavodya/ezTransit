@@ -191,9 +191,11 @@ class Partial extends StatelessWidget {
                                     "name": startIn.text + ' - ' + endIn.text,
                                   };
 
+                                  String gg=startIn.text+'-'+endIn.text;
+
                                   FirebaseFirestore.instance
-                                      .collection("partialroutes")
-                                      .add(data);
+                                      .collection("partialroutes").doc('$gg')
+                                      .set(data);
                                 }),
                           ),
                           SizedBox(width: 50.0),
