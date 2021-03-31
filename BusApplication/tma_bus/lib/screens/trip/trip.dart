@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:geofence_service/geofence_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -188,9 +189,9 @@ class _TripViewState extends State<TripView> {
     positionStream = Geolocator.getPositionStream().listen((Position position) {
       print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-      FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+      /*FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
         'location' : GeoPoint(position.latitude, position.longitude)
-      });
+      });*/
     });
   }
 
