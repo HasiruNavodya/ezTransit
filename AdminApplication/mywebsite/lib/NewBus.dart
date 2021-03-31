@@ -269,9 +269,12 @@ class _NewBusState extends State<NewBus> {
                                           "Seat Count": seat.text,
                                         };
 
+                                        String plateno=plateNumber.text;
+
                                         FirebaseFirestore.instance
-                                            .collection('NewBus')
-                                            .add(data);
+                                            .collection('buses')
+                                            .doc('$plateno')
+                                            .set(data);
 
                                         showDialog(
                                             context: context,

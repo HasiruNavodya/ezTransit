@@ -137,11 +137,29 @@ class _complaintsState extends State<Complaints> {
                       child: RaisedButton(color:Colors.black87,
                         disabledElevation: 4.0,
                         onPressed: () {
-                          // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
-                          FirebaseFirestore.instance.collection("complaints").add({"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":dateToday.toString()})
-                              .then((value) => print("Complain Reported Successfully!"))
-                              .catchError((error) => print("Failed to add user: $error"));
-                          showAlertDialog(context);
+
+                          if(formkey.currentState.validate())
+                          {
+                            // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
+                            FirebaseFirestore.instance.collection("complaints").add({"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":dateToday.toString()})
+                                .then((value) => print("Complain Reported Successfully!"))
+                                .catchError((error) => print("Failed to add user: $error"));
+                            showAlertDialog(context);
+                            print("successfull");
+                          }else
+                          {
+                            showAlertDialogTwo(context);
+                            print("unsuccessfull");
+
+                          }
+
+
+
+
+
+
+
+
 
                         },
                         child: Text('Submit',
@@ -186,4 +204,35 @@ class _complaintsState extends State<Complaints> {
       },
     );
   }
+
+
+  showAlertDialogTwo(BuildContext context) {
+
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Please Fill All The Records"),
+      actions: [
+        okButton,
+
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 }
