@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
+
 class Emergency extends StatefulWidget {
   static const String id = 'emergency';
   @override
@@ -12,15 +13,21 @@ class Emergency extends StatefulWidget {
 
 class _EmergencyState extends State<Emergency> {
   SideBarWidget _sideBar = SideBarWidget();
+  
+   
   @override
   Widget build(BuildContext context) {
+  
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Emergency'),
       ),
       sideBar: _sideBar.sideBarMenus(context, Emergency.id),
-      body: StreamBuilder(
+      body:   
+      
+      StreamBuilder(
+      
           stream:
               FirebaseFirestore.instance.collection('emergencies').snapshots(),
           builder:
@@ -30,6 +37,7 @@ class _EmergencyState extends State<Emergency> {
             }
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 50),
+              
               child: ListView(
                 children: snapshot.data.docs.map(
                   (DocumentSnapshot document) {
@@ -37,7 +45,7 @@ class _EmergencyState extends State<Emergency> {
                       elevation: 10,
                       child: Container(
                         padding: EdgeInsets.all(30),
-                        height: 250,
+                        height: 300,
                         decoration: BoxDecoration(
                           color: Colors.blue[300],
                           borderRadius: BorderRadius.only(),
@@ -65,6 +73,19 @@ class _EmergencyState extends State<Emergency> {
                                 ),
                                 Text(
                                   document.data()['busNo'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                             SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  'Time : ',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  document.data()['time'].toDate().toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],

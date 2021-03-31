@@ -260,17 +260,17 @@ class _NewBusState extends State<NewBus> {
                                       // validate the form based on it's current state
                                       if (_formKey.currentState.validate()) {
                                         Map<String, dynamic> data = {
-                                          "Plate Number": plateNumber.text,
-                                          "Driver Name": driverName.text,
-                                          "License Number": licenseNumber.text,
-                                          "Color": color.text,
-                                          "Public or Private": publicPrivate.text,
-                                          "Luxury Level": luxeryLevel.text,
-                                          "Seat Count": seat.text,
+                                          "plateNumber": plateNumber.text,
+                                          "driverName": driverName.text,
+                                          "licenseNumber": licenseNumber.text,
+                                          "color": color.text,
+                                          "public/Private": publicPrivate.text,
+                                          "luxuryLevel": luxeryLevel.text,
+                                          "seatCount": seat.text,
                                         };
 
                                         FirebaseFirestore.instance
-                                            .collection('NewBus')
+                                            .collection('buses')
                                             .add(data);
 
                                         showDialog(

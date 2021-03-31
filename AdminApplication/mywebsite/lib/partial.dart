@@ -153,46 +153,50 @@ class Partial extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 130,
-                            child: ElevatedButton(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 20,
-                                  ),
-                                  child: Text(
-                                    'Create',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.black87, // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                onPressed: () async {
-                                  // validate the form based on it's current state
+                          Center(
+                            child: SizedBox(
+                              width: 130,
+                              child: Center(
+                                child: ElevatedButton(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                        horizontal: 20,
+                                      ),
+                                      child: Text(
+                                        'Create',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.black87, // background
+                                      onPrimary: Colors.white, // foreground
+                                    ),
+                                    onPressed: () async {
+                                      // validate the form based on it's current state
 
-                                  Map<String, dynamic> data = {
-                                    "Start In": startIn.text,
-                                    "End IN": endIN.text,
-                                    "Part No ": partNoF.text,
-                                    "Fare": fare.text,
-                                  };
+                                      Map<String, dynamic> data = {
+                                        "Start In": startIn.text,
+                                        "End IN": endIN.text,
+                                        "Part No ": partNoF.text,
+                                        "Fare": fare.text,
+                                      };
 
-                                  FirebaseFirestore.instance
-                                      .collection("trips")
-                                      .doc("initializeTrip")
-                                      .collection("stop")
-                                      .add(data);
+                                      FirebaseFirestore.instance
+                                          .collection("trips")
+                                          .doc("initializeTrip")
+                                          .collection("stop")
+                                          .add(data);
 
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertBox(
-                                            'Successfully Inserted!');
-                                      });
-                                }),
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertBox(
+                                                'Successfully Inserted!');
+                                          });
+                                    }),
+                              ),
+                            ),
                           ),
                           SizedBox(width: 50.0),
                  
