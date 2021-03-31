@@ -30,6 +30,7 @@ class _complaintsState extends State<Complaints> {
   }
 
 
+  DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) ;
 
 
   TextEditingController ComplaintBusNo= new TextEditingController();
@@ -39,8 +40,11 @@ class _complaintsState extends State<Complaints> {
   String plateno;
   String time;
 
+
+
   @override
   Widget build(BuildContext context) {
+    print('dsfsdfsdfdsfsdfdsfdsfdsfdsf'+dateToday.toString());
 
 
     //
@@ -144,7 +148,7 @@ class _complaintsState extends State<Complaints> {
                         disabledElevation: 4.0,
                         onPressed: () {
                           // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
-                          FirebaseFirestore.instance.collection("complaints").add({"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'})
+                          FirebaseFirestore.instance.collection("complaints").add({"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":dateToday.toString()})
                               .then((value) => print("Complain Reported Successfully!"))
                               .catchError((error) => print("Failed to add user: $error"));
                           showAlertDialog(context);
