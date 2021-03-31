@@ -1,8 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class UserDetails extends StatelessWidget {
+class UserDetails extends StatefulWidget {
+
+  @override
+  _UserDetailsState createState() => _UserDetailsState();
+}
+
+class _UserDetailsState extends State<UserDetails> {
+
+  String userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      userEmail = auth.currentUser.email;
+      print(auth.currentUser.email);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +38,7 @@ class UserDetails extends StatelessWidget {
       backgroundColor: Colors.white70,
       body:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("passengers")
-            .where('Email', isEqualTo: 'hasiru@gmail.com').snapshots(),
+            .where('Email', isEqualTo: '$userEmail').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -152,7 +175,7 @@ class UserDetails extends StatelessWidget {
                          child: RaisedButton(color:Colors.black87,
 
                             onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage()), (Route<dynamic> route) => false);
+                              logout();
                             },
                             child: Text('Log Out',
                               style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
@@ -178,8 +201,13 @@ class UserDetails extends StatelessWidget {
 
           );
         },
-        
+
       ),
     );
   }
+  void logout() async{
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage()), (Route<dynamic> route) => false);
+  }
 }
+
