@@ -281,10 +281,7 @@ class Partial extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   // validate the form based on it's current state
-                                  Map<String, dynamic> data = {
-                                    "Trip Id": tripID.text,
-                                    "Part No ": partNoS.text,
-                                  };
+                                
 
                                   FirebaseFirestore.instance
                                       .collection('trips')
