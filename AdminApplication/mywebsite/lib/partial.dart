@@ -77,6 +77,14 @@ class Partial extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 40.0),
+                      SizedBox(
+                       
+                         child: Text(
+                                    'Create Partial Routes',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                        ),
+                        SizedBox(height: 40.0),
                       TextFormField(
                         controller: startIn,
                         decoration: InputDecoration(
@@ -208,12 +216,20 @@ class Partial extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
+                 padding: const EdgeInsets.only(
+            top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
                   color: Colors.blue[300],
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 40.0),
+                      SizedBox(
+                       
+                         child: Text(
+                                    'Add Partial Routes to Trips',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                        ),
+                        SizedBox(height: 20.0),
+
                       TextFormField(
                         controller: tripId,
                         decoration: InputDecoration(
@@ -236,13 +252,13 @@ class Partial extends StatelessWidget {
                         //key: ValueKey('arrivingTime'),
                         controller: partNoS,
                         decoration: InputDecoration(
-                            labelText: 'End IN',
+                            labelText: 'End In',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'End IN is required';
+                            return 'End In is required';
                             //validator: (val) =>val.isEmpty?'This field is required':null,
                           }
                         },
