@@ -1,34 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
-//import 'package:mywebsite/initializeTrip.dart';
-//import 'page.dart';
-
-const CameraPosition _kInitialPosition =
-    CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
-
-class MapClickPageNew extends StatelessWidget {
-  //MapClickPage() : super(const Icon(icons.mouse), 'Map click');
-
-  @override
-  Widget build(BuildContext context) {
-    return const _MapClickBody();
-  }
-}
-
-class _MapClickBody extends StatefulWidget {
-  const _MapClickBody();
-
-  @override
-  State<StatefulWidget> createState() => _MapClickBodyState();
-}
 
 class AlertBox extends StatelessWidget {
+  
   final title;
   AlertBox(this.title);
 
@@ -52,27 +30,23 @@ class AlertBox extends StatelessWidget {
   }
 }
 
-class _MapClickBodyState extends State<_MapClickBody> {
-  _MapClickBodyState();
+class Partial extends StatelessWidget {
 
-  GoogleMapController mapController;
-  LatLng _lastTap;
-  LatLng _lastLongPress;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String _latitude;
-  String _longitude;
-  String _stopName;
-  String _arrivingTime;
-  String _timeDu;
+  static const String id = 'partial routes';
+  String _startIn;
+  String _endIN;
+  String _partNoF;
+  String _fare;
+  String _tripId;
+  String _partNoS;
 
 //get data from textformfield
-  TextEditingController stopName = new TextEditingController();
-  TextEditingController arrivingTime = new TextEditingController();
-  TextEditingController timeDu = new TextEditingController();
-  TextEditingController cnlatitude = new TextEditingController();
-  TextEditingController cnlongitude = new TextEditingController();
+  TextEditingController startIn = new TextEditingController();
+  TextEditingController endIN = new TextEditingController();
+  TextEditingController partNoF = new TextEditingController();
+  TextEditingController fare = new TextEditingController();
+  TextEditingController tripId = new TextEditingController();
+  TextEditingController partNoS = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -104,87 +78,74 @@ class _MapClickBodyState extends State<_MapClickBody> {
                     children: <Widget>[
                       SizedBox(height: 40.0),
                       TextFormField(
-                        //   key: ValueKey('stopName'),
-                        controller: stopName,
+                        controller: startIn,
                         decoration: InputDecoration(
-                            labelText: 'Stop Name',
+                            labelText: 'Start In',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'Stop Name is required';
+                            return 'Start In is required';
                           }
                         },
                         onSaved: (String value) {
-                          _stopName = value;
+                          _startIn = value;
                         },
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
                         //key: ValueKey('arrivingTime'),
-                        controller: arrivingTime,
+                        controller: endIN,
                         decoration: InputDecoration(
-                            labelText: 'Arriving Time',
+                            labelText: 'End IN',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'Arriving Time is required';
+                            return 'End In is required';
                             //validator: (val) =>val.isEmpty?'This field is required':null,
                           }
                         },
                         onSaved: (String value) {
-                          _arrivingTime = value;
+                          _endIN = value;
                         },
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
                         //  key: ValueKey('timeDu'),
-                        controller: timeDu,
+                        controller: partNoF,
                         decoration: InputDecoration(
-                            labelText: 'Time Duration From Last Stop',
+                            labelText: 'Part No',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'Time Duration From Last Stop is required';
+                            return 'Part No is required';
                           }
                         },
                         onSaved: (String value) {
-                          _timeDu = value;
+                          _partNoF = value;
                         },
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
                         //    key: ValueKey('cnlatitude'),
-                        controller: cnlatitude,
+                        controller: fare,
                         decoration: InputDecoration(
-                            labelText: 'Latitude',
+                            labelText: 'Fare',
                             labelStyle:
                                 TextStyle(fontSize: 16, color: Colors.black),
                             border: OutlineInputBorder()),
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return ('latitude is required');
+                            return ('Fare is required');
                           }
                         },
-                      ),
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                        //   key: ValueKey('cnlongitude'),
-                        controller: cnlongitude,
-                        decoration: InputDecoration(
-                            labelText: 'Longitude',
-                            labelStyle:
-                                TextStyle(fontSize: 16, color: Colors.black),
-                            border: OutlineInputBorder()),
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return ('longitude is required');
-                          }
+                        onSaved: (String value) {
+                          _fare = value;
                         },
                       ),
                       SizedBox(height: 30.0),
@@ -192,10 +153,117 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 130,
+                          SizedBox(
+                            width: 130,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20,),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 20,
+                                  ),
+                                  child: Text(
+                                    'Create',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () async {
+                                  // validate the form based on it's current state
+
+                                  Map<String, dynamic> data = {
+                                    "Start In": startIn.text,
+                                    "End IN": endIN.text,
+                                    "Part No ": partNoF.text,
+                                    "Fare": fare.text,
+                                  };
+
+                                  FirebaseFirestore.instance
+                                      .collection("trips")
+                                      .doc("initializeTrip")
+                                      .collection("stop")
+                                      .add(data);
+
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertBox(
+                                            'Successfully Inserted!');
+                                      });
+                                }),
+                          ),
+                          SizedBox(width: 50.0),
+                 
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
+              // ***********************
+
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
+                  color: Colors.blue[300],
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 40.0),
+                      TextFormField(
+                        controller: tripId,
+                        decoration: InputDecoration(
+                            labelText: 'Trip Id',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Trip Id is required';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _tripId = value;
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+
+                      TextFormField(
+                        //key: ValueKey('arrivingTime'),
+                        controller: partNoS,
+                        decoration: InputDecoration(
+                            labelText: 'End IN',
+                            labelStyle:
+                                TextStyle(fontSize: 16, color: Colors.black),
+                            border: OutlineInputBorder()),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'End IN is required';
+                            //validator: (val) =>val.isEmpty?'This field is required':null,
+                          }
+                        },
+                        onSaved: (String value) {
+                          _endIN = value;
+                        },
+                      ),
+                      
+                      SizedBox(height: 30.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 130,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 20,
+                                  ),
                                   child: Text(
                                     'Add',
                                     style: TextStyle(fontSize: 20),
@@ -209,11 +277,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   // validate the form based on it's current state
 
                                   Map<String, dynamic> data = {
-                                    "Stop Name": stopName.text,
-                                    "Ariving Time": arrivingTime.text,
-                                    "Time Duration ": timeDu.text,
-                                    "Latitude": cnlatitude.text,
-                                    "Longitude": cnlongitude.text,
+                                    "Trip Id": tripId.text,
+                                   
+                                    "Part No ": partNoS.text,
+                                 
                                   };
 
                                   FirebaseFirestore.instance
@@ -225,64 +292,17 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertBox('Successfully Inserted!');
+                                        return AlertBox(
+                                            'Successfully Inserted!');
                                       });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              MapClickPageNew()));
                                 }),
                           ),
                           SizedBox(width: 50.0),
-                          SizedBox(width: 130,
-                            child: ElevatedButton(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20),
-                                  child: Text(
-                                    'Finish',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.black87, // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Home()));
-                                }),
-                          ),
+
                         ],
                       )
                     ],
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Stack(
-                  children: [
-                    GoogleMap(
-                      onMapCreated: onMapCreated,
-                      initialCameraPosition: _kInitialPosition,
-                      onTap: (LatLng pos) {
-                        cnlatitude.text = pos.latitude.toString();
-                        cnlongitude.text = pos.longitude.toString();
-                        setState(() {
-                          _lastTap = pos;
-                        });
-                      },
-                      onLongPress: (LatLng pos) {
-                        setState(() {
-                          _lastLongPress = pos;
-                        });
-                      },
-                    ),
-                  ],
                 ),
               ),
             ],
@@ -290,11 +310,5 @@ class _MapClickBodyState extends State<_MapClickBody> {
         ),
       ),
     );
-  }
-
-  void onMapCreated(GoogleMapController controller) async {
-    setState(() {
-      mapController = controller;
-    });
   }
 }

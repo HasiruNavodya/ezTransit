@@ -8,6 +8,7 @@ import 'package:mywebsite/NewBus.dart';
 import 'package:mywebsite/auth.dart';
 import 'package:mywebsite/initializeTrip.dart';
 import 'package:mywebsite/login.dart';
+import 'package:mywebsite/partial.dart';
 
 class SideBarWidget {
   sideBarMenus(context, selectedRoute) {
@@ -27,6 +28,11 @@ class SideBarWidget {
           title: 'Initialize Trip',
           route: InitializeTrip.id,
           icon: Icons.trip_origin_rounded,
+        ),
+         MenuItem(
+          title: 'Partial Route',
+          route: Partial.id,
+          icon: Icons.add_road_rounded,
         ),
         MenuItem(
           title: 'Emergency',
