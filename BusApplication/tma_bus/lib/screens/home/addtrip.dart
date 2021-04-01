@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,8 @@ import 'package:permission_handler/permission_handler.dart';
 String tripID;
 String busNo;
 int sval = 1;
+String busEmail;
+String bus;
 
 class AddTripView extends StatefulWidget {
 
@@ -24,7 +27,21 @@ class _AddTripViewState extends State<AddTripView> {
   @override
   void initState() {
     super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      busEmail = auth.currentUser.email;
+      List list = busEmail.split('@');
+      bus = list[0].toString().toUpperCase();
+      print(bus);
+    }
+
+
     activityPermission();
+
+
   }
 
   @override
@@ -37,8 +54,9 @@ class _AddTripViewState extends State<AddTripView> {
         backgroundColor: Colors.black87,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: busNo).snapshots(),
+        stream: FirebaseFirestore.instance.collection('trips').where('bus', isEqualTo: bus).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
           if (snapshot.hasError) {
             return Text('Something went wrong');
           }

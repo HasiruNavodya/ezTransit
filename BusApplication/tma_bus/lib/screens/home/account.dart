@@ -1,7 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Account extends StatelessWidget {
+import '../../main.dart';
+import '../auth/login.dart';
+
+String busEmail;
+String bus;
+
+class Account extends StatefulWidget {
+  @override
+  _AccountState createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      busEmail = auth.currentUser.email;
+      List list = busEmail.split('@');
+      bus = list[0].toString().toUpperCase();
+      print(bus);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +42,7 @@ class Account extends StatelessWidget {
       backgroundColor: Colors.white70,
       body:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("NewBus")
-            .where('Plate Number', isEqualTo: 'EG-2234').snapshots(),
+            .where('Plate Number', isEqualTo: bus).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -245,8 +274,7 @@ class Account extends StatelessWidget {
                       child: RaisedButton(color:Colors.black87,
 
                         onPressed: () {
-                          // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          //     LoginPage()), (Route<dynamic> route) => false);
+                          logout();
                         },
                         child: Text('Log Out',
                           style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
@@ -276,5 +304,9 @@ class Account extends StatelessWidget {
 
       ),
     );
+  }
+  void logout() async{
+    await FirebaseAuth.instance.signOut();
+    streamController.add(2);
   }
 }
