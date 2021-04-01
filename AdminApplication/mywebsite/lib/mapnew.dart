@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
+import 'package:mywebsite/initializeTrip.dart';
 //import 'package:mywebsite/initializeTrip.dart';
 //import 'page.dart';
 
@@ -192,10 +193,14 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 130,
+                          SizedBox(
+                            width: 130,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20,),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 20,
+                                  ),
                                   child: Text(
                                     'Add',
                                     style: TextStyle(fontSize: 20),
@@ -215,17 +220,18 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     "Latitude": cnlatitude.text,
                                     "Longitude": cnlongitude.text,
                                   };
-
+                                  InitializeTrip tid;
                                   FirebaseFirestore.instance
                                       .collection("trips")
-                                      .doc("initializeTrip")
+                                      .doc("tid")
                                       .collection("stop")
                                       .add(data);
 
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertBox('Successfully Inserted!');
+                                        return AlertBox(
+                                            'Successfully Inserted!');
                                       });
                                   Navigator.push(
                                       context,
@@ -235,10 +241,12 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                 }),
                           ),
                           SizedBox(width: 50.0),
-                          SizedBox(width: 130,
+                          SizedBox(
+                            width: 130,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
                                   child: Text(
                                     'Finish',
                                     style: TextStyle(fontSize: 20),

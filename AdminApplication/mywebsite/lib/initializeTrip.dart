@@ -14,7 +14,7 @@ class _InitializeTripState extends State<InitializeTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _tripID='T3500';
+  String _tripID;
   String _bus;
   String _startCity;
   String _startTime;
@@ -29,7 +29,7 @@ class _InitializeTripState extends State<InitializeTrip> {
   TextEditingController startTime = new TextEditingController();
   TextEditingController endCity = new TextEditingController();
   TextEditingController endTime = new TextEditingController();
-    TextEditingController stopCount = new TextEditingController();
+  TextEditingController stopCount = new TextEditingController();
 
   Widget _buildtripID() {
     return TextFormField(
@@ -141,7 +141,7 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 
-    Widget _buildstopCount() {
+  Widget _buildstopCount() {
     return TextFormField(
       controller: stopCount,
       decoration: InputDecoration(
@@ -250,10 +250,10 @@ class _InitializeTripState extends State<InitializeTrip> {
                                       "End Time": endTime.text,
                                       "Stop Count": stopCount.text,
                                     };
-
+                                    String tid = tripID.text;
                                     FirebaseFirestore.instance
                                         .collection("trips")
-                                        .doc("$tripID")
+                                        .doc("$tid")
                                         .set(data);
 
                                     showDialog(

@@ -191,12 +191,10 @@ class Partial extends StatelessWidget {
                                     "name": startIn.text + ' - ' + endIn.text,
                                   };
 
-                                  String startinendin =
-                                      startIn.text + '-' + endIn.text;
+                                  String startinendin=startIn.text+'-'+endIn.text;
 
                                   FirebaseFirestore.instance
-                                      .collection("partialroutes")
-                                      .doc('$startinendin')
+                                      .collection("partialroutes").doc('$startinendin')
                                       .set(data);
                                 }),
                           ),
@@ -244,6 +242,7 @@ class Partial extends StatelessWidget {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
+                        //key: ValueKey('arrivingTime'),
                         controller: partNoS,
                         decoration: InputDecoration(
                             labelText: 'Part No',
@@ -284,10 +283,10 @@ class Partial extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   // validate the form based on it's current state
-                                  /*      Map<String, dynamic> data = {
+                            /*      Map<String, dynamic> data = {
                                     "Trip Id": tripID.text,
                                     "Part No ": partNoS.text, 
-                                  }; */
+                                  };*/
 
                                   FirebaseFirestore.instance
                                       .collection('trips')
