@@ -6,6 +6,8 @@ import 'package:mywebsite/mapnew.dart';
 
 class InitializeTrip extends StatefulWidget {
   static const String id = 'initializeTrip';
+
+  static String tid;
   @override
   _InitializeTripState createState() => _InitializeTripState();
 }

@@ -7,8 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
 import 'package:mywebsite/initializeTrip.dart';
-//import 'package:mywebsite/initializeTrip.dart';
-//import 'page.dart';
+
 
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
@@ -67,6 +66,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
   String _stopName;
   String _arrivingTime;
   String _timeDu;
+
+  String tid = InitializeTrip.tid;
 
 //get data from textformfield
   TextEditingController stopName = new TextEditingController();
@@ -220,10 +221,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     "Latitude": cnlatitude.text,
                                     "Longitude": cnlongitude.text,
                                   };
-                                  InitializeTrip tid;
+
                                   FirebaseFirestore.instance
                                       .collection("trips")
-                                      .doc("tid")
+                                      .doc("$tid")
                                       .collection("stop")
                                       .add(data);
 
