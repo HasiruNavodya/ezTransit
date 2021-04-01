@@ -8,11 +8,12 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
+import 'package:tma_bus/screens/home/addtrip.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID;
+String tripID = 'T3000';
 String tripName;
 double stopLat;
 double stopLng;
@@ -28,8 +29,11 @@ String busEmail;
 String bus;
 
 
+// ignore: must_be_immutable
 class TripView extends StatefulWidget {
   TripView(String tripID);
+
+  AddTripView tripid = AddTripView();
 
 
   @override
@@ -49,7 +53,7 @@ class _TripViewState extends State<TripView> {
     super.initState();
 
     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    print(tripID);
+    //print(tripid.tripID);
 
     FirebaseAuth auth = FirebaseAuth.instance;
 

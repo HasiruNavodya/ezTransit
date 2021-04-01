@@ -12,13 +12,15 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../main.dart';
 
-String tripID;
 String busNo;
 int sval = 1;
 String busEmail;
 String bus;
 
+// ignore: must_be_immutable
 class AddTripView extends StatefulWidget {
+
+  String tripID;
 
   @override
   _AddTripViewState createState() => _AddTripViewState();
