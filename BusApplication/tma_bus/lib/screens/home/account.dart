@@ -86,7 +86,7 @@ class _AccountState extends State<Account> {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Name\n',
+                            'Name',
                             style:
                             TextStyle(fontFamily: 'BalooBhai',
                                 fontSize: 17.0,
@@ -117,7 +117,7 @@ class _AccountState extends State<Account> {
                              color: Colors.black87,
                            ),
                            title: Text(
-                             'Bus Number Plate\n',
+                             'Bus Number Plate',
                              style: TextStyle(fontSize: 17.0,
                                  fontFamily: 'Neucha',
                                  fontWeight: FontWeight.bold),
@@ -149,7 +149,7 @@ class _AccountState extends State<Account> {
                               color: Colors.black87,
                             ),
                             title: Text(
-                              'Bus Color\n',
+                              'Bus Color',
                               style: TextStyle(fontSize: 17.0,
                                   fontFamily: 'Neucha',
                                   fontWeight: FontWeight.bold),
@@ -182,7 +182,7 @@ class _AccountState extends State<Account> {
                               color: Colors.black87,
                             ),
                             title: Text(
-                              'License Number\n',
+                              'License Number',
                               style: TextStyle(fontSize: 17.0,
                                   fontFamily: 'Neucha',
                                   fontWeight: FontWeight.bold),
@@ -214,7 +214,7 @@ class _AccountState extends State<Account> {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Luxury Level\n',
+                            'Luxury Level',
                             style: TextStyle(fontSize: 17.0,
                                 fontFamily: 'Neucha',
                                 fontWeight: FontWeight.bold),
@@ -246,7 +246,7 @@ class _AccountState extends State<Account> {
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Bus Type\n',
+                            'Bus Type',
                             style: TextStyle(fontSize: 17.0,
                                 fontFamily: 'Neucha',
                                 fontWeight: FontWeight.bold),

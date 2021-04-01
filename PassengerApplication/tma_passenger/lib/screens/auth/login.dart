@@ -16,18 +16,30 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Welcome"),
+        backgroundColor: Colors.black,
+        centerTitle: true,
+
+      ),
       body: SafeArea(
         child: Form(
           key: _formkey,
           child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0,),
             children: <Widget>[
               Column(
                   children: <Widget>[
-                    SizedBox(height: 180.0,),
-                    Image.asset('assets/Square_Logo.jpg'),
-                    Text('LOGIN', style: TextStyle(fontSize: 20),),
+                    SizedBox(height: 40.0,),
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage('assets/login1.png'),
+
+
+                    ),
+                    SizedBox(height: 40.0,),
+                    Text('LOG IN',  style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color:Colors.black,
+                    ),),
                   ]
               ),
               SizedBox(height: 40.0,),
@@ -73,17 +85,26 @@ class _LoginPageState extends State<LoginPage> {
                   ButtonTheme(
                     height: 40,
                     disabledColor: Colors.grey,
-                    child: RaisedButton(
+                    child: RaisedButton(color:Colors.black87,
+
                       disabledElevation: 4.0,
                       onPressed: signIn,
-                      child: Text('Sign In', style: TextStyle(fontSize: 18.0),),
+                      child: Text('Sign In',  style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
+                      ),
+                      ),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 30.0,),
+
               TextButton(
-                child: Text("Sign Up"),
+                child: Text("Sign Up",
+                  style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.lightBlue,
+                  ),
+
+                ),
+
                 onPressed: (){
                   //streamController.add(0);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
