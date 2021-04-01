@@ -290,13 +290,11 @@ class Partial extends StatelessWidget {
 
                                   FirebaseFirestore.instance
                                       .collection('trips')
-                                      .doc('$tripID')
-                                      .collection('stops')
-                                      .doc('stop.id')
+                                      .doc('${tripID.text}')
                                       .update({
-                                    "Trip Id": tripID.text,
-                                    "Part No ": partNoS.text,
+                                    "parts": FieldValue.arrayUnion([partNoS.text])
                                   });
+
 
                                   showDialog(
                                       context: context,
