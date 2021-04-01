@@ -63,11 +63,24 @@ class _ComplaintsState extends State<Complaints> {
                                   'Complaint : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
+                                Text(
+                                  document.data()['Complaint'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
                               ],
                             ),
-                            Text(
-                              document.data()['Complaint'].toString(),
-                              style: TextStyle(fontSize: 16),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  'Time : ',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  document.data()['time'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
                             ),
                           ],
                         ),
