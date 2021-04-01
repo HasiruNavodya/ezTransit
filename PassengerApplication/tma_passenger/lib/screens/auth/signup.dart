@@ -29,20 +29,33 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context)  {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Welcome"),
+        backgroundColor: Colors.black,
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Form(
           key: _formkey,
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             children: <Widget>[
+              SizedBox(height: 10.0,),
+              CircleAvatar(
+                radius: 110,
+                backgroundImage: AssetImage('assets/create1.jpg',
+                ),
+
+
+              ),
+              SizedBox(height: 5.0,),
               Column(
                 children: <Widget>[
-                  SizedBox(height: 80.0,),
-                  Text('Create Account', style: TextStyle(fontSize: 20),),
+
+                  Text('Create Account', style: TextStyle(fontSize:22,fontWeight: FontWeight.bold,color:Colors.black,),),
                 ],
               ),
-              SizedBox(height: 60.0,),
+              SizedBox(height: 20.0,),
               TextFormField(
                 validator: (String value){
                   if(value.isEmpty)
@@ -160,13 +173,13 @@ class _RegisterState extends State<Register> {
 
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(height: 30.0,),
               Column(
                 children: <Widget>[
                   ButtonTheme(
                     height: 50,
                     disabledColor: Colors.grey,
-                    child: RaisedButton(
+                    child: RaisedButton(color:Colors.black87,
                       onPressed:(){
 
                         if(_formkey.currentState.validate())
@@ -181,9 +194,11 @@ class _RegisterState extends State<Register> {
 
 
                       },
-                      child: Text('Sign Up',style: TextStyle(fontSize: 15, color: Colors.black)),
+                      child: Text('Sign Up',style: TextStyle(fontSize: 15, color: Colors.white)),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 20.0,),
+
                 ],
               )
             ],
