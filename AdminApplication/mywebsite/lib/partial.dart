@@ -295,7 +295,6 @@ class Partial extends StatelessWidget {
                                     "parts": FieldValue.arrayUnion([partNoS.text])
                                   });
 
-
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -303,11 +302,6 @@ class Partial extends StatelessWidget {
                                             'Successfully Inserted!');
                                       });
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Partial()));
                                 }),
                           ),
                         ],
