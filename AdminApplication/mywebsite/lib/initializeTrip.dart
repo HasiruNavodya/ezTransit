@@ -8,6 +8,8 @@ class InitializeTrip extends StatefulWidget {
   static const String id = 'initializeTrip';
 
   static String tid;
+
+  static String tripID;
   @override
   _InitializeTripState createState() => _InitializeTripState();
 }

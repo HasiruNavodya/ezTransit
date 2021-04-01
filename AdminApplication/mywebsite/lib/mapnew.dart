@@ -8,7 +8,6 @@ import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
 import 'package:mywebsite/initializeTrip.dart';
 
-
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
 
@@ -221,10 +220,11 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     "Latitude": cnlatitude.text,
                                     "Longitude": cnlongitude.text,
                                   };
-
+                                  //  String a = InitializeTrip.tid;
+                                  String a = InitializeTrip.tripID;
                                   FirebaseFirestore.instance
                                       .collection("trips")
-                                      .doc("$tid")
+                                      .doc("$a")
                                       .collection("stop")
                                       .add(data);
 
