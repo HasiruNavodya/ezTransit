@@ -73,6 +73,19 @@ class _EmergencyState extends State<Emergency> {
                             Row(
                               children: [
                                 Text(
+                                  'Time : ',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  document.data()['time'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
                                   'Location : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
@@ -102,11 +115,11 @@ class _EmergencyState extends State<Emergency> {
                                   'Description : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
+                                Text(
+                                  document.data()['text'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
                               ],
-                            ),
-                            Text(
-                              document.data()['text'].toString(),
-                              style: TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
