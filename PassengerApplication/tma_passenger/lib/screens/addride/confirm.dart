@@ -113,7 +113,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
           context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.CENTER,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.red,
           textColor: Colors.white,
           border: Border.all(color: Colors.white),
         );

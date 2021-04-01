@@ -10,6 +10,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../main.dart';
+
 String tripID;
 String busNo;
 int sval = 1;
@@ -126,6 +128,7 @@ class _AddTripViewState extends State<AddTripView> {
       onPressed:  () {
         print(sval);
         streamController.add(sval);
+        tripIdStream.add(tripID);
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => TmaMainApp()));
         Navigator.pop(context);
       },

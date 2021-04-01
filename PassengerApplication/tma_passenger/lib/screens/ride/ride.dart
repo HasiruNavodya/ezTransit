@@ -12,12 +12,20 @@ double pickupLat;
 double pickupLng;
 double distanceInMeters;
 String rideState = 'fetching';
-String ticketID = 'tck1000';
+//String ticketID = 'tck1000';
+//String ticketID;
 Map ticketData;
 Map tripData;
 Map busData;
 
 class RideView extends StatefulWidget {
+
+  String ticketID;
+
+  RideView(tid){
+    this.ticketID = tid;
+  }
+
   @override
   _RideViewState createState() => _RideViewState();
 }
@@ -29,6 +37,8 @@ class _RideViewState extends State<RideView> {
   @override
   void initState() {
     super.initState();
+
+    print(widget.ticketID);
 
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
@@ -415,7 +425,7 @@ class _RideViewState extends State<RideView> {
 
   void getRideData(){
 
-    FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
+    FirebaseFirestore.instance.collection('tickets').doc(widget.ticketID).get().then((DocumentSnapshot ticket) {
       if (ticket.exists) {
         ticketData = ticket.data();
         print(ticketData);
