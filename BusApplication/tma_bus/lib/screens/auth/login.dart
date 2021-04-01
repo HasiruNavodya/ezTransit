@@ -27,14 +27,15 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Column(
                   children: <Widget>[
-                    SizedBox(height: 180.0,),
+                    SizedBox(height: 100.0,),
                     Icon(
                       Icons.directions_bus,
-                      //color: Colors.pink,
-                      size: 36.0,
+                      color: Colors.black87,
+                      size: 150.0,
                     ),
                     SizedBox(height: 30.0,),
-                    Text('LOGIN', style: TextStyle(fontSize: 20),),
+                    Text('LOG IN', style:TextStyle(fontSize:20,fontWeight: FontWeight.bold,color:Colors.black,
+                    ),),
                   ]
               ),
               SizedBox(height: 40.0,),
@@ -80,9 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                   ButtonTheme(
                     height: 40,
                     disabledColor: Colors.grey,
-                    child: ElevatedButton(
+                    child: RaisedButton(color:Colors.black87,
                       onPressed: signIn,
-                      child: Text('Sign In', style: TextStyle(fontSize: 18.0),),
+                      child: Text('Sign In', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
+                      ),),
                     ),
                   ),
                 ],
