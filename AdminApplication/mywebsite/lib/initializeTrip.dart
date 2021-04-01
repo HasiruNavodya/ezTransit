@@ -246,13 +246,13 @@ class _InitializeTripState extends State<InitializeTrip> {
                                   // validate the form based on it's current state
                                   if (_formKey.currentState.validate()) {
                                     Map<String, dynamic> data = {
-                                      "Trip ID": tripID.text,
-                                      "Bus Name": bus.text,
-                                      "Start City": startCity.text,
-                                      "Start Time": startTime.text,
-                                      "End City": endCity.text,
-                                      "End Time": endTime.text,
-                                      "Stop Count": stopCount.text,
+                                      "tripID": tripID.text,
+                                      "bus": bus.text,
+                                      "startCity": startCity.text,
+                                      "startTime": startTime.text,
+                                      "endCity": endCity.text,
+                                      "endTime": endTime.text,
+                                      "stopCount": stopCount.text,
                                     };
                                     String tid = tripID.text;
                                     FirebaseFirestore.instance

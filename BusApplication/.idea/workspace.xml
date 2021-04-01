@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0be8ef7-8e2f-4054-a004-442b728eeb1a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../AdminApplication/mywebsite/lib/initializeTrip.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../AdminApplication/mywebsite/lib/initializeTrip.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdminApplication/mywebsite/lib/mapnew.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../AdminApplication/mywebsite/lib/mapnew.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_bus/lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/lib/screens/auth/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tma_bus/lib/screens/home/account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/tma_bus/lib/screens/home/account.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

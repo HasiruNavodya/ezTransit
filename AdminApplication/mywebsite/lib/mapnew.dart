@@ -238,6 +238,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                 ),
                                 onPressed: () async {
 
+                                  String stname=stopName.text;
+
                                   // validate the form based on it's current state
 
                                   Map<String, dynamic> data = {
@@ -247,14 +249,17 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     // "Latitude": cnlatitude.text,
                                     // "Longitude": cnlongitude.text,
                                    "location":GeoPoint(lat,long),
+
+
                                   };
                                   //  String a = InitializeTrip.tid;
                                   print("fdssssss"+tripid);
                                   FirebaseFirestore.instance
                                       .collection("trips")
                                       .doc("$tripid")
-                                      .collection("stop")
-                                      .add(data);
+                                      .collection("stops")
+                                      .doc('$stname')
+                                      .set(data);
 
                                   showDialog(
                                       context: context,
