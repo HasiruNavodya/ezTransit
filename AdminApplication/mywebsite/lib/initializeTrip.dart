@@ -6,6 +6,10 @@ import 'package:mywebsite/mapnew.dart';
 
 class InitializeTrip extends StatefulWidget {
   static const String id = 'initializeTrip';
+
+  static String tid;
+
+  static String tripID;
   @override
   _InitializeTripState createState() => _InitializeTripState();
 }
@@ -14,7 +18,7 @@ class _InitializeTripState extends State<InitializeTrip> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _tripID='T3500';
+  String _tripID;
   String _bus;
   String _startCity;
   String _startTime;
@@ -29,7 +33,7 @@ class _InitializeTripState extends State<InitializeTrip> {
   TextEditingController startTime = new TextEditingController();
   TextEditingController endCity = new TextEditingController();
   TextEditingController endTime = new TextEditingController();
-    TextEditingController stopCount = new TextEditingController();
+  TextEditingController stopCount = new TextEditingController();
 
   Widget _buildtripID() {
     return TextFormField(
@@ -141,7 +145,7 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 
-    Widget _buildstopCount() {
+  Widget _buildstopCount() {
     return TextFormField(
       controller: stopCount,
       decoration: InputDecoration(
@@ -172,8 +176,8 @@ class _InitializeTripState extends State<InitializeTrip> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            width: 1.3 * MediaQuery.of(context).size.width,
-            height: 0.9 * MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+            height: 1.3 * MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 /* gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -250,10 +254,10 @@ class _InitializeTripState extends State<InitializeTrip> {
                                       "End Time": endTime.text,
                                       "Stop Count": stopCount.text,
                                     };
-
+                                    String tid = tripID.text;
                                     FirebaseFirestore.instance
                                         .collection("trips")
-                                        .doc("$tripID")
+                                        .doc("$tid")
                                         .set(data);
 
                                     showDialog(
@@ -266,7 +270,7 @@ class _InitializeTripState extends State<InitializeTrip> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                MapClickPageNew()));
+                                                MapClickPageNew(tripID.text)));
 
                                     ;
                                   }

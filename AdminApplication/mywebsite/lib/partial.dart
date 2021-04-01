@@ -283,19 +283,16 @@ class Partial extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   // validate the form based on it's current state
-                                  Map<String, dynamic> data = {
+                            /*      Map<String, dynamic> data = {
                                     "Trip Id": tripID.text,
-                                    "Part No ": partNoS.text,
-                                  };
+                                    "Part No ": partNoS.text, 
+                                  };*/
 
                                   FirebaseFirestore.instance
                                       .collection('trips')
-                                      .doc('$tripID')
-                                      .collection('stops')
-                                      .doc('stop.id')
+                                      .doc('${tripID.text}')
                                       .update({
-                                    "Trip Id": tripID.text,
-                                    "Part No ": partNoS.text,
+                                    "parts": FieldValue.arrayUnion([partNoS.text])
                                   });
 
                                   showDialog(
@@ -305,11 +302,6 @@ class Partial extends StatelessWidget {
                                             'Successfully Inserted!');
                                       });
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Partial()));
                                 }),
                           ),
                         ],

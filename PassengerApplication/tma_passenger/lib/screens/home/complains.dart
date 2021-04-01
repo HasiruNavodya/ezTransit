@@ -219,7 +219,7 @@ class _complaintsState extends State<Complaints> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Alert"),
-      content: Text("Please Fill All The Records"),
+      content: Text("Please Fill All The Fields"),
       actions: [
         okButton,
 
