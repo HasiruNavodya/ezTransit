@@ -174,8 +174,8 @@ class _InitializeTripState extends State<InitializeTrip> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            width: 1.3 * MediaQuery.of(context).size.width,
-            height: 0.9 * MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+            height: 1.3 * MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 /* gradient: LinearGradient(
                   begin: Alignment.centerLeft,
