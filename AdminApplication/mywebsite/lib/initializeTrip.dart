@@ -270,7 +270,7 @@ class _InitializeTripState extends State<InitializeTrip> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                MapClickPageNew()));
+                                                MapClickPageNew(tripID.text)));
 
                                     ;
                                   }
