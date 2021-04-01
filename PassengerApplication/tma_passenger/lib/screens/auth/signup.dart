@@ -40,15 +40,15 @@ class _RegisterState extends State<Register> {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             children: <Widget>[
-              SizedBox(height: 20.0,),
-              CircleAvatar(
-                radius: 110,
-                backgroundImage: AssetImage('assets/create1.jpg',
-                ),
-
-
-              ),
               SizedBox(height: 10.0,),
+              Icon(
+                Icons.account_circle,
+                color: Colors.black,
+                size:150.0,
+              ),
+
+
+              SizedBox(height:10.0,),
               Column(
                 children: <Widget>[
 
