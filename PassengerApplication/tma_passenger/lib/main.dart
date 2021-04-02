@@ -40,31 +40,32 @@ class ViewController extends StatefulWidget {
 }
 
 class _ViewControllerState extends State<ViewController> {
+
+  void setAppState(int appStateValue) {
+    setState(() {
+      appState = appStateValue;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
-    void mySetState(int appStateValue) {
-      setState(() {
-        appState = appStateValue;
-      });
-    }
+
 
     widget.stream.listen((appStateValue) {
-      mySetState(appStateValue);
+      setAppState(appStateValue);
     });
 
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
-        mySetState(2);
+        setAppState(2);
       } else {
         print('User is signed in!');
-<<<<<<< HEAD
+
         setAppState(1);
-=======
-        mySetState(0);
->>>>>>> parent of 9511974 (.)
+
       }
     });
   }

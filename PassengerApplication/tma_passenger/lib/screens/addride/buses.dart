@@ -288,22 +288,22 @@ class _SelectBusState extends State<SelectBus> {
 
                                             ButtonTheme(child:
                                             RaisedButton(color:Colors.black87, onPressed: () {
-<<<<<<< HEAD
+
                                               //Navigator.push(context, MaterialPageRoute(),);
-                                              _markers.add(
+                                              /*_markers.add(
                                                   Marker(
                                                     markerId: MarkerId('bus'),
                                                     position: LatLng(6.823821869777691, 80.03039345308913),
                                                     icon: BitmapDescriptor.defaultMarker,
-                                                  ));
+                                                  ));*/
 
 
-=======
+
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(),
                                               );
->>>>>>> parent of 9511974 (.)
+
                                             }, child: Text("Locate Bus",
                                               style: TextStyle(
                                                 color: Colors.white,
