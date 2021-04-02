@@ -129,10 +129,39 @@ class _LoginPageState extends State<LoginPage> {
         streamController.add(0);
       }catch(e) {
         print("e.message");
+        showAlertDialogTwo(context);
       }
       }
 
   }
 
+  showAlertDialogTwo(BuildContext context) {
+
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Email or Password Incorrect!"),
+      actions: [
+        okButton,
+
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 }
