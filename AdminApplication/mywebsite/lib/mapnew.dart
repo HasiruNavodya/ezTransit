@@ -309,7 +309,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                       onTap: (LatLng pos) {
                         cnlatitude.text = pos.latitude.toString();
                         cnlongitude.text = pos.longitude.toString();
-                        lat=pos.longitude;
+                        lat=pos.latitude;
                          long=pos.longitude;
                         setState(() {
                           _lastTap = pos;

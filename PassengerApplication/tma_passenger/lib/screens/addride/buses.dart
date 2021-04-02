@@ -76,7 +76,7 @@ class _SelectBusState extends State<SelectBus> {
         print(ticketprice);
         print('mmmmmm $startcity');
         print('lllllll $endcity');
-        print(pno);
+        print("QPQPQPQPQPQPQQPQQ"+'$pno');
         setState(() {
           pnoSet = 'yes';
         });
@@ -238,7 +238,7 @@ class _SelectBusState extends State<SelectBus> {
                                             Text(''),
 
 
-                                            Text('Km'+'          Min ',
+                                            Text('Km: 6',
                                                 style: TextStyle(
                                                     fontSize: 15.0,
                                                     fontWeight: FontWeight.bold
