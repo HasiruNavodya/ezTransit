@@ -73,7 +73,7 @@ class _ViewControllerState extends State<ViewController> {
         setAppState(2);
       } else {
         print('User is signed in!');
-        setAppState(0);
+        setAppState(1);
       }
     });
   }
@@ -85,7 +85,7 @@ class _ViewControllerState extends State<ViewController> {
       return HomeView();
     } else if (appState == 1) {
       print(appState);
-      return RideView(ticketID);
+      return RideView();
     } else if (appState == 2) {
       print(appState);
       return LoginPage();

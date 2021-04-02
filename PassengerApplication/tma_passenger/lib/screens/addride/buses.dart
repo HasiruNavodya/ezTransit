@@ -312,9 +312,11 @@ class _SelectBusState extends State<SelectBus> {
                                               _markers.add(
                                                   Marker(
                                                     markerId: MarkerId('bus'),
-                                                    position: LatLng(data['location'].latitude,data['location'].longitude),
+                                                    position: LatLng(6.823821869777691, 80.03039345308913),
                                                     icon: BitmapDescriptor.defaultMarker,
                                                   ));
+
+
                                             }, child: Text("Locate Bus",
                                               style: TextStyle(
                                                 color: Colors.white,
