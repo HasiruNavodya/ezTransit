@@ -174,7 +174,7 @@ class _RideViewState extends State<RideView> {
                                             fontSize: 16,
                                           ),
                                         ),
-                                        Text("Color: " +busData['color'],
+                                        Text("Color: " +busData['Color'],
                                           style: TextStyle(
                                             fontSize: 16,
                                           ),
