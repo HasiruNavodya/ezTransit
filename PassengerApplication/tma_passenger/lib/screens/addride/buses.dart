@@ -160,7 +160,7 @@ class _SelectBusState extends State<SelectBus> {
                   return new ListView(
                     children: snapshot.data.docs.map((DocumentSnapshot document) {
 
-                      CollectionReference users = FirebaseFirestore.instance.collection('NewBus');
+                      CollectionReference users = FirebaseFirestore.instance.collection('buses');
 
                       return FutureBuilder<DocumentSnapshot>(
                         future: users.doc(document.data()['bus']).get(),
@@ -176,7 +176,7 @@ class _SelectBusState extends State<SelectBus> {
 
                             tripid=document.data()['tripID'];
                             print(tripid);
-                            ticketcount=document.data()['ticket count'];
+                            ticketcount=document.data()['ticketCount'];
                             seatcount=data['Seat Count'];
                             print('$seatcount'+'-'+'$ticketcount');
                             newseatcount=seatcount-ticketcount;

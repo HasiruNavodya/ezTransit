@@ -129,6 +129,11 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         FirebaseFirestore.instance.collection("tickets").add({"busNo": bus,"endCity":endcity,"endTime":droppingat,"fare":ticketprice,"passenger":'',"startCity":startcity,"startTime":pickupat,"ticketID":'',"tripID":tripid})
             .then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
+
+        FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
+
       }, (error) {
         print("One Time Payment Failed. Error: $error");
         Toast.show(
