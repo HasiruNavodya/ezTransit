@@ -13,12 +13,16 @@ double pickupLng;
 double distanceInMeters;
 String rideState = 'fetching';
 String ticketID = 'tck1000';
+<<<<<<< HEAD
 //String ticketID;
+=======
+>>>>>>> parent of 9511974 (.)
 Map ticketData;
 Map tripData;
 Map busData;
 
 class RideView extends StatefulWidget {
+<<<<<<< HEAD
 
   //String ticketID = 'TCK1000';
 /*
@@ -26,6 +30,8 @@ class RideView extends StatefulWidget {
     this.ticketID = tid;
   }*/
 
+=======
+>>>>>>> parent of 9511974 (.)
   @override
   _RideViewState createState() => _RideViewState();
 }
@@ -38,8 +44,11 @@ class _RideViewState extends State<RideView> {
   void initState() {
     super.initState();
 
+<<<<<<< HEAD
     //print(widget.ticketID);
 
+=======
+>>>>>>> parent of 9511974 (.)
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
       LocationPermission permission;
