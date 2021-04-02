@@ -28,13 +28,18 @@ String endCity;
 String busEmail;
 String bus;
 
+StreamController<String> getTripID = StreamController<String>();
 
 // ignore: must_be_immutable
 class TripView extends StatefulWidget {
-  TripView(String tripID);
 
+<<<<<<< HEAD
   AddTripView tripid = AddTripView();
 
+=======
+  TripView(this.stream);
+  final Stream<String> stream;
+>>>>>>> parent of 9511974 (.)
 
   @override
   _TripViewState createState() => _TripViewState();
@@ -52,8 +57,14 @@ class _TripViewState extends State<TripView> {
   void initState() {
     super.initState();
 
+<<<<<<< HEAD
     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     //print(tripid.tripID);
+=======
+    widget.stream.listen((tripid) {
+      setTripID(tripid);
+    });
+>>>>>>> parent of 9511974 (.)
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -65,7 +76,13 @@ class _TripViewState extends State<TripView> {
       print(bus);
     }
 
+
+
     print(tripState);
+  }
+
+  void setTripID(String tripid) {
+    tripID = tripid;
   }
 
   @override
@@ -85,7 +102,7 @@ class _TripViewState extends State<TripView> {
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
 
-            //lastStopPassed = data['lastStopPassed'];
+            lastStopPassed = data['lastStopPassed'];
 
             return Scaffold(
               appBar: AppBar(
@@ -299,10 +316,10 @@ class _TripViewState extends State<TripView> {
       });
     });
 
-    /*FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
       'lastStopPassed' : 0
     });
-*/
+
 
     Future.delayed(const Duration(seconds: 3), () {
       streamController.add(0);

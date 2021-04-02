@@ -47,12 +47,6 @@ class _SelectBusState extends State<SelectBus> {
     partNameGlobal = partName;
   }
 
-  GoogleMapController mapController;
-  static const _initialPosition = LatLng(7.2906, 80.6337);
-  LatLng _lastPostion = _initialPosition;
-  final Set<Marker> _markers = {};
-  BitmapDescriptor busicon;
-
 
   @override
   void initState() {
@@ -84,21 +78,6 @@ class _SelectBusState extends State<SelectBus> {
     });
   }
 
-  void setMapMarker() async{
-    busicon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(60,60)), 'assets/bus.png');
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      mapController = controller;
-    });
-  }
-
-  void _onCameraMove(CameraPosition position) {
-    setState(() {
-      _lastPostion = position.target;
-    });
-  }
 
 
   final spinkit = SpinKitFadingCircle(
@@ -131,14 +110,15 @@ class _SelectBusState extends State<SelectBus> {
               child: Stack(
                 children: [
                   GoogleMap(
-                    onMapCreated: _onMapCreated,
+                    //onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(6.844688, 80.015283), zoom: 15.0,),
                     myLocationEnabled: true,
+                    // Add little blue dot for device location, requires permission from user
                     mapType: MapType.normal,
                     compassEnabled: true,
-                    onCameraMove: _onCameraMove,
-                    markers: _markers,
+                    //onCameraMove: _onCameraMove,
+                    //markers: _markers,
                   ),
                 ],
               ),
@@ -308,13 +288,22 @@ class _SelectBusState extends State<SelectBus> {
 
                                             ButtonTheme(child:
                                             RaisedButton(color:Colors.black87, onPressed: () {
+<<<<<<< HEAD
                                               //Navigator.push(context, MaterialPageRoute(),);
                                               _markers.add(
                                                   Marker(
                                                     markerId: MarkerId('bus'),
-                                                    position: LatLng(data['location'].latitude,data['location'].longitude),
+                                                    position: LatLng(6.823821869777691, 80.03039345308913),
                                                     icon: BitmapDescriptor.defaultMarker,
                                                   ));
+
+
+=======
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(),
+                                              );
+>>>>>>> parent of 9511974 (.)
                                             }, child: Text("Locate Bus",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -377,7 +366,6 @@ class _SelectBusState extends State<SelectBus> {
       );
 
     }
-
 
   }
 

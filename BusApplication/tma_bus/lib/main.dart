@@ -9,20 +9,19 @@ import 'package:tma_bus/screens/trip/trip.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'screens/home/addtrip.dart';
 
 int appState = 3;
-String tripID;
 StreamController<int> streamController = StreamController<int>();
-StreamController<String> tripIdStream = StreamController<String>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(TmaBusApp());
+  runApp(TmaMainApp());
 }
 
-class TmaBusApp extends StatelessWidget {
+class TmaMainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class TmaBusApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ViewController(streamController.stream, tripIdStream.stream),
+      home: ViewController(streamController.stream),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -39,9 +38,8 @@ class TmaBusApp extends StatelessWidget {
 
 class ViewController extends StatefulWidget {
 
-  ViewController(this.stream1,this.stream2);
-  final Stream<int> stream1;
-  final Stream<String> stream2;
+  ViewController(this.stream);
+  final Stream<int> stream;
 
   @override
   _ViewControllerState createState() => _ViewControllerState();
@@ -53,34 +51,28 @@ class _ViewControllerState extends State<ViewController> {
   void initState() {
     super.initState();
 
-    widget.stream1.listen((appStateValue) {
-      setAppState(appStateValue);
+    widget.stream.listen((appStateValue) {
+      mySetState(appStateValue);
     });
 
-    widget.stream2.listen((trid) {
-      setTripID(trid);
-    });
-
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
       if (user == null) {
-        setAppState(2);
+        mySetState(2);
         print('User is currently signed out!');
       } else {
-        setAppState(0);
+        mySetState(0);
         print('User is signed in!');
       }
     });
 
   }
 
-  void setAppState(int appStateValue) {
+  void mySetState(int appStateValue) {
     setState(() {
       appState = appStateValue;
     });
-  }
-
-  void setTripID(String trid) {
-      tripID = trid;
   }
 
   @override
@@ -90,7 +82,7 @@ class _ViewControllerState extends State<ViewController> {
       return HomeView();
     }
     else if(appState == 1){
-      return TripView(tripID);
+      return TripView();
     }
     else{
       return LoginPage();
