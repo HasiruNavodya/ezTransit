@@ -442,7 +442,7 @@ class _RideViewState extends State<RideView> {
             if (bus.exists) {
               busData = bus.data();
               setState(() {
-                rideState = 'waiting';
+                rideState = 'onbus';
               });
             }
           });
@@ -475,13 +475,13 @@ class _RideViewState extends State<RideView> {
         _markers.add(
           Marker(
             markerId: MarkerId('bus'),
-            position: LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
+            position: LatLng(6.844610383055133, 80.014490977822),
             icon: busicon,
           ));
 
         mapController?.animateCamera(
           CameraUpdate.newLatLng(
-            LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
+            LatLng(6.844610383055133, 80.014490977822),
           ),
         );
 

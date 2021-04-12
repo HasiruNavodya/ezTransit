@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
 import 'package:tma_bus/screens/home/addtrip.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -27,19 +28,14 @@ String startCity;
 String endCity;
 String busEmail;
 String bus;
+DatabaseReference pCount;
 
 StreamController<String> getTripID = StreamController<String>();
 
 // ignore: must_be_immutable
 class TripView extends StatefulWidget {
 
-<<<<<<< HEAD
-  AddTripView tripid = AddTripView();
 
-=======
-  TripView(this.stream);
-  final Stream<String> stream;
->>>>>>> parent of 9511974 (.)
 
   @override
   _TripViewState createState() => _TripViewState();
@@ -53,18 +49,15 @@ class _TripViewState extends State<TripView> {
   final myController = TextEditingController();
   final myController2 = TextEditingController();
 
+  final ValueNotifier<int> vnBodyCount = ValueNotifier<int>(0);
+
   @override
   void initState() {
     super.initState();
 
-<<<<<<< HEAD
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    //print(tripid.tripID);
-=======
-    widget.stream.listen((tripid) {
-      setTripID(tripid);
-    });
->>>>>>> parent of 9511974 (.)
+
+
+
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -91,6 +84,7 @@ class _TripViewState extends State<TripView> {
       if(geoGate == 0){
         initTrip();
         streamLiveLocation();
+        getIRCount();
       }
       return FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
@@ -136,6 +130,34 @@ class _TripViewState extends State<TripView> {
                           fontSize: 20.0,
                         ),
                       ),
+                      SizedBox(
+                        width: 50.0,
+                        height: 50.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Passenger Count: ',
+                            style: TextStyle(
+                              //fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          ValueListenableBuilder(
+                            builder: (BuildContext context, int value, Widget child) {
+                              return Text('$value',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                ),
+                              );
+                            },
+                            valueListenable: vnBodyCount,
+                          ),
+                        ],
+                      ),
+
                     ],
                   ),
                 ),
@@ -214,7 +236,7 @@ class _TripViewState extends State<TripView> {
       if (tripDoc.exists) {
         print('Document exists on the database');
         //lastStopPassed = tripDoc.data()['lastStopPassed'];
-        stopCount = tripDoc.data()['stopCount'];
+        //stopCount = tripDoc.data()['stopCount'];
         startCity = tripDoc.data()['startCity'];
         endCity = tripDoc.data()['endCity'];
       }
@@ -228,9 +250,9 @@ class _TripViewState extends State<TripView> {
 
   void streamLiveLocation() async{
     positionStream = Geolocator.getPositionStream().listen((Position position) {
-      print(position.latitude.toString() + ', ' + position.longitude.toString());
+      //print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-      /*FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+/*      FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
         'location' : GeoPoint(position.latitude, position.longitude)
       });*/
     });
@@ -334,6 +356,25 @@ class _TripViewState extends State<TripView> {
       return;
     }
     print('ErrorCode: $errorCode');
+  }
+
+  void getIRCount(){
+    /*pCount.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      String value = snapshot.value['testbus'];
+      print('Value is $value');
+    });*/
+
+    pCount = FirebaseDatabase.instance.reference();
+    pCount.onValue.listen((event){
+      var test = event.snapshot;
+      print(test.value["PCount"]["testbus"]);
+      vnBodyCount.value = test.value["PCount"]["testbus"];
+      //var pulse = snapshot.value["PCount"]["testbus"];
+      //print(pulse);
+      //var temp  = snapshot.value["temperature"];
+    });
+
   }
 
 }

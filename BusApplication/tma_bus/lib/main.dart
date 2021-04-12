@@ -62,7 +62,7 @@ class _ViewControllerState extends State<ViewController> {
         mySetState(2);
         print('User is currently signed out!');
       } else {
-        mySetState(0);
+        mySetState(1);
         print('User is signed in!');
       }
     });
