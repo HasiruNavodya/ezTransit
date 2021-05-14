@@ -14,6 +14,8 @@ import 'screens/home/addtrip.dart';
 
 int appState = 3;
 StreamController<int> streamController = StreamController<int>();
+StreamController<String> tripIDStream = StreamController<String>();
+String tripID;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,7 @@ class TmaMainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ViewController(streamController.stream),
+      home: ViewController(streamController.stream,tripIDStream.stream),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -38,8 +40,9 @@ class TmaMainApp extends StatelessWidget {
 
 class ViewController extends StatefulWidget {
 
-  ViewController(this.stream);
+  ViewController(this.stream,this.tripstream);
   final Stream<int> stream;
+  final Stream<String> tripstream;
 
   @override
   _ViewControllerState createState() => _ViewControllerState();
@@ -55,6 +58,10 @@ class _ViewControllerState extends State<ViewController> {
       mySetState(appStateValue);
     });
 
+    widget.tripstream.listen((tripidval) {
+      setTrip(tripidval);
+    });
+
     FirebaseAuth.instance
         .authStateChanges()
         .listen((User user) {
@@ -62,7 +69,7 @@ class _ViewControllerState extends State<ViewController> {
         mySetState(2);
         print('User is currently signed out!');
       } else {
-        mySetState(1);
+        mySetState(0);
         print('User is signed in!');
       }
     });
@@ -75,6 +82,10 @@ class _ViewControllerState extends State<ViewController> {
     });
   }
 
+  void setTrip(String tripidval) {
+      tripID = tripidval;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -82,6 +93,7 @@ class _ViewControllerState extends State<ViewController> {
       return HomeView();
     }
     else if(appState == 1){
+      TripView().setTripID(tripID);
       return TripView();
     }
     else{
@@ -89,4 +101,5 @@ class _ViewControllerState extends State<ViewController> {
     }
 
   }
+
 }

@@ -28,7 +28,7 @@ class _AccountState extends State<Account> {
       bus = list[0].toString().toUpperCase();
       print(bus);
     }
-
+    //logout();
   }
 
   @override

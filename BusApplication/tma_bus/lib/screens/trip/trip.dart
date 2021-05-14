@@ -8,13 +8,13 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
-import 'package:tma_bus/screens/home/addtrip.dart';
+//import 'package:tma_bus/screens/home/addtrip.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID = 'T3001';
+String tripID;
 String tripName;
 double stopLat;
 double stopLng;
@@ -35,6 +35,9 @@ StreamController<String> getTripID = StreamController<String>();
 // ignore: must_be_immutable
 class TripView extends StatefulWidget {
 
+  void setTripID(String tripid) {
+    tripID = tripid;
+  }
 
 
   @override
@@ -55,10 +58,6 @@ class _TripViewState extends State<TripView> {
   void initState() {
     super.initState();
 
-
-
-
-
     FirebaseAuth auth = FirebaseAuth.instance;
 
     if (auth.currentUser != null) {
@@ -69,23 +68,21 @@ class _TripViewState extends State<TripView> {
       print(bus);
     }
 
-
-
     print(tripState);
   }
 
-  void setTripID(String tripid) {
-    tripID = tripid;
-  }
+
 
   @override
   Widget build(BuildContext context) {
+
     if (tripState == 'on') {
       if(geoGate == 0){
         initTrip();
         streamLiveLocation();
         getIRCount();
       }
+
       return FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -157,7 +154,6 @@ class _TripViewState extends State<TripView> {
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),

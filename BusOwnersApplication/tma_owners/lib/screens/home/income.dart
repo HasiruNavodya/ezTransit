@@ -41,8 +41,15 @@ class _PickDateState extends State<PickDate> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: calender(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Check Income: Select Date'),
+        centerTitle: true,
+        backgroundColor: Colors.black87,
+      ),
+      body: Container(
+        child: calender(),
+      ),
     );
   }
 

@@ -81,8 +81,8 @@ class _AddTripViewState extends State<AddTripView> {
                   margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
                   child: new OutlinedButton(
                     onPressed: () {
-                      //tripID = document.data()['tripID'];
-                      //print(tripID);
+                      tripID = document.data()['tripID'];
+                      print(tripID);
                       showAlertDialog(context);
                     },
                     child: Padding(
@@ -129,6 +129,7 @@ class _AddTripViewState extends State<AddTripView> {
       onPressed:  () {
         print(sval);
         streamController.add(sval);
+        tripIDStream.add(tripID);
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => TmaMainApp()));
         Navigator.pop(context);
       },
