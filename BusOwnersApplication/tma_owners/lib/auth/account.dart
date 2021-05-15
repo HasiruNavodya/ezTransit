@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../main.dart';
-import '../auth/login.dart';
+import 'package:tma_owners/auth/login.dart';
+import 'package:tma_owners/main.dart';
 
 String busEmail;
 String bus;
@@ -73,133 +72,133 @@ class _AccountState extends State<Account> {
                       ),
                     ),
 
-                  Expanded(
-                    flex: 1,
-                    child:
-                    Card(
+                    Expanded(
+                      flex: 1,
+                      child:
+                      Card(
+                          color: Colors.white60,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.account_box,
+                              color: Colors.black87,
+                            ),
+                            title: Text(
+                              'Name',
+                              style:
+                              TextStyle(fontFamily: 'BalooBhai',
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text('${document.data()['Driver Name']}',
+                              style: TextStyle(
+                                fontSize: 17,
+                                // fontWeight: FontWeight.w900,
+                                //fontFamily: 'SourceSansPro',
+                                color: Colors.black87,
+                                //letterSpacing: 2.5,
+                              ),
+                            ),
+                          )),
+
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child:
+                      Card(
                         color: Colors.white60,
                         margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                         child: ListTile(
                           leading: Icon(
-                            Icons.account_box,
+                            Icons.directions_bus_sharp,
                             color: Colors.black87,
                           ),
                           title: Text(
-                            'Name',
-                            style:
-                            TextStyle(fontFamily: 'BalooBhai',
-                                fontSize: 17.0,
+                            'Bus Number Plate',
+                            style: TextStyle(fontSize: 17.0,
+                                fontFamily: 'Neucha',
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text('${document.data()['Driver Name']}',
+                          subtitle: Text('${document.data()['Plate Number']}',
                             style: TextStyle(
                               fontSize: 17,
-                              // fontWeight: FontWeight.w900,
+                              //fontWeight: FontWeight.bold,
                               //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
                               //letterSpacing: 2.5,
                             ),
                           ),
-                        )),
+                        ),
+                      ),
 
-                  ),
-                   Expanded(
-                     flex: 1,
-                       child:
-                       Card(
-                         color: Colors.white60,
-                         margin:
-                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                         child: ListTile(
-                           leading: Icon(
-                             Icons.directions_bus_sharp,
-                             color: Colors.black87,
-                           ),
-                           title: Text(
-                             'Bus Number Plate',
-                             style: TextStyle(fontSize: 17.0,
-                                 fontFamily: 'Neucha',
-                                 fontWeight: FontWeight.bold),
-                           ),
-                           subtitle: Text('${document.data()['Plate Number']}',
-                             style: TextStyle(
-                               fontSize: 17,
-                               //fontWeight: FontWeight.bold,
-                               //fontFamily: 'SourceSansPro',
-                               color: Colors.black87,
-                               //letterSpacing: 2.5,
-                             ),
-                           ),
-                         ),
-                       ),
-
-                   ),
+                    ),
 
 
                     Expanded(
                       flex: 1,
-                        child:Card(
-                          color: Colors.white60,
-                          margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.directions_bus_sharp,
+                      child:Card(
+                        color: Colors.white60,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.directions_bus_sharp,
+                            color: Colors.black87,
+                          ),
+                          title: Text(
+                            'Bus Color',
+                            style: TextStyle(fontSize: 17.0,
+                                fontFamily: 'Neucha',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text('${document.data()['Color']}',
+                            style: TextStyle(
+                              fontSize: 17,
+                              //fontWeight: FontWeight.bold,
+                              //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
-                            ),
-                            title: Text(
-                              'Bus Color',
-                              style: TextStyle(fontSize: 17.0,
-                                  fontFamily: 'Neucha',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text('${document.data()['Color']}',
-                              style: TextStyle(
-                                fontSize: 17,
-                                //fontWeight: FontWeight.bold,
-                                //fontFamily: 'SourceSansPro',
-                                color: Colors.black87,
-                                //letterSpacing: 2.5,
-                              ),
-
+                              //letterSpacing: 2.5,
                             ),
 
                           ),
+
                         ),
+                      ),
 
                     ),
 
                     Expanded(
                       flex: 1,
-                        child: Card(
-                          color: Colors.white60,
-                          margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.credit_card_rounded,
+                      child: Card(
+                        color: Colors.white60,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.credit_card_rounded,
+                            color: Colors.black87,
+                          ),
+                          title: Text(
+                            'License Number',
+                            style: TextStyle(fontSize: 17.0,
+                                fontFamily: 'Neucha',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text('${document.data()['License Number']}',
+                            style: TextStyle(
+                              fontSize: 17,
+                              //fontWeight: FontWeight.bold,
+                              //fontFamily: 'SourceSansPro',
                               color: Colors.black87,
-                            ),
-                            title: Text(
-                              'License Number',
-                              style: TextStyle(fontSize: 17.0,
-                                  fontFamily: 'Neucha',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text('${document.data()['License Number']}',
-                              style: TextStyle(
-                                fontSize: 17,
-                                //fontWeight: FontWeight.bold,
-                                //fontFamily: 'SourceSansPro',
-                                color: Colors.black87,
-                                //letterSpacing: 2.5,
-                              ),
-
+                              //letterSpacing: 2.5,
                             ),
 
                           ),
+
                         ),
+                      ),
                     ),
 
                     Expanded(

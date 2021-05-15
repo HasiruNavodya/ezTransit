@@ -1,34 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="team42.tma_bus">
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-
-
-
-
-    <application
-
-        android:label="tma_bus"
+    package="team42.tma.tma_owners">
+   <application
+        android:label="tma_owners"
         android:icon="@mipmap/ic_launcher">
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDxrRdgmin9mb_qIpcknuulRVrYOmRo9UQ"/>
-
-
-        <service
-            android:name="com.pravera.geofence_service.foreground_service.ForegroundService"
-            android:stopWithTask="true"
-            />
-        <service
-            android:name="com.pravera.geofence_service.activity_recognition.ActivityRecognitionIntentService"
-            android:stopWithTask="true" />
-
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

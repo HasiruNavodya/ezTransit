@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tma_bus/screens/auth/login.dart';
-import 'package:tma_bus/screens/home/account.dart';
-import 'package:tma_bus/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tma_owners/auth/login.dart';
+import 'package:tma_owners/home/home.dart';
 
 
 int appState = 3;
@@ -81,3 +79,4 @@ class _ViewControllerState extends State<ViewController> {
 
   }
 }
+

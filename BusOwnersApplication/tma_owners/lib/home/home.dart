@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tma_bus/screens/home/account.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:location/location.dart';
-import 'package:tma_bus/screens/home/income.dart';
-import 'package:tma_bus/screens/home/locate.dart';
+import 'package:tma_owners/auth/account.dart';
+import 'package:tma_owners/income/incomehome.dart';
+import 'package:tma_owners/income/selectdate.dart';
+import 'package:tma_owners/locate/selectBus.dart';
+
 //import 'package:permission_handler/permission_handler.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,7 +19,6 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     controller = TabController(length: 3, vsync: this);
-    locationPermission();
   }
 
   @override
@@ -33,7 +32,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
     return Scaffold(
       body: TabBarView(
         //physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[Income(), Locate(), Account()],
+        children: <Widget>[SelectDate(), SelectBusToLocate(), Account()],
         controller: controller,
       ),
       bottomNavigationBar: Material(
@@ -56,34 +55,5 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       ),
     );
   }
-
-  void locationPermission() async{
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-  }
-
-
-
 }
 
