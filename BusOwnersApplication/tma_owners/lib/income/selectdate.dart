@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:tma_owners/income/selectbus.dart';
 
 CalendarFormat _calendarFormat = CalendarFormat.month;
 DateTime _focusedDay = DateTime.now();
@@ -28,17 +29,33 @@ class _SelectDateState extends State<SelectDate> {
         child: Column(
           children: [
             Expanded(
-              flex: 2,
+              flex: 7,
               child: calender(),
             ),
             Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  child: Text("NEXT >>>"),
-                ),
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    //style: ElevatedButton.styleFrom(onSurface: Colors.red),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectBus(_selectedDay)));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('SELECT BUS'),
+                        Icon(Icons.arrow_right),
+                      ],
+                    )
+                  ),
+                ],
               ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(),
             ),
           ],
         ),
