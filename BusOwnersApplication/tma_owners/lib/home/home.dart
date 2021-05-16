@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tma_owners/auth/account.dart';
 import 'package:tma_owners/income/incomehome.dart';
 import 'package:tma_owners/income/selectdate.dart';
-import 'package:tma_owners/locate/selectBus.dart';
+import 'package:tma_owners/locate/selectbusmap.dart';
 
 //import 'package:permission_handler/permission_handler.dart';
 
@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
     return Scaffold(
       body: TabBarView(
         //physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[SelectDate(), SelectBusToLocate(), Account()],
+        children: <Widget>[SelectDate(), SelectBusMap(), Account()],
         controller: controller,
       ),
       bottomNavigationBar: Material(
