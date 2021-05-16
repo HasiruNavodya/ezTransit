@@ -3,6 +3,11 @@
    <application
         android:label="tma_owners"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data
+           android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCXMQA_0o00N8KA7iSXA870zExtgQ-Fc-A"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

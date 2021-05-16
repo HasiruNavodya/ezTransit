@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_owners/income/selecttrip.dart';
+import 'map.dart';
 
 String bus;
 DateTime dateG;
@@ -53,7 +54,7 @@ class _SelectBusMapState extends State<SelectBusMap> {
                 child: new OutlinedButton(
                   onPressed: () {
                     bus = document.data()['Plate Number'];
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => SelectTrip()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BusMap()));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
