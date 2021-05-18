@@ -54,7 +54,7 @@ class _SelectBusMapState extends State<SelectBusMap> {
                 child: new OutlinedButton(
                   onPressed: () {
                     bus = document.data()['Plate Number'];
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BusMap()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BusMap(bus)));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),

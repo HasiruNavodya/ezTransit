@@ -8,6 +8,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BusMap extends StatefulWidget {
 
+  BusMap(this.busNo);
+  final String busNo;
+
   @override
   _BusMapState createState() => _BusMapState();
 }
@@ -31,7 +34,7 @@ class _BusMapState extends State<BusMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Wait For Your Bus"),
+        title: Text("Bus " + widget.busNo + " Live Location"),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
@@ -39,7 +42,7 @@ class _BusMapState extends State<BusMap> {
       body: Container(
         child: GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: LatLng(6.844688, 80.015283), zoom: 15.0,),
+          initialCameraPosition: CameraPosition(target: LatLng(6.844688, 80.015283), zoom: 5.0,),
           myLocationEnabled: true,
           mapType: MapType.normal,
           compassEnabled: true,
@@ -67,13 +70,13 @@ class _BusMapState extends State<BusMap> {
 
     setState(() {
 
-      FirebaseFirestore.instance.collection('buses').doc('GE-3412').snapshots().listen((DocumentSnapshot busLocation) {
+      FirebaseFirestore.instance.collection('buses').doc(widget.busNo).snapshots().listen((DocumentSnapshot busLocation) {
 
         print("location updated");
 
-        _markers.add(Marker(markerId: MarkerId('bus'), position: LatLng(6.844610383055133, 80.014490977822), icon: busicon));
+        _markers.add(Marker(markerId: MarkerId('bus'), position: LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude), icon: busicon));
 
-        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(6.844610383055133, 80.014490977822)));
+        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude)));
 
       });
     });

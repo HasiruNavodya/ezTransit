@@ -64,7 +64,7 @@ class _ViewControllerState extends State<ViewController> {
       } else {
         print('User is signed in!');
 
-        setAppState(1);
+        setAppState(0);
 
       }
     });
@@ -75,13 +75,16 @@ class _ViewControllerState extends State<ViewController> {
     if (appState == 0) {
       print(appState);
       return HomeView();
-    } else if (appState == 1) {
+    }
+    else if (appState == 1) {
       print(appState);
       return RideView();
-    } else if (appState == 2) {
+    }
+    else if (appState == 2) {
       print(appState);
       return LoginPage();
-    } else {
+    }
+    else {
       return Scaffold(
         body: Container(
           child: SpinKitDualRing(color: Colors.black87),
