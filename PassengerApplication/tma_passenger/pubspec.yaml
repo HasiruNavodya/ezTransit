@@ -36,6 +36,7 @@ dependencies:
   geoflutterfire: ^3.0.0-nullsafety.1
   geolocator: ^7.0.1
 
+
   rxdart: ^0.26.0
 
   uuid: 2.2.2
@@ -69,9 +70,13 @@ flutter:
     - assets/login1.png
     - assets/create.png
     - assets/create1.jpg
+    - assets/mapbg.png
 #     - images/a_dot_burr.jpeg
 #     - images/a_dot_ham.jpeg
-
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: fonts/Quicksand-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

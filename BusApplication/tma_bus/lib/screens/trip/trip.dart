@@ -248,7 +248,7 @@ class _TripViewState extends State<TripView> {
     positionStream = Geolocator.getPositionStream().listen((Position position) {
       //print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-/*      FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+      /*FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
         'location' : GeoPoint(position.latitude, position.longitude)
       });*/
     });
@@ -263,7 +263,6 @@ class _TripViewState extends State<TripView> {
     print('resumed');
     positionStream.resume();
   }
-
 
 
   final geofenceService = GeofenceService(

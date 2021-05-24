@@ -36,17 +36,8 @@ class _SelectPickupState extends State<SelectPickup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SelectDestination()),
-              );
-            }
-        ),
         title: Text("Select Pickup Location"),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black87,
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
@@ -57,78 +48,94 @@ class _SelectPickupState extends State<SelectPickup> {
             child:Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(15.0) ,
-                  child: Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Card(
+                    shadowColor: Colors.grey,
                     child: TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         setState(() {
                           searchString = val.toLowerCase();
                         });
                       },
                       controller: textEditingController,
                       decoration: InputDecoration(
+                          labelText: 'Search Destination City',
+                          border: OutlineInputBorder(),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.search),
-
-
                           ),
-                          hintText:'Search Your Pickup Location',
+                          //hintText: 'Search Your Destination',
                           hintStyle: TextStyle(
-                              fontFamily: 'Antra',color: Colors.blueGrey)),
+                              fontFamily: 'Antra', color: Colors.blueGrey)),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: StreamBuilder<QuerySnapshot>(
 
 
 
-                    stream: (searchString == null || searchString.trim()== '')
-                        ?FirebaseFirestore.instance.collection("cities").snapshots()
-                        :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+                      stream: (searchString == null || searchString.trim()== '')
+                          ?FirebaseFirestore.instance.collection("cities").snapshots()
+                          :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
 
-                    builder: (context,snapshot){
-                      if(snapshot.data == null) return CircularProgressIndicator();
+                      builder: (context,snapshot){
+                        if(snapshot.data == null) return CircularProgressIndicator();
 
-                      if(snapshot.hasError){
-                        return Text("Error ${snapshot.error}");
-                      }
-                      switch(snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return Text("Not date Present");
+                        if(snapshot.hasError){
+                          return Text("Error ${snapshot.error}");
+                        }
+                        switch(snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return Text("Not date Present");
 
-                        case ConnectionState.done:
-                          return Text("Done!");
+                          case ConnectionState.done:
+                            return Text("Done!");
 
-                        default :
+                          default :
 
-                          final List<DocumentSnapshot> documents = snapshot.data.docs;
+                            final List<DocumentSnapshot> documents = snapshot.data.docs;
 
-                          return new ListView(
-                              children: documents
-                                  .map((doc) => Card(
-                                child: ListTile(
-                                    title: Text(doc['location']),
-                                    subtitle: Text(doc['name']),
-
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation),  //need to pass parameters here (doc['location']),destinationLocation
+                            return new ListView(
+                                children: documents
+                                    .map((doc) => Card(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 7,
+                                        child: ListTile(
+                                            title: Text(doc['location'],
+                                              style: TextStyle(
+                                                fontSize: 19,
+                                              ),
+                                            ),
+                                            subtitle: Text(doc['name']),
+                                            onTap: () {
+                                              Navigator.push(context,MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation)));
+                                            }),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: Colors.blueGrey.shade700,
+                                          size: 16,
                                         ),
-                                      );
-                                    }
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                                    .toList());
 
-                                ),
-                              ))
-                                  .toList());
 
-
-                      }
-                    },
+                        }
+                      },
+                    ),
                   ),
                 ),
-
+//Navigator.push(context,MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation)));
 
               ],
 

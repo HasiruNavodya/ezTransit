@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:tma_passenger/screens/addride/confirm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,15 +25,13 @@ String endcity;
 class SelectBus extends StatefulWidget {
   String pickuLocation;
   String destinationLocation;
-  SelectBus(pickuploc,destinationloc)
-  {
-    this.pickuLocation=pickuploc;
-    this.destinationLocation=destinationloc;
+  SelectBus(pickuploc, destinationloc) {
+    this.pickuLocation = pickuploc;
+    this.destinationLocation = destinationloc;
   }
   @override
-  _SelectBusState createState() => _SelectBusState(pickuLocation,destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
+  _SelectBusState createState() => _SelectBusState(pickuLocation, destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
 }
-
 
 class _SelectBusState extends State<SelectBus> {
   String pickuLocation;
@@ -47,38 +46,39 @@ class _SelectBusState extends State<SelectBus> {
     partNameGlobal = partName;
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print(partName);
 
-    if(pnoSet == 'no'){
+    if (pnoSet == 'no') {
       getpno();
     }
   }
 
-  void getpno(){
-    FirebaseFirestore.instance.collection('partialroutes').doc('$partNameGlobal').get().then((DocumentSnapshot documentSnapshot) {
+  void getpno() {
+    FirebaseFirestore.instance
+        .collection('partialroutes')
+        .doc('$partNameGlobal')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         print(documentSnapshot.data()['partNo']);
         pno = documentSnapshot.data()['partNo'];
-        startcity=documentSnapshot.data()['startin'];
-        endcity=documentSnapshot.data()['endin'];
+        startcity = documentSnapshot.data()['startin'];
+        endcity = documentSnapshot.data()['endin'];
         ticketprice = documentSnapshot.data()['fare'];
         print(ticketprice);
         print('mmmmmm $startcity');
         print('lllllll $endcity');
-        print("QPQPQPQPQPQPQQPQQ"+'$pno');
+        print("QPQPQPQPQPQPQQPQQ" + '$pno');
         setState(() {
           pnoSet = 'yes';
         });
       }
     });
   }
-
-
 
   final spinkit = SpinKitFadingCircle(
     itemBuilder: (BuildContext context, int index) {
@@ -92,10 +92,9 @@ class _SelectBusState extends State<SelectBus> {
 
   @override
   Widget build(BuildContext context) {
-
     //Query buses = FirebaseFirestore.instance.collection('trips').where('parts', arrayContainsAny: [pno]);
 
-    if(pnoSet == 'yes'){
+    if (pnoSet == 'yes') {
       return Scaffold(
         appBar: AppBar(
           title: Text("Select Bus"),
@@ -103,270 +102,285 @@ class _SelectBusState extends State<SelectBus> {
           centerTitle: true,
         ),
 
-        body: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Stack(
-                children: [
-                  GoogleMap(
-                    //onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(6.844688, 80.015283), zoom: 15.0,),
-                    myLocationEnabled: true,
-                    // Add little blue dot for device location, requires permission from user
-                    mapType: MapType.normal,
-                    compassEnabled: true,
-                    //onCameraMove: _onCameraMove,
-                    //markers: _markers,
-                  ),
-                ],
+        body: Container(
+          color: Colors.white70,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                      //onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(6.844688, 80.015283),
+                        zoom: 15.0,
+                      ),
+                      myLocationEnabled: true,
+                      // Add little blue dot for device location, requires permission from user
+                      mapType: MapType.normal,
+                      compassEnabled: true,
+                      //onCameraMove: _onCameraMove,
+                      //markers: _markers,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: StreamBuilder<QuerySnapshot>(
+              Expanded(
+                flex: 3,
+                child: Container(
+                  color: Colors.grey.shade100,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('trips')
+                        .where('parts', arrayContains: pno)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
 
-                stream:FirebaseFirestore.instance.collection('trips').where('parts', arrayContains: pno).snapshots(),
-                builder: (context,snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong');
-                  }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return spinkit;
+                      }
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Loading");
-                  }
+                      return new ListView(
+                        children:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          CollectionReference users =
+                              FirebaseFirestore.instance.collection('buses');
 
-                  return new ListView(
-                    children: snapshot.data.docs.map((DocumentSnapshot document) {
-
-                      CollectionReference users = FirebaseFirestore.instance.collection('buses');
-
-                      return FutureBuilder<DocumentSnapshot>(
-                        future: users.doc(document.data()['bus']).get(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                          if (snapshot.hasError) {
-                            return Text("Something went wrong");
-                          }
-
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            Map<String, dynamic> data = snapshot.data.data();
-
-                            tripid=document.data()['tripID'];
-                            print(tripid);
-                            ticketcount=document.data()['ticketCount'];
-                            seatcount=data['Seat Count'];
-                            print('$seatcount'+'-'+'$ticketcount');
-                            newseatcount=seatcount-ticketcount;
-                            print(newseatcount);
-                            if (ticketcount>=seatcount)
-                              {
-                                newseatcount=0;
-
+                          return FutureBuilder<DocumentSnapshot>(
+                            future: users.doc(document.data()['bus']).get(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text("Something went wrong");
                               }
 
-                            if (ticketcount>seatcount)
-                            {
-                              standingcount=ticketcount-seatcount;
-                              print(standingcount);
-                            }
-                            else{
-                              standingcount=0;
-                            }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                Map<String, dynamic> data = snapshot.data.data();
 
+                                tripid = document.data()['tripID'];
+                                print(tripid);
+                                ticketcount = document.data()['ticketCount'];
+                                seatcount = data['Seat Count'];
+                                print('$seatcount' + '-' + '$ticketcount');
+                                newseatcount = seatcount - ticketcount;
+                                print(newseatcount);
+                                if (ticketcount >= seatcount) {
+                                  newseatcount = 0;
+                                }
 
-                            return Container(
+                                if (ticketcount > seatcount) {
+                                  standingcount = ticketcount - seatcount;
+                                  print(standingcount);
+                                } else {
+                                  standingcount = 0;
+                                }
 
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Card(
-                                  color: Colors.white38,
+                                return Container(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-
-                                        Expanded(
-                                          flex: 3,
-                                          child:Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Column(
                                           children: [
-
-                                            Text('Pickup At: '+document.data()['startTime'],
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold)),
-                                            Text(''),
-
-
-                                            Text(document.data()['name'],
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-                                            Text(document.data()['startTime']+' - '+document.data()['endTime'],
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-                                            Text('Km: 6',
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-
-                                            ButtonTheme(child:
-                                            FlatButton(color:Colors.black87, onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation,document.data()['bus'],ticketprice,tripid,startcity,endcity)),
-                                              );
-                                            }, child: Text("Select Bus",
-                                              style: TextStyle(
-                                                color: Colors.white,
+                                            Container(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Text(document.data()['name'],
+                                                          style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              fontWeight:
+                                                              FontWeight.bold)),
+                                                      //Text(''),
+                                                      Text(document.data()['startTime'] + ' - ' + document.data()['endTime'],
+                                                        style: TextStyle(
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                      Text(''),
+                                                    ],
+                                                  )
+                                                ],
                                               ),
                                             ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                          'Pickup At: ' +
+                                                              document.data()[
+                                                                  'startTime'],
+                                                          style: TextStyle(
+                                                              fontSize: 16.0,
+                                                              fontWeight:
+                                                                  FontWeight.bold)),
+                                                      Text(
+                                                          'Dropping At: ' +
+                                                              document.data()[
+                                                              'startTime'],
+                                                          style: TextStyle(
+                                                              fontSize: 16.0,
+                                                              fontWeight:
+                                                              FontWeight.bold)),
+                                                      Text(''),
+                                                      Text('Comfort Level: ' + data['Luxury Level'],
+                                                          style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              fontWeight:
+                                                              FontWeight.bold)),
+                                                      //Text(''),
+                                                      Text(data['Public or Private'] + ' Bus',
+                                                          style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              fontWeight:
+                                                              FontWeight.bold)),
+                                                      Text(''),
+
+                                                    ],
+                                                  ),
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                        'Free Seats: ' +
+                                                            newseatcount.toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            fontWeight:
+                                                                FontWeight.bold)),
+                                                    //Text(''),
+                                                    Text(
+                                                        'Standing: ' +
+                                                            standingcount.toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            fontWeight:
+                                                                FontWeight.bold)),
+                                                    Text(''),
+                                                    ButtonTheme(
+                                                      child: OutlinedButton(
+                                                        //color: Colors.black87,
+                                                        onPressed: () {
+                                                          //Navigator.push(context, MaterialPageRoute(),);
+                                                          /*_markers.add(
+                                                          Marker(
+                                                            markerId: MarkerId('bus'),
+                                                            position: LatLng(6.823821869777691, 80.03039345308913),
+                                                            icon: BitmapDescriptor.defaultMarker,
+                                                          ));*/
+                                                        },
+                                                        child: Text(
+                                                          "Location",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+
+
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-
-                                            ),
-
-
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    ElevatedButton(
+                                                      style: ButtonStyle(
+                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                                      ),
+                                                      //color: Colors.black87,
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ConfirmTicket(
+                                                                      destinationLocation,
+                                                                      pickuLocation,
+                                                                      document.data()[
+                                                                      'bus'],
+                                                                      ticketprice,
+                                                                      tripid,
+                                                                      startcity,
+                                                                      endcity)),
+                                                        );
+                                                      },
+                                                      child: Text(
+                                                        "Select This Bus",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
 
                                           ],
-
-
                                         ),
-                                        ),
-
-
-
-
-                                        Column(
-                                          children: [
-                                            Text('Free Seats:'+newseatcount.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold)),
-                                            Text(''),
-
-
-                                            Text( 'Standing:'+standingcount.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-                                            Text(data['Luxury Level'],
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-                                            Text(data['Public or Private'],
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold
-                                                )),
-                                            Text(''),
-
-
-                                            ButtonTheme(child:
-                                            RaisedButton(color:Colors.black87, onPressed: () {
-
-                                              //Navigator.push(context, MaterialPageRoute(),);
-                                              /*_markers.add(
-                                                  Marker(
-                                                    markerId: MarkerId('bus'),
-                                                    position: LatLng(6.823821869777691, 80.03039345308913),
-                                                    icon: BitmapDescriptor.defaultMarker,
-                                                  ));*/
-
-
-
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(),
-                                              );
-
-                                            }, child: Text("Locate Bus",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            ),
-                                            ),
-
-
-                                          ],
-
-                                        ),
-
-                                      ],
-
-
+                                      ),
                                     ),
                                   ),
+                                );
+                              }
 
-                                ),
-                              ),
-                            );
-                          }
-
-                          return Text("loading");
-                        },
+                              return Text("");
+                            },
+                          );
+                        }).toList(),
                       );
-                    }).toList(),
-                  );
-                },
+                    },
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-    // floatingActionButton: FloatingActionButton(
-    // onPressed: () {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
-    //   );
-    //
-    // },
-    // child: Icon(Icons.arrow_forward_ios),
-    // backgroundColor: Colors.black87,
-    // ),
-    );
-
-    }
-
-
-    else{
+        // floatingActionButton: FloatingActionButton(
+        // onPressed: () {
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => ConfirmTicket(destinationLocation,pickuLocation)),
+        //   );
+        //
+        // },
+        // child: Icon(Icons.arrow_forward_ios),
+        // backgroundColor: Colors.black87,
+        // ),
+      );
+    } else {
       return Scaffold(
         appBar: AppBar(
           title: Text("Loading"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
-
         body: spinkit,
       );
-
     }
-
   }
 
   // String getLux(){
@@ -399,4 +413,3 @@ class _SelectBusState extends State<SelectBus> {
 //       pno = documentSnapshot.data()['partNo'];
 //       print(pno);
 //     }
-

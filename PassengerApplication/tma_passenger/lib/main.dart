@@ -24,6 +24,7 @@ class TmaPassengerApp extends StatelessWidget {
       title: 'TMA Passenger',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Quicksand',
       ),
       home: ViewController(streamController.stream),
       debugShowCheckedModeBanner: false,
