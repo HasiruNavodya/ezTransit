@@ -23,41 +23,38 @@ String startcity;
 String endcity;
 
 class SelectBus extends StatefulWidget {
-  String pickuLocation;
-  String destinationLocation;
-  SelectBus(pickuploc, destinationloc) {
-    this.pickuLocation = pickuploc;
-    this.destinationLocation = destinationloc;
-  }
+
+  SelectBus(this.pickuLocation, this.destinationLocation);
+  final String pickuLocation;
+  final String destinationLocation;
+
   @override
-  _SelectBusState createState() => _SelectBusState(pickuLocation, destinationLocation); //need to pass parameters here pickuLocation,destinationLocation
+  _SelectBusState createState() => _SelectBusState(); //need to pass parameters here pickuLocation,destinationLocation
 }
 
 class _SelectBusState extends State<SelectBus> {
-  String pickuLocation;
-  String pno;
-  String destinationLocation;
-  String partName;
 
-  _SelectBusState(pickuLocation, destinationLocation) {
-    this.pickuLocation = pickuLocation;
-    this.destinationLocation = destinationLocation;
-    partName = '$destinationLocation' + '-' + '$pickuLocation';
-    partNameGlobal = partName;
-  }
+  BitmapDescriptor busicon;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print(partName);
+    setMapMarker();
 
     if (pnoSet == 'no') {
       getpno();
     }
+    //print(widget.partName);
   }
 
+  GoogleMapController mapController;
+  static const _initialPosition = LatLng(7.2906, 80.6337);
+  LatLng _lastPostion = _initialPosition;
+  final Set<Marker> _markers = {};
+
   void getpno() {
+    partNameGlobal = '${widget.destinationLocation}' + '-' + '${widget.pickuLocation}';
+
     FirebaseFirestore.instance
         .collection('partialroutes')
         .doc('$partNameGlobal')
@@ -111,7 +108,7 @@ class _SelectBusState extends State<SelectBus> {
                 child: Stack(
                   children: [
                     GoogleMap(
-                      //onMapCreated: _onMapCreated,
+                      onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
                         target: LatLng(6.844688, 80.015283),
                         zoom: 15.0,
@@ -120,8 +117,8 @@ class _SelectBusState extends State<SelectBus> {
                       // Add little blue dot for device location, requires permission from user
                       mapType: MapType.normal,
                       compassEnabled: true,
-                      //onCameraMove: _onCameraMove,
-                      //markers: _markers,
+                      onCameraMove: _onCameraMove,
+                      markers: _markers,
                     ),
                   ],
                 ),
@@ -277,6 +274,7 @@ class _SelectBusState extends State<SelectBus> {
                                                       child: OutlinedButton(
                                                         //color: Colors.black87,
                                                         onPressed: () {
+                                                          showBusLocation();
                                                           //Navigator.push(context, MaterialPageRoute(),);
                                                           /*_markers.add(
                                                           Marker(
@@ -317,8 +315,8 @@ class _SelectBusState extends State<SelectBus> {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   ConfirmTicket(
-                                                                      destinationLocation,
-                                                                      pickuLocation,
+                                                                      widget.destinationLocation,
+                                                                      widget.pickuLocation,
                                                                       document.data()[
                                                                       'bus'],
                                                                       ticketprice,
@@ -346,7 +344,6 @@ class _SelectBusState extends State<SelectBus> {
                                   ),
                                 );
                               }
-
                               return Text("");
                             },
                           );
@@ -381,6 +378,39 @@ class _SelectBusState extends State<SelectBus> {
         body: spinkit,
       );
     }
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    //showBusLocation();
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+  void _onCameraMove(CameraPosition position) {
+    setState(() {
+      _lastPostion = position.target;
+    });
+  }
+
+  void showBusLocation() async {
+
+    setState(() {
+
+      FirebaseFirestore.instance.collection('buses').doc('GE-3412').snapshots().listen((DocumentSnapshot busLocation) {
+
+        print("location updated");
+
+        _markers.add(Marker(markerId: MarkerId('bus'), position: LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude), icon: busicon));
+
+        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude)));
+
+      });
+    });
+  }
+
+  void setMapMarker() async{
+    busicon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(60,60)), 'assets/bus.png');
   }
 
   // String getLux(){
