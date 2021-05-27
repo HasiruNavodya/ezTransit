@@ -13,10 +13,10 @@ class Complaints extends StatefulWidget {
 
 
   @override
-  _complaintsState createState() => _complaintsState();
+  _ComplaintsState createState() => _ComplaintsState();
 }
 
-class _complaintsState extends State<Complaints> {
+class _ComplaintsState extends State<Complaints> {
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 

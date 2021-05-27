@@ -118,81 +118,6 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
   @override
   Widget build(BuildContext context) {
 
-
-
-
-    payHerePay() {
-
-      FirebaseFirestore.instance.collection('tickets').doc('ticketNumbers').get().then((DocumentSnapshot ticketNo) {
-        if (ticketNo.exists) {
-          ticketNum = ticketNo.data()['last'];
-          ticketNum = ticketNum + 1;
-          print('ticket numberrrrrr' + ticketNum.toString());
-        }
-      });
-
-      Map paymentObject = {
-        "sandbox": true, // true if using Sandbox Merchant ID
-        "merchant_id": "1216958", // Replace your Merchant ID
-        "merchant_secret": "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
-        "notify_url": "http://sample.com/notify",
-        "order_id": ticketNum.toString(),
-        "items": "bus fare",
-        "amount": widget.ticketprice,
-        "currency": "LKR",
-        "first_name": "Saman",
-        "last_name": "Perera",
-        "email": "samanp@gmail.com",
-        "phone": "0771234567",
-        "address": "No.1, Galle Road",
-        "city": "Colombo",
-        "country": "Sri Lanka",
-        "delivery_address": "No. 46, Galle road, Kalutara South",
-        "delivery_city": "Kalutara",
-        "delivery_country": "Sri Lanka",
-        "custom_1": "",
-        "custom_2": ""
-      };
-
-      PayHere.startPayment(paymentObject, (paymentId) {
-        print("One Time Payment Success. Payment Id: $paymentId");
-
-        FirebaseFirestore.instance.collection("tickets").doc(ticketNum.toString()).set({
-          "busNo": bus,
-          "endCity":endcity,
-          "endTime":droppingat,
-          "fare":ticketprice,
-          "passenger":'',
-          "startCity":startcity,
-          "startTime":pickupat,
-          "ticketID":'',
-          "tripID":tripid
-        }).then((value) => print("Records Added Successfully!"))
-            .catchError((error) => print("Failed: $error"));
-
-        FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
-            .then((value) => print("Records Added Successfully!"))
-            .catchError((error) => print("Failed: $error"));
-
-        Navigator.of(context).popUntil((route) => route.isFirst);
-
-
-      }, (error) {
-        print("One Time Payment Failed. Error: $error");
-        Toast.show(
-          "Payment Failed! Try Again.",
-          context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.CENTER,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          border: Border.all(color: Colors.white),
-        );
-      }, () {
-        print("One Time Payment Dismissed");
-      });
-    }
-
     if(loading == 'yes'){
       getPickupAt();
       return Scaffold(body: Center(child: Text('Loading...'),),);
@@ -325,13 +250,11 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             ButtonTheme(
-                              minWidth: 100.0,
-                              height: 50.0,
                               child: RaisedButton(
                                 color: Colors.black,
-                                onPressed: () => {payHerePay()},
+                                onPressed: () => {addTicketAndPay()},
                                 child: Text(
-                                  "Pay",
+                                  "Pay Online",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -339,18 +262,28 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                               ),
                             ),
                             ButtonTheme(
-                              minWidth: 100.0,
-                              height: 50.0,
                               child: RaisedButton(
                                 color: Colors.black,
                                 onPressed: () {
                                   //RideView().setTID('tck1000');
                                   addTicket();
-                                  streamController.add(1);
+                                },
+                                child: Text(
+                                  "Pay Cash",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ButtonTheme(
+                              child: RaisedButton(
+                                color: Colors.black,
+                                onPressed: () {
                                   Navigator.of(context).popUntil((route) => route.isFirst);
                                 },
                                 child: Text(
-                                  "Pay on Bus",
+                                  "Cancel",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -387,6 +320,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
   }
 
   void addTicket(){
+
     FirebaseFirestore.instance.collection('tickets').doc('ticketNumbers').get().then((DocumentSnapshot ticketNo){
       if (ticketNo.exists) {
         ticketNum = ticketNo.data()['last'];
@@ -407,7 +341,8 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
           "pickup":startcity,
           "pickupTime":pickupat,
           "ticketID":ticketID,
-          "tripID":tripid
+          "tripID":tripid,
+          "payment": "Cash"
         }).then((value) {
           print("Records Added Successfully!");
           FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
@@ -421,10 +356,103 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
               .then((value) => print("Records Added Successfully!"))
               .catchError((error) => print("Failed: $error"));
 
+          streamController.add(1);
           Navigator.of(context).popUntil((route) => route.isFirst);
         })
             .catchError((error) => print("Failed: $error"));
+
       }
     });
   }
+
+  void addTicketAndPay(){
+
+    FirebaseFirestore.instance.collection('tickets').doc('ticketNumbers').get().then((DocumentSnapshot ticketNo){
+      if (ticketNo.exists) {
+        ticketNum = ticketNo.data()['last'];
+        ticketNum = ticketNum + 1;
+        ticketID = 'TCK' + ticketNum.toString();
+        print('ticket numberrrrrr' + ticketID);
+
+        Map paymentObject = {
+          "sandbox": true, // true if using Sandbox Merchant ID
+          "merchant_id": "1216958", // Replace your Merchant ID
+          "merchant_secret": "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
+          "notify_url": "http://sample.com/notify",
+          "order_id": ticketID,
+          "items": "bus fare",
+          "amount": widget.ticketprice,
+          "currency": "LKR",
+          "first_name": "Saman",
+          "last_name": "Perera",
+          "email": "samanp@gmail.com",
+          "phone": "0771234567",
+          "address": "No.1, Galle Road",
+          "city": "Colombo",
+          "country": "Sri Lanka",
+          "delivery_address": "No. 46, Galle road, Kalutara South",
+          "delivery_city": "Kalutara",
+          "delivery_country": "Sri Lanka",
+          "custom_1": "",
+          "custom_2": ""
+        };
+
+        PayHere.startPayment(paymentObject, (paymentId) {
+
+          print("One Time Payment Success. Payment Id: $paymentId");
+
+          FirebaseFirestore.instance.collection("tickets").doc('ticketNumbers').update({"last": FieldValue.increment(1)})
+              .then((value) => print("Records Added Successfully!"))
+              .catchError((error) => print("Failed: $error"));
+
+          FirebaseFirestore.instance.collection("tickets").doc(ticketID).set({
+            "bus": bus,
+            "drop":endcity,
+            "dropTime":droppingat,
+            "fare":ticketprice,
+            "passenger":userEmail,
+            "pickup":startcity,
+            "pickupTime":pickupat,
+            "ticketID":ticketID,
+            "tripID":tripid,
+            "payment": 'Payed'
+          }).then((value) {
+            print("Records Added Successfully!");
+            FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
+                .then((value) => print("Records Added Successfully!"))
+                .catchError((error) => print("Failed: $error"));
+
+            FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({
+              "currentTicketNo": ticketID,
+              "onRide": "True"
+            })
+                .then((value) {
+                  print("Records Added Successfully!");
+                  streamController.add(1);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                })
+                .catchError((error) => print("Failed: $error"));
+
+
+          })
+              .catchError((error) => print("Failed: $error"));
+
+        }, (error) {
+          print("One Time Payment Failed. Error: $error");
+          Toast.show(
+            "Payment Failed! Try Again.",
+            context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.CENTER,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            border: Border.all(color: Colors.white),
+          );
+        }, () {
+          print("One Time Payment Dismissed");
+        });
+      }
+    });
+  }
+
 }

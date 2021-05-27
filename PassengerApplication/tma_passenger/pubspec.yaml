@@ -76,7 +76,11 @@ flutter:
   fonts:
     - family: Quicksand
       fonts:
-        - asset: fonts/Quicksand-Regular.ttf
+        - asset: fonts/quicksand/Quicksand-Regular.ttf
+
+    - family: Nexa
+      fonts:
+        - asset: fonts/nexa/Nexa Light.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

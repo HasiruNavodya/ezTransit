@@ -22,10 +22,10 @@ class TmaPassengerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TMA Passenger',
-      theme: ThemeData(
+      /*theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'Quicksand',
-      ),
+        //fontFamily: 'Nexa',
+      ),*/
       home: ViewController(streamController.stream),
       debugShowCheckedModeBanner: false,
     );

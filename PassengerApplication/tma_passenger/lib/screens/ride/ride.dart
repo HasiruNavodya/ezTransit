@@ -6,6 +6,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tma_passenger/screens/home/complains.dart';
 
 import '../../main.dart';
 
@@ -15,6 +16,7 @@ double distanceInMeters;
 String rideState = 'fetching';
 String ticketID = 'TCK1004';
 String userEmail;
+var payColor;
 
 Map ticketData;
 Map tripData;
@@ -268,7 +270,7 @@ class _RideViewState extends State<RideView> {
     else if(rideState == 'onbus'){
       return Scaffold(
         appBar: AppBar(
-          title: Text("On the Bus"),
+          title: Text("On Bus"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -373,15 +375,53 @@ class _RideViewState extends State<RideView> {
                                   ),
                                 ),
                               ),
+                              Card(
+                                color: Colors.white70,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 400,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text("Fare: Rs. " + ticketData['fare'] + "  |  ",
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                                Text(ticketData['payment'],
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: payColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
 
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   TextButton(
-                                    onPressed: (){},
+                                    onPressed: (){
+                                      endRide();
+                                    },
                                     child: Text(
-                                      'Stop Ride Early',
+                                      'Stop Ride Mode',
                                       style: TextStyle(color: Colors.indigo[900]),
                                     ),
                                   ),
@@ -393,7 +433,12 @@ class _RideViewState extends State<RideView> {
                                     ),
                                   ),*/
                                   TextButton(
-                                    onPressed: (){},
+                                    onPressed: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Complaints()),
+                                      );
+                                    },
                                     child: Text(
                                       'Report Complaint',
                                       style: TextStyle(color: Colors.red),
@@ -437,6 +482,9 @@ class _RideViewState extends State<RideView> {
 
   void endRide() {
     print('Ride Ended>>>>>>>>>>>>>>>>>>>>>>>');
+    FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({"onRide": "False"})
+        .then((value) => print("Records Added Successfully!"))
+        .catchError((error) => print("Failed: $error"));
     streamController.add(0);
   }
 
@@ -477,6 +525,12 @@ class _RideViewState extends State<RideView> {
                   });
                 }
               });
+            }
+
+            if(ticketData['payment'] == 'Payed'){
+              payColor = Colors.indigo;
+            }else{
+              payColor = Colors.red;
             }
           }
         });
