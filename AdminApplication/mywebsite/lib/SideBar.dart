@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:mywebsite/AddBusOwner.dart';
 import 'package:mywebsite/Complaints.dart';
 import 'package:mywebsite/Emergency.dart';
 import 'package:mywebsite/Home%20View.dart';
@@ -40,7 +41,13 @@ class SideBarWidget {
           icon: Icons.dangerous,
         ),
         MenuItem(
-            title: 'Complaints', route: Complaints.id, icon: Icons.messenger),
+            title: 'Complaints', route: Complaints.id, icon: Icons.messenger
+        ),
+        MenuItem(
+            title: 'Add Bus Owner', route: AddBusOwner.id, icon: Icons.perm_identity
+        ),
+
+
       ],
       selectedRoute: selectedRoute,
       onSelected: (item) {
