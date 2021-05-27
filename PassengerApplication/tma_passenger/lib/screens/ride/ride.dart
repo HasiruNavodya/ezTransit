@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -12,13 +13,19 @@ double pickupLat;
 double pickupLng;
 double distanceInMeters;
 String rideState = 'fetching';
-String ticketID = 'tck1000';
+String ticketID = 'TCK1004';
+String userEmail;
 
 Map ticketData;
 Map tripData;
 Map busData;
 
 class RideView extends StatefulWidget {
+
+  void setTID(String tidfrompay){
+    ticketID = tidfrompay;
+  }
+
 
   @override
   _RideViewState createState() => _RideViewState();
@@ -31,7 +38,7 @@ class _RideViewState extends State<RideView> {
   @override
   void initState() {
     super.initState();
-
+    getUserInfo();
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
       LocationPermission permission;
@@ -55,6 +62,14 @@ class _RideViewState extends State<RideView> {
 
     setMapMarker();
 
+  }
+
+  void getUserInfo(){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      userEmail = auth.currentUser.email;
+      print(auth.currentUser.email);
+    }
   }
 
   GoogleMapController mapController;
@@ -124,46 +139,6 @@ class _RideViewState extends State<RideView> {
                                     width: 400,
                                     child: Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text(ticketData['pickup'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            Text(" to ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            Text(ticketData['drop'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
                                         Text("Bus: "+tripData['startCity'] + ' - ' +tripData['endCity'],
                                           style: TextStyle(
                                             fontSize: 16,
@@ -202,10 +177,10 @@ class _RideViewState extends State<RideView> {
                                               ),
                                             ),
                                             ValueListenableBuilder<int>(
-                                              valueListenable: distance,
-                                              builder: (BuildContext context, distance, Widget child) {
-                                                return Text("$distance");
-                                              }
+                                                valueListenable: distance,
+                                                builder: (BuildContext context, distance, Widget child) {
+                                                  return Text("$distance");
+                                                }
                                             ),
                                             Text(" m",
                                               style: TextStyle(
@@ -219,6 +194,56 @@ class _RideViewState extends State<RideView> {
                                   ),
                                 ),
                               ),
+
+
+                              Card(
+                                color: Colors.white70,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 400,
+                                    child: Column(
+                                      children: [
+                                        Text('Ticket ID: '+ticketData['ticketID'],
+                                          style: TextStyle(
+                                            //fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+
+                                            Text(ticketData['pickup'],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            Text(" to ",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            Text(ticketData['drop'],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+
                               TextButton(
                                 onPressed: (){},
                                 child: Text(
@@ -417,37 +442,44 @@ class _RideViewState extends State<RideView> {
 
   void getRideData(){
 
-    FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
-      if (ticket.exists) {
-        ticketData = ticket.data();
-        print(ticketData);
+    FirebaseFirestore.instance.collection('passengers').doc(userEmail).get().then((DocumentSnapshot user) {
+      if (user.exists) {
+        print("qweqweqweqweqweqwe");
+        ticketID = user.data()['currentTicketNo'];
 
-        if(ticketData['tripID'] != null){
-          FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).get().then((DocumentSnapshot trip) {
-            if (trip.exists) {
-              tripData = trip.data();
-              print(tripData);
-              FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupLoc) {
+        FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
+          if (ticket.exists) {
+            ticketData = ticket.data();
+            print(ticketData);
+
+            if(ticketData['tripID'] != null){
+              FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).get().then((DocumentSnapshot trip) {
                 if (trip.exists) {
-                  pickupLat = pickupLoc.data()['location'].latitude;
-                  pickupLng = pickupLoc.data()['location'].longitude;
+                  tripData = trip.data();
+                  print(tripData);
+                  FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupLoc) {
+                    if (trip.exists) {
+                      pickupLat = pickupLoc.data()['location'].latitude;
+                      pickupLng = pickupLoc.data()['location'].longitude;
+                    }
+                  });
                 }
               });
             }
-          });
-        }
 
-        if(ticketData['bus'] != null){
-          FirebaseFirestore.instance.collection('buses').doc(ticketData['bus']).get().then((DocumentSnapshot bus) {
-            if (bus.exists) {
-              busData = bus.data();
-              setState(() {
-                rideState = 'onbus';
+            if(ticketData['bus'] != null){
+              FirebaseFirestore.instance.collection('buses').doc(ticketData['bus']).get().then((DocumentSnapshot bus) {
+                if (bus.exists) {
+
+                  busData = bus.data();
+                  setState(() {
+                    rideState = 'onbus';
+                  });
+                }
               });
             }
-          });
-        }
-
+          }
+        });
       }
     });
   }

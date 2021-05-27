@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 import 'package:toast/toast.dart';
 
+import '../../main.dart';
 import 'destination.dart';
+import '../ride/ride.dart';
 
-
+int ticketNum;
+String userEmail;
+String ticketID;
 
 class ConfirmTicket extends StatefulWidget {
   String destinationloc;
@@ -55,6 +60,22 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
     this.endcity = endcity;
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    getUserInfo();
+
+  }
+
+  void getUserInfo(){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      userEmail = auth.currentUser.email;
+      print(auth.currentUser.email);
+    }
+  }
+
   void getPickupAt() {
     FirebaseFirestore.instance
         .collection("trips")
@@ -98,14 +119,24 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
   Widget build(BuildContext context) {
 
 
-    PayHerePay() {
+
+
+    payHerePay() {
+
+      FirebaseFirestore.instance.collection('tickets').doc('ticketNumbers').get().then((DocumentSnapshot ticketNo) {
+        if (ticketNo.exists) {
+          ticketNum = ticketNo.data()['last'];
+          ticketNum = ticketNum + 1;
+          print('ticket numberrrrrr' + ticketNum.toString());
+        }
+      });
+
       Map paymentObject = {
         "sandbox": true, // true if using Sandbox Merchant ID
         "merchant_id": "1216958", // Replace your Merchant ID
-        "merchant_secret":
-            "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
+        "merchant_secret": "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
         "notify_url": "http://sample.com/notify",
-        "order_id": "ItemNo12345",
+        "order_id": ticketNum.toString(),
         "items": "bus fare",
         "amount": widget.ticketprice,
         "currency": "LKR",
@@ -126,13 +157,25 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
       PayHere.startPayment(paymentObject, (paymentId) {
         print("One Time Payment Success. Payment Id: $paymentId");
 
-        FirebaseFirestore.instance.collection("tickets").add({"busNo": bus,"endCity":endcity,"endTime":droppingat,"fare":ticketprice,"passenger":'',"startCity":startcity,"startTime":pickupat,"ticketID":'',"tripID":tripid})
-            .then((value) => print("Records Added Successfully!"))
+        FirebaseFirestore.instance.collection("tickets").doc(ticketNum.toString()).set({
+          "busNo": bus,
+          "endCity":endcity,
+          "endTime":droppingat,
+          "fare":ticketprice,
+          "passenger":'',
+          "startCity":startcity,
+          "startTime":pickupat,
+          "ticketID":'',
+          "tripID":tripid
+        }).then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
 
         FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
             .then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
+
+        Navigator.of(context).popUntil((route) => route.isFirst);
+
 
       }, (error) {
         print("One Time Payment Failed. Error: $error");
@@ -157,7 +200,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
     else{
       return Scaffold(
         appBar: AppBar(
-          title: Text("Confirm Your Ticket"),
+          title: Text("Pay for Your Ticket"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
@@ -286,7 +329,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                               height: 50.0,
                               child: RaisedButton(
                                 color: Colors.black,
-                                onPressed: () => {PayHerePay()},
+                                onPressed: () => {payHerePay()},
                                 child: Text(
                                   "Pay",
                                   style: TextStyle(
@@ -301,15 +344,13 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                               child: RaisedButton(
                                 color: Colors.black,
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SelectDestination()),
-                                  );
+                                  //RideView().setTID('tck1000');
+                                  addTicket();
+                                  streamController.add(1);
+                                  Navigator.of(context).popUntil((route) => route.isFirst);
                                 },
                                 child: Text(
-                                  "Back",
+                                  "Pay on Bus",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -343,5 +384,47 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
     }
 
 
+  }
+
+  void addTicket(){
+    FirebaseFirestore.instance.collection('tickets').doc('ticketNumbers').get().then((DocumentSnapshot ticketNo){
+      if (ticketNo.exists) {
+        ticketNum = ticketNo.data()['last'];
+        ticketNum = ticketNum + 1;
+        ticketID = 'TCK' + ticketNum.toString();
+        print('ticket numberrrrrr' + ticketID);
+
+        FirebaseFirestore.instance.collection("tickets").doc('ticketNumbers').update({"last": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
+
+        FirebaseFirestore.instance.collection("tickets").doc(ticketID).set({
+          "bus": bus,
+          "drop":endcity,
+          "dropTime":droppingat,
+          "fare":ticketprice,
+          "passenger":userEmail,
+          "pickup":startcity,
+          "pickupTime":pickupat,
+          "ticketID":ticketID,
+          "tripID":tripid
+        }).then((value) {
+          print("Records Added Successfully!");
+          FirebaseFirestore.instance.collection("trips").doc(tripid).update({"ticketCount": FieldValue.increment(1)})
+              .then((value) => print("Records Added Successfully!"))
+              .catchError((error) => print("Failed: $error"));
+
+          FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({
+            "currentTicketNo": ticketID,
+            "onRide": "True"
+          })
+              .then((value) => print("Records Added Successfully!"))
+              .catchError((error) => print("Failed: $error"));
+
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        })
+            .catchError((error) => print("Failed: $error"));
+      }
+    });
   }
 }
