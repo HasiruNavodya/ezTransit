@@ -4,7 +4,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class AddBusOwner extends StatefulWidget {
-  static const String id = 'newbus';
+  static const String id = 'addbusowner';
   @override
   _AddBusOwnerState createState() => _AddBusOwnerState();
 }
