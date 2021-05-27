@@ -3,187 +3,103 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 
-class NewBus extends StatefulWidget {
-  static const String id = 'newbus';
+class AddBusOwner extends StatefulWidget {
+  static const String id = 'addbusowner';
   @override
-  _NewBusState createState() => _NewBusState();
+  _AddBusOwnerState createState() => _AddBusOwnerState();
 }
 
-class _NewBusState extends State<NewBus> {
+class _AddBusOwnerState extends State<AddBusOwner> {
 // reference for the form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _plateNumber;
-  String _driverName;
-  String _owneremail;
-  String _licenseNumber;
-  String _color;
-  String _publicPrivate;
-  String _luxeryLevel;
-  String _seat;
+  String _regno;
+  String _email;
+  String _nic;
+  String _name;
+
 
 //get data from textformfield
-  TextEditingController plateNumber = new TextEditingController();
-  TextEditingController driverName = new TextEditingController();
-  TextEditingController owneremail = new TextEditingController();
-  TextEditingController licenseNumber = new TextEditingController();
-  TextEditingController color = new TextEditingController();
-  TextEditingController publicPrivate = new TextEditingController();
-  TextEditingController luxeryLevel = new TextEditingController();
-  TextEditingController seat = new TextEditingController();
+  TextEditingController regno = new TextEditingController();
+  TextEditingController name = new TextEditingController();
+  TextEditingController nic = new TextEditingController();
+  TextEditingController email = new TextEditingController();
 
-  Widget _buildPlateNumber() {
+
+
+
+  Widget _buildRegNumber() {
     return TextFormField(
-      controller: plateNumber,
+      controller: regno,
       decoration: InputDecoration(
-          labelText: 'Plate Number',
+          labelText: 'Registration No',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Plate Number is required';
+          return 'Registration Number is required';
         }
       },
       onSaved: (String value) {
-        _plateNumber = value;
+        _regno = value;
       },
     );
   }
 
-  Widget _buildDriverName() {
+  Widget _buildOwnerName() {
     return TextFormField(
-      controller: driverName,
-      maxLength: 30,
+      controller: name,
       decoration: InputDecoration(
-          labelText: 'Driver Name',
+          labelText: 'Owner Name',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Driver Name is required';
+          return 'Owner Name is required';
         }
       },
       onSaved: (String value) {
-        _driverName = value;
+        _name = value;
       },
     );
   }
 
-
+  Widget _buildOwnerNic() {
+    return TextFormField(
+      controller: nic,
+      decoration: InputDecoration(
+          labelText: 'NIC Number',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Owner NIC Number is required';
+        }
+      },
+      onSaved: (String value) {
+        _nic = value;
+      },
+    );
+  }
 
   Widget _buildOwnerEmail() {
     return TextFormField(
-      controller: owneremail,
+      controller: email,
       decoration: InputDecoration(
-          labelText: 'Owner Email',
+          labelText: 'Email',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Owner Email is required';
+          return ('Owner Email is required');
         }
       },
       onSaved: (String value) {
-        _owneremail = value;
+        _email = value;
       },
     );
   }
 
-  Widget _buildLicenseNumber() {
-    return TextFormField(
-      controller: licenseNumber,
-      decoration: InputDecoration(
-          labelText: 'Driver License Number',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Driver License Number is required';
-        }
-      },
-      onSaved: (String value) {
-        _licenseNumber = value;
-      },
-    );
-  }
-
-  Widget _buildColor() {
-    return TextFormField(
-      controller: color,
-      decoration: InputDecoration(
-          labelText: 'Color',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return ('Color is required');
-        }
-      },
-      onSaved: (String value) {
-        _color = value;
-      },
-    );
-  }
-
-  Widget _buildPublicPrivate() {
-    return TextFormField(
-      controller: publicPrivate,
-      decoration: InputDecoration(
-          labelText: 'Public / Private',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      maxLength: 7,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return ('This field is required');
-        }
-      },
-      onSaved: (String value) {
-        _publicPrivate = value;
-      },
-    );
-  }
-
-  Widget _buildLuxeryLevel() {
-    return TextFormField(
-      controller: luxeryLevel,
-      decoration: InputDecoration(
-          labelText: 'Luxery Level',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      maxLength: 15,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return ('This field is required');
-        }
-      },
-      onSaved: (String value) {
-        _luxeryLevel = value;
-      },
-    );
-  }
-
-  Widget _buildSeat() {
-    return TextFormField(
-      controller: seat,
-      decoration: InputDecoration(
-        // fillColor: Colors.white,
-        //filled: true,
-        labelText: 'Seat Count',
-        labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-        border: OutlineInputBorder(),
-      ),
-      maxLength: 3,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return ('Seat count is required');
-        }
-      },
-      onSaved: (String value) {
-        _seat = value;
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +107,9 @@ class _NewBusState extends State<NewBus> {
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Add New Bus'),
+        title: const Text('Add Bus Owner'),
       ),
-      sideBar: _sideBar.sideBarMenus(context, NewBus.id),
+      sideBar: _sideBar.sideBarMenus(context, AddBusOwner.id),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -219,7 +135,7 @@ class _NewBusState extends State<NewBus> {
                   bottomRight: Radius.circular(40.0),
                   topLeft: Radius.circular(40.0),
                   topRight: Radius.circular(40.0),
-                  
+
                 ),
               gradient: LinearGradient(
                     begin: Alignment.centerLeft,
@@ -240,41 +156,33 @@ class _NewBusState extends State<NewBus> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        _buildPlateNumber(),
+                        _buildRegNumber(),
                         SizedBox(height: 10.0),
-                        _buildDriverName(),
+                        _buildOwnerName(),
+                        SizedBox(height: 10.0),
+                        _buildOwnerNic(),
                         SizedBox(height: 10.0),
                         _buildOwnerEmail(),
-                        SizedBox(height: 10.0),
-                        _buildLicenseNumber(),
-                        SizedBox(height: 10.0),
-                        _buildColor(),
-                        SizedBox(height: 10.0),
-                        _buildPublicPrivate(),
-                        SizedBox(height: 10.0),
-                        _buildLuxeryLevel(),
-                        SizedBox(height: 10.0),
-                        _buildSeat(),
                         SizedBox(height: 30.0),
-                        
+
                         Row(
-                          
+
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                            
+
                               child: SizedBox(width: 175,
                                 child: ElevatedButton(
-                                  
-                                  
+
+
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical:12.0,horizontal: 20),
                                       child: Text(
                                         'Submit',
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      
+
                                     ),
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.black87, // background
@@ -284,21 +192,18 @@ class _NewBusState extends State<NewBus> {
                                       // validate the form based on it's current state
                                       if (_formKey.currentState.validate()) {
                                         Map<String, dynamic> data = {
-                                          "Plate Number": plateNumber.text,
-                                          "Driver Name": driverName.text,
-                                          "License Number": licenseNumber.text,
-                                          "Color": color.text,
-                                          "Public or Private": publicPrivate.text,
-                                          "Luxury Level": luxeryLevel.text,
-                                          "Seat Count": seat.text,
-                                          "Owner": owneremail.text,
+                                          "bizRegNo": regno.text,
+                                          "ownerEmail": email.text,
+                                          "ownerNIC": nic.text,
+                                          "ownerName": name.text,
+
                                         };
 
-                                        String plateno=plateNumber.text;
+                                        String owname=name.text;
 
                                         FirebaseFirestore.instance
-                                            .collection('buses')
-                                            .doc('$plateno')
+                                            .collection('owners')
+                                            .doc('$owname')
                                             .set(data);
 
                                         showDialog(
@@ -307,7 +212,7 @@ class _NewBusState extends State<NewBus> {
                                               return AlertBox(
                                                   'Successfully Inserted!');
                                             });
-                                             _formKey.currentState.reset();
+                                        _formKey.currentState.reset();
                                       }
                                     }),
                               ),
@@ -331,7 +236,7 @@ class _NewBusState extends State<NewBus> {
                                   }),
                             ),
 
-                               
+
                           ],
                         ),
                       ],
