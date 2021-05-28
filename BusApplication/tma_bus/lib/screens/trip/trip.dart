@@ -10,6 +10,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
 //import 'package:tma_bus/screens/home/addtrip.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:intl/intl.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -53,6 +55,11 @@ class _TripViewState extends State<TripView> {
   final myController2 = TextEditingController();
 
   final ValueNotifier<int> vnBodyCount = ValueNotifier<int>(0);
+
+  var _textStyle = TextStyle(
+    color: Colors.red,
+    fontSize: 50,
+  );
 
   @override
   void initState() {
@@ -101,58 +108,187 @@ class _TripViewState extends State<TripView> {
                 centerTitle: true,
                 backgroundColor: Colors.black,
               ),
-              body: Center(
-                child: Container(
+              body: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${data['startCity']}' + ' - ' + '${data['endCity']}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
                             ),
                           ),
-                        ],
-                      ),
-                      Text(
-                        '${data['startTime']}' + ' - ' + '${data['endTime']}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Passenger Count: ',
-                            style: TextStyle(
-                              //fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                          ValueListenableBuilder(
-                            builder: (BuildContext context, int value, Widget child) {
-                              return Text('$value',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
+                          child: StreamBuilder(
+                            stream: Stream.periodic(const Duration(seconds: 1)),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: Text(
+                                  DateFormat().add_jms().format(DateTime.now()),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40,
+                                  ),
                                 ),
                               );
                             },
-                            valueListenable: vnBodyCount,
                           ),
-                        ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${data['startCity']}' + ' - ' + '${data['endCity']}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${data['startTime']}' + ' - ' + '${data['endTime']}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Passenger Count: ',
+                                  style: TextStyle(
+                                    //fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                ValueListenableBuilder(
+                                  builder: (BuildContext context, int value, Widget child) {
+                                    return Text('$value',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                      ),
+                                    );
+                                  },
+                                  valueListenable: vnBodyCount,
+                                ),
+                              ],
+                            ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Next Stop: ',
+                                style: TextStyle(
+                                  //fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              ValueListenableBuilder(
+                                builder: (BuildContext context, int value, Widget child) {
+                                  return Text('$value',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  );
+                                },
+                                valueListenable: vnBodyCount,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
+                                    onPressed: (){endTrip();},
+                                    child: Text('Stop Trip'),
+                                  ),
+                                  OutlinedButton(
+                                    onPressed: (){},
+                                    child: Text('Report Emergency'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/pickup.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:tma_passenger/screens/home/add_ride.dart';
-import 'package:tma_passenger/screens/home/home.dart';
+
 
 class SelectDestination extends StatefulWidget {
   SelectDestination({Key key, this.title}) : super(key: key);
@@ -33,12 +31,12 @@ class _SelectDestinationState extends State<SelectDestination> {
             onPressed: () {
               Navigator.pop(context);
             }),*/
-        title: Text("Select Destination"),
+        title: Text("Where do you want to go?"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
       body: Container(
-        //color: Colors.grey.shade50,
+        color: Colors.white,
         child: Column(
           children: <Widget>[
             Expanded(
@@ -56,7 +54,7 @@ class _SelectDestinationState extends State<SelectDestination> {
                         },
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            labelText: 'Search Destination City',
+                            labelText: 'Search for Destinations',
                             border: OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),

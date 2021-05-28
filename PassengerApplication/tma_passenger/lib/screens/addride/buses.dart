@@ -94,7 +94,7 @@ class _SelectBusState extends State<SelectBus> {
     if (pnoSet == 'yes') {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Select Bus"),
+          title: Text("Select A Bus"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
@@ -117,7 +117,7 @@ class _SelectBusState extends State<SelectBus> {
                       // Add little blue dot for device location, requires permission from user
                       mapType: MapType.normal,
                       compassEnabled: true,
-                      onCameraMove: _onCameraMove,
+                      //onCameraMove: _onCameraMove,
                       markers: _markers,
                     ),
                   ],
@@ -195,13 +195,13 @@ class _SelectBusState extends State<SelectBus> {
                                                       Text(document.data()['name'],
                                                           style: TextStyle(
                                                               fontSize: 15.0,
-                                                              fontWeight:
-                                                              FontWeight.bold)),
+                                                              //fontWeight: FontWeight.bold
+                                                            ),),
                                                       //Text(''),
                                                       Text(document.data()['startTime'] + ' - ' + document.data()['endTime'],
                                                         style: TextStyle(
                                                           fontSize: 15.0,
-                                                          fontWeight: FontWeight.bold
+                                                          //fontWeight: FontWeight.bold
                                                         ),
                                                       ),
                                                       Text(''),
@@ -225,28 +225,28 @@ class _SelectBusState extends State<SelectBus> {
                                                                   'startTime'],
                                                           style: TextStyle(
                                                               fontSize: 16.0,
-                                                              fontWeight:
-                                                                  FontWeight.bold)),
+                                                              //fontWeight: FontWeight.bold
+                                                          )),
                                                       Text(
                                                           'Dropping At: ' +
                                                               document.data()[
                                                               'startTime'],
                                                           style: TextStyle(
                                                               fontSize: 16.0,
-                                                              fontWeight:
-                                                              FontWeight.bold)),
+                                                              //fontWeight: FontWeight.bold
+                                                          )),
                                                       Text(''),
                                                       Text('Comfort Level: ' + data['Luxury Level'],
                                                           style: TextStyle(
                                                               fontSize: 15.0,
-                                                              fontWeight:
-                                                              FontWeight.bold)),
+                                                              //fontWeight: FontWeight.bold
+                                                          )),
                                                       //Text(''),
                                                       Text(data['Public or Private'] + ' Bus',
                                                           style: TextStyle(
                                                               fontSize: 15.0,
-                                                              fontWeight:
-                                                              FontWeight.bold)),
+                                                              //fontWeight: FontWeight.bold
+                                                          )),
                                                       Text(''),
 
                                                     ],
@@ -259,16 +259,16 @@ class _SelectBusState extends State<SelectBus> {
                                                             newseatcount.toString(),
                                                         style: TextStyle(
                                                             fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight.bold)),
+                                                            //fontWeight: FontWeight.bold
+                                                        )),
                                                     //Text(''),
                                                     Text(
                                                         'Standing: ' +
                                                             standingcount.toString(),
                                                         style: TextStyle(
                                                             fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight.bold)),
+                                                            //fontWeight: FontWeight.bold,
+                                                        ),),
                                                     Text(''),
                                                     ButtonTheme(
                                                       child: OutlinedButton(

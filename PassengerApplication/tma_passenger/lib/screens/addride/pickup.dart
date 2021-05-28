@@ -36,112 +36,115 @@ class _SelectPickupState extends State<SelectPickup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Select Pickup Location"),
+        title: Text("Where should we pick you up?"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
-      body: Column(
+      body: Container(
+        color: Colors.white,
+        child: Column(
 
-        children: <Widget>[
-          Expanded(
-            child:Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Card(
-                    shadowColor: Colors.grey,
-                    child: TextField(
-                      onChanged: (val) {
-                        setState(() {
-                          searchString = val.toLowerCase();
-                        });
-                      },
-                      controller: textEditingController,
-                      decoration: InputDecoration(
-                          labelText: 'Search Destination City',
-                          border: OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                          ),
-                          //hintText: 'Search Your Destination',
-                          hintStyle: TextStyle(
-                              fontFamily: 'Antra', color: Colors.blueGrey)),
+          children: <Widget>[
+            Expanded(
+              child:Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Card(
+                      shadowColor: Colors.grey,
+                      child: TextField(
+                        onChanged: (val) {
+                          setState(() {
+                            searchString = val.toLowerCase();
+                          });
+                        },
+                        controller: textEditingController,
+                        decoration: InputDecoration(
+                            labelText: 'Search for Pickup Location',
+                            border: OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.search),
+                            ),
+                            //hintText: 'Search Your Destination',
+                            hintStyle: TextStyle(
+                                fontFamily: 'Antra', color: Colors.blueGrey)),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: StreamBuilder<QuerySnapshot>(
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: StreamBuilder<QuerySnapshot>(
 
 
 
-                      stream: (searchString == null || searchString.trim()== '')
-                          ?FirebaseFirestore.instance.collection("cities").snapshots()
-                          :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
+                        stream: (searchString == null || searchString.trim()== '')
+                            ?FirebaseFirestore.instance.collection("cities").snapshots()
+                            :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
 
-                      builder: (context,snapshot){
-                        if(snapshot.data == null) return CircularProgressIndicator();
+                        builder: (context,snapshot){
+                          if(snapshot.data == null) return CircularProgressIndicator();
 
-                        if(snapshot.hasError){
-                          return Text("Error ${snapshot.error}");
-                        }
-                        switch(snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return Text("Not date Present");
+                          if(snapshot.hasError){
+                            return Text("Error ${snapshot.error}");
+                          }
+                          switch(snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return Text("Not date Present");
 
-                          case ConnectionState.done:
-                            return Text("Done!");
+                            case ConnectionState.done:
+                              return Text("Done!");
 
-                          default :
+                            default :
 
-                            final List<DocumentSnapshot> documents = snapshot.data.docs;
+                              final List<DocumentSnapshot> documents = snapshot.data.docs;
 
-                            return new ListView(
-                                children: documents
-                                    .map((doc) => Card(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 7,
-                                        child: ListTile(
-                                            title: Text(doc['location'],
-                                              style: TextStyle(
-                                                fontSize: 19,
+                              return new ListView(
+                                  children: documents
+                                      .map((doc) => Card(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 7,
+                                          child: ListTile(
+                                              title: Text(doc['location'],
+                                                style: TextStyle(
+                                                  fontSize: 19,
+                                                ),
                                               ),
-                                            ),
-                                            subtitle: Text(doc['name']),
-                                            onTap: () {
-                                              Navigator.push(context,MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation)));
-                                            }),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          color: Colors.blueGrey.shade700,
-                                          size: 16,
+                                              subtitle: Text(doc['name']),
+                                              onTap: () {
+                                                Navigator.push(context,MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation)));
+                                              }),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                                    .toList());
+                                        Expanded(
+                                          flex: 1,
+                                          child: Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: Colors.blueGrey.shade700,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                                      .toList());
 
 
-                        }
-                      },
+                          }
+                        },
+                      ),
                     ),
                   ),
-                ),
 //Navigator.push(context,MaterialPageRoute(builder: (context) => SelectBus((doc['location']),destinationLocation)));
 
-              ],
+                ],
 
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -125,193 +125,241 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
     else{
       return Scaffold(
         appBar: AppBar(
-          title: Text("Pay for Your Ticket"),
+          title: Text("Book Ticket"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
         //backgroundColor: Colors.red,
         backgroundColor: Colors.white,
-        body: StreamBuilder<QuerySnapshot>(
-          // stream:FirebaseFirestore.instance.collection('trips').where('parts', isEqualTo: ).snapshots(),
-          stream: FirebaseFirestore.instance
-              .collection('trips')
-          // .doc('$tripid')
-          // .collection('stops').doc('Kollupitiya').collection('gg')
-              .snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            }
+        body: Container(
+          color: Colors.white60,
+          child: StreamBuilder<QuerySnapshot>(
+            // stream:FirebaseFirestore.instance.collection('trips').where('parts', isEqualTo: ).snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('trips')
+            // .doc('$tripid')
+            // .collection('stops').doc('Kollupitiya').collection('gg')
+                .snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
-            }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text("Loading");
+              }
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.add_road,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Destination: ${widget.destinationloc}",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    return Container(
+                      child: Column(
+                        children: [
+                          Expanded(flex: 1,child: Container()),
+                          Expanded(
+                          flex: 6,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Container(
+                                          child: Text(
+                                            "Ticket Details",
+                                            style: TextStyle(
+                                              //fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.add_road,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Destination: ${widget.destinationloc}",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.edit_road_outlined,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Pickup Location: ${widget.pickuploc}",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.edit_road_outlined,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Pickup Location: ${widget.pickuploc}",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.directions_bus_outlined,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Bus: ${widget.bus} ",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.directions_bus_outlined,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Bus: ${widget.bus} ",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.timer_rounded,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Pick Up At: $pickupat",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.timer_rounded,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Pick Up At: $pickupat",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.access_time_outlined,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Dropping At: $droppingat",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.access_time_outlined,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Dropping At: $droppingat",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.credit_card_sharp,
-                            color: Colors.black87,
-                          ),
-                          title: Text(
-                            "Ticket Price: Rs.${widget.ticketprice}",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.credit_card_sharp,
+                                          color: Colors.black87,
+                                        ),
+                                        title: Text(
+                                          "Ticket Price: Rs.${widget.ticketprice}",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              //fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ),
 
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            ButtonTheme(
-                              child: RaisedButton(
-                                color: Colors.black,
-                                onPressed: () => {addTicketAndPay()},
-                                child: Text(
-                                  "Pay Online",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+
+                                    // floatingActionButton: FloatingActionButton(
+                                    //   onPressed: () {
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(builder: (context) => BuyTicket()),
+                                    //     );
+                                    //   },
+                                    //   child: Icon(Icons.arrow_forward_ios),
+                                    //   backgroundColor: Colors.black87,
+                                    // ),
+                                  ],
                                 ),
                               ),
                             ),
-                            ButtonTheme(
-                              child: RaisedButton(
-                                color: Colors.black,
-                                onPressed: () {
-                                  //RideView().setTID('tck1000');
-                                  addTicket();
-                                },
-                                child: Text(
-                                  "Pay Cash",
-                                  style: TextStyle(
-                                    color: Colors.white,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                ButtonTheme(
+                                  child: RaisedButton(
+                                    color: Colors.black,
+                                    onPressed: () => {addTicketAndPay()},
+                                    child: Text(
+                                      "Pay Online",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            ButtonTheme(
-                              child: RaisedButton(
-                                color: Colors.black,
-                                onPressed: () {
-                                  Navigator.of(context).popUntil((route) => route.isFirst);
-                                },
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                    color: Colors.white,
+                                ButtonTheme(
+                                  child: RaisedButton(
+                                    color: Colors.black,
+                                    onPressed: () {
+                                      //RideView().setTID('tck1000');
+                                      addTicket();
+                                    },
+                                    child: Text(
+                                      "Pay Cash",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                ButtonTheme(
+                                  child: RaisedButton(
+                                    color: Colors.black,
+                                    onPressed: () {
+                                      Navigator.of(context).popUntil((route) => route.isFirst);
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),),
+
+                        ],
                       ),
+                    );
 
-                      // floatingActionButton: FloatingActionButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => BuyTicket()),
-                      //     );
-                      //   },
-                      //   child: Icon(Icons.arrow_forward_ios),
-                      //   backgroundColor: Colors.black87,
-                      // ),
-                    ],
-                  );
-
-                  //Card(child: Text(document.data()['name']??'default'),);
-                }).toList(),
-              ),
-            );
-          },
+                    //Card(child: Text(document.data()['name']??'default'),);
+                  }).toList(),
+                ),
+              );
+            },
+          ),
         ),
       );
     }

@@ -40,7 +40,7 @@ class AddRide extends StatelessWidget {
                 "\nAdd New Ride",
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  //fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
