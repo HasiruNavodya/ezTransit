@@ -118,7 +118,7 @@ class _TripViewState extends State<TripView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Card(
                           /*elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -145,7 +145,7 @@ class _TripViewState extends State<TripView> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Card(
                           /*elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -184,43 +184,7 @@ class _TripViewState extends State<TripView> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
-                        child: Card(
-                          /*elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: Colors.black45,
-                              width: 1.0,
-                            ),
-                          ),*/
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text('Passenger Count: ',
-                                  style: TextStyle(
-                                    //fontWeight: FontWeight.bold,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                ValueListenableBuilder(
-                                  builder: (BuildContext context, int value, Widget child) {
-                                    return Text('$value',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18.0,
-                                      ),
-                                    );
-                                  },
-                                  valueListenable: vnBodyCount,
-                                ),
-                              ],
-                            ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
+                        flex: 3,
                         child: Card(
                           /*elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -239,14 +203,17 @@ class _TripViewState extends State<TripView> {
                                 //crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(15.0),
                                     child: Text('NEXT STOP',
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18.0,
-                                        color: Colors.black87
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                          color: Colors.black87
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
                                   ),
                                   Row(
                                     children: [
@@ -260,14 +227,14 @@ class _TripViewState extends State<TripView> {
                                                     padding: const EdgeInsets.all(4.0),
                                                     child: Row(
                                                       children: [
-                                                        Icon(Icons.arrow_forward_rounded, size: 25, color: Colors.black,),
+                                                        Icon(Icons.arrow_forward_rounded, size: 25, color: Colors.green.shade800,),
                                                         Icon(Icons.directions_walk, size: 35, color: Colors.black,),
                                                       ],
                                                     ),
                                                   ),
                                                   Text('PICKUP',
                                                     style: TextStyle(
-                                                        //fontWeight: FontWeight.bold,
+                                                      //fontWeight: FontWeight.bold,
                                                         fontSize: 15.0,
                                                         color: Colors.black87
                                                     ),
@@ -284,7 +251,8 @@ class _TripViewState extends State<TripView> {
                                                       return Text('$value',
                                                         style: TextStyle(
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 34.0,
+                                                          fontSize: 40.0,
+                                                          color: Colors.green.shade800,
                                                         ),
                                                       );
                                                     },
@@ -297,7 +265,7 @@ class _TripViewState extends State<TripView> {
                                         ],
                                       ),
                                       SizedBox(
-                                        width: 90,
+                                        width: 65,
                                       ),
                                       Column(
                                         children: [
@@ -309,7 +277,7 @@ class _TripViewState extends State<TripView> {
                                                     padding: const EdgeInsets.all(4.0),
                                                     child: Row(
                                                       children: [
-                                                        Icon(Icons.arrow_back_rounded, size: 25, color: Colors.black,),
+                                                        Icon(Icons.arrow_back_rounded, size: 25, color: Colors.blue.shade800,),
                                                         Transform(
                                                           alignment: Alignment.center,
                                                           transform: Matrix4.rotationY(math.pi),
@@ -320,7 +288,7 @@ class _TripViewState extends State<TripView> {
                                                   ),
                                                   Text('DROP',
                                                     style: TextStyle(
-                                                        //fontWeight: FontWeight.bold,
+                                                      //fontWeight: FontWeight.bold,
                                                         fontSize: 15.0,
                                                         color: Colors.black87
                                                     ),
@@ -337,7 +305,8 @@ class _TripViewState extends State<TripView> {
                                                       return Text('$value',
                                                         style: TextStyle(
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 34.0,
+                                                          fontSize: 40.0,
+                                                          color: Colors.blue.shade800,
                                                         ),
                                                       );
                                                     },
@@ -359,7 +328,44 @@ class _TripViewState extends State<TripView> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),*/
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Passengers in Bus: ',
+                                  style: TextStyle(
+                                    //fontWeight: FontWeight.bold,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                                ValueListenableBuilder(
+                                  builder: (BuildContext context, int value, Widget child) {
+                                    return Text('$value',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                      ),
+                                    );
+                                  },
+                                  valueListenable: vnBodyCount,
+                                ),
+                              ],
+                            ),
+                        ),
+                      ),
+
+                      Expanded(
+                        flex: 2,
                         child: Card(
                           /*elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -387,7 +393,7 @@ class _TripViewState extends State<TripView> {
                                     ),
                                   ),
                                   OutlinedButton.icon(
-                                    onPressed: (){},
+                                    onPressed: (){endTrip();},
                                     icon: Icon(Icons.dangerous, size: 18, color: Colors.black,),
                                     label: Text('STOP TRIP',
                                       style: TextStyle(
