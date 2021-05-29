@@ -12,6 +12,7 @@ import 'package:tma_bus/main.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -109,7 +110,7 @@ class _TripViewState extends State<TripView> {
                 backgroundColor: Colors.black,
               ),
               body: Container(
-                color: Colors.white,
+                color: Colors.grey.shade700,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -119,14 +120,14 @@ class _TripViewState extends State<TripView> {
                       Expanded(
                         flex: 2,
                         child: Card(
-                          elevation: 0,
+                          /*elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
                               color: Colors.black45,
                               width: 1.0,
                             ),
-                          ),
+                          ),*/
                           child: StreamBuilder(
                             stream: Stream.periodic(const Duration(seconds: 1)),
                             builder: (context, snapshot) {
@@ -144,16 +145,16 @@ class _TripViewState extends State<TripView> {
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Card(
-                          elevation: 0,
+                          /*elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
                               color: Colors.black45,
                               width: 1.0,
                             ),
-                          ),
+                          ),*/
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -185,14 +186,14 @@ class _TripViewState extends State<TripView> {
                       Expanded(
                         flex: 1,
                         child: Card(
-                          elevation: 0,
+                          /*elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
                               color: Colors.black45,
                               width: 1.0,
                             ),
-                          ),
+                          ),*/
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -221,50 +222,153 @@ class _TripViewState extends State<TripView> {
                       Expanded(
                         flex: 1,
                         child: Card(
-                          elevation: 0,
+                          /*elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
                               color: Colors.black45,
                               width: 1.0,
                             ),
-                          ),
+                          ),*/
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            //crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('Next Stop: ',
-                                style: TextStyle(
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              ValueListenableBuilder(
-                                builder: (BuildContext context, int value, Widget child) {
-                                  return Text('$value',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0,
+                              Column(
+                                //mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text('NEXT STOP',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                        color: Colors.black87
+                                      ),
                                     ),
-                                  );
-                                },
-                                valueListenable: vnBodyCount,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(4.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.arrow_forward_rounded, size: 25, color: Colors.black,),
+                                                        Icon(Icons.directions_walk, size: 35, color: Colors.black,),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text('PICKUP',
+                                                    style: TextStyle(
+                                                        //fontWeight: FontWeight.bold,
+                                                        fontSize: 15.0,
+                                                        color: Colors.black87
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ValueListenableBuilder(
+                                                    builder: (BuildContext context, int value, Widget child) {
+                                                      return Text('$value',
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 34.0,
+                                                        ),
+                                                      );
+                                                    },
+                                                    valueListenable: vnBodyCount,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 90,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(4.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.arrow_back_rounded, size: 25, color: Colors.black,),
+                                                        Transform(
+                                                          alignment: Alignment.center,
+                                                          transform: Matrix4.rotationY(math.pi),
+                                                          child: Icon(Icons.directions_walk, size: 35, color: Colors.black,),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text('DROP',
+                                                    style: TextStyle(
+                                                        //fontWeight: FontWeight.bold,
+                                                        fontSize: 15.0,
+                                                        color: Colors.black87
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ValueListenableBuilder(
+                                                    builder: (BuildContext context, int value, Widget child) {
+                                                      return Text('$value',
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 34.0,
+                                                        ),
+                                                      );
+                                                    },
+                                                    valueListenable: vnBodyCount,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
+
                             ],
                           ),
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Card(
-                          elevation: 0,
+                          /*elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
                               color: Colors.white,
                               width: 1.0,
                             ),
-                          ),
+                          ),*/
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -273,16 +377,23 @@ class _TripViewState extends State<TripView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.red,
-                                    ),
-                                    onPressed: (){endTrip();},
-                                    child: Text('Stop Trip'),
-                                  ),
-                                  OutlinedButton(
+                                  OutlinedButton.icon(
                                     onPressed: (){},
-                                    child: Text('Report Emergency'),
+                                    icon: Icon(Icons.bus_alert, size: 18, color: Colors.black,),
+                                    label: Text('REPORT EMERGENCY',
+                                      style: TextStyle(
+                                          color: Colors.black
+                                      ),
+                                    ),
+                                  ),
+                                  OutlinedButton.icon(
+                                    onPressed: (){},
+                                    icon: Icon(Icons.dangerous, size: 18, color: Colors.black,),
+                                    label: Text('STOP TRIP',
+                                      style: TextStyle(
+                                          color: Colors.red
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
