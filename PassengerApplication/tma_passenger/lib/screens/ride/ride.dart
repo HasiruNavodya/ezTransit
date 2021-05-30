@@ -92,7 +92,7 @@ class _RideViewState extends State<RideView> {
       listenToRidepEnd();
       return Scaffold(
         appBar: AppBar(
-          title: Text("Wait For Your Bus"),
+          title: Text("WAIT FOR BUS"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -118,7 +118,7 @@ class _RideViewState extends State<RideView> {
             ),
 
             Expanded(
-              flex: 10,
+              flex: 12,
               child: Container(
                 child: Column(
                   children: [
@@ -247,7 +247,7 @@ class _RideViewState extends State<RideView> {
                               ),
 
                               TextButton(
-                                onPressed: (){},
+                                onPressed: (){endRide();},
                                 child: Text(
                                   'Cancel Ride',
                                   style: TextStyle(color: Colors.red),
@@ -270,7 +270,7 @@ class _RideViewState extends State<RideView> {
     else if(rideState == 'onbus'){
       return Scaffold(
         appBar: AppBar(
-          title: Text("On Bus"),
+          title: Text("RIDE INFO"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -295,7 +295,7 @@ class _RideViewState extends State<RideView> {
             ),
 
             Expanded(
-              flex: 7,
+              flex: 9,
               child: Container(
                 child: Column(
                   children: [
@@ -521,7 +521,7 @@ class _RideViewState extends State<RideView> {
 
                   busData = bus.data();
                   setState(() {
-                    rideState = 'onbus';
+                    rideState = 'waiting';
                   });
                 }
               });

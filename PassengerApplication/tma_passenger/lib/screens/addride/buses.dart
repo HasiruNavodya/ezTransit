@@ -94,13 +94,12 @@ class _SelectBusState extends State<SelectBus> {
     if (pnoSet == 'yes') {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Select A Bus"),
+          title: Text("SELECT BUS"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
 
         body: Container(
-          color: Colors.white70,
           child: Column(
             children: [
               Expanded(
@@ -126,7 +125,7 @@ class _SelectBusState extends State<SelectBus> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  color: Colors.grey.shade100,
+                  color: Colors.grey.shade200,
                   child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('trips')
@@ -138,7 +137,7 @@ class _SelectBusState extends State<SelectBus> {
                       }
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return spinkit;
+                        return SpinKitDualRing(color: Colors.black87);
                       }
 
                       return new ListView(
@@ -284,7 +283,7 @@ class _SelectBusState extends State<SelectBus> {
                                                           ));*/
                                                         },
                                                         child: Text(
-                                                          "Location",
+                                                          "Show Location",
                                                           style: TextStyle(
                                                             color: Colors.black,
                                                           ),
@@ -303,10 +302,10 @@ class _SelectBusState extends State<SelectBus> {
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
-                                                    ElevatedButton(
+                                                    OutlinedButton(
                                                       style: ButtonStyle(
-                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black54),
+                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
                                                       ),
                                                       //color: Colors.black87,
                                                       onPressed: () {
@@ -325,11 +324,16 @@ class _SelectBusState extends State<SelectBus> {
                                                                       endcity)),
                                                         );
                                                       },
-                                                      child: Text(
-                                                        "Select This Bus",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "Select This Bus ",
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                          Icon(Icons.done,color: Colors.white60,size: 18,)
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
@@ -371,11 +375,11 @@ class _SelectBusState extends State<SelectBus> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Loading"),
+          title: Text("SELECT BUS"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
-        body: spinkit,
+        body: SpinKitDualRing(color: Colors.black87),
       );
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_passenger/screens/addride/pickup.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,7 +32,7 @@ class _SelectDestinationState extends State<SelectDestination> {
             onPressed: () {
               Navigator.pop(context);
             }),*/
-        title: Text("Where do you want to go?"),
+        title: Text("SELECT DESTINATION"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
@@ -75,7 +76,7 @@ class _SelectDestinationState extends State<SelectDestination> {
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.data == null)
-                            return CircularProgressIndicator();
+                            return SpinKitDualRing(color: Colors.black87);
                           if (snapshot.hasError) {
                             return Text("Error ${snapshot.error}");
                           }

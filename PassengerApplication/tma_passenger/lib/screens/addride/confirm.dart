@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 import 'package:toast/toast.dart';
 
@@ -120,19 +121,19 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
 
     if(loading == 'yes'){
       getPickupAt();
-      return Scaffold(body: Center(child: Text('Loading...'),),);
+      return Scaffold(body: Center(child: SpinKitDualRing(color: Colors.black87),),);
     }
     else{
       return Scaffold(
         appBar: AppBar(
-          title: Text("Book Ticket"),
+          title: Text("BOOK TICKET"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
         //backgroundColor: Colors.red,
         backgroundColor: Colors.white,
         body: Container(
-          color: Colors.white60,
+          color: Colors.white,
           child: StreamBuilder<QuerySnapshot>(
             // stream:FirebaseFirestore.instance.collection('trips').where('parts', isEqualTo: ).snapshots(),
             stream: FirebaseFirestore.instance
@@ -146,7 +147,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text("Loading");
+                return SpinKitDualRing(color: Colors.black87);
               }
 
               return Padding(
@@ -156,12 +157,12 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                     return Container(
                       child: Column(
                         children: [
-                          Expanded(flex: 1,child: Container()),
                           Expanded(
                           flex: 6,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -300,55 +301,57 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                             ),
                           ),
                           Expanded(
-                            flex: 2,
+                            flex: 1,
                             child: Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                ButtonTheme(
-                                  child: RaisedButton(
-                                    color: Colors.black,
-                                    onPressed: () => {addTicketAndPay()},
-                                    child: Text(
-                                      "Pay Online",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black87,
+                                  ),
+                                  onPressed: () => {addTicketAndPay()},
+                                  child: Text(
+                                    "Pay Now",
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                ButtonTheme(
-                                  child: RaisedButton(
-                                    color: Colors.black,
-                                    onPressed: () {
-                                      //RideView().setTID('tck1000');
-                                      addTicket();
-                                    },
-                                    child: Text(
-                                      "Pay Cash",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    //RideView().setTID('tck1000');
+                                    showAlertDialog(context);
+                                  },
+                                  child: Text(
+                                    "Pay Cash",
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                ButtonTheme(
-                                  child: RaisedButton(
-                                    color: Colors.black,
-                                    onPressed: () {
-                                      Navigator.of(context).popUntil((route) => route.isFirst);
-                                    },
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black38,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).popUntil((route) => route.isFirst);
+                                  },
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),),
+                          ),
+                          ),
 
                         ],
                       ),
@@ -501,6 +504,50 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         });
       }
     });
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "YES",
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.blue.shade900,
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+        addTicket();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "CLOSE",
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm"),
+      content: Text("Book this Ticket?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 }

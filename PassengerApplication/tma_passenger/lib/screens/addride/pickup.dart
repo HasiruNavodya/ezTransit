@@ -1,4 +1,5 @@
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_passenger/screens/addride/buses.dart';
 import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/addride/pickup.dart';
@@ -36,7 +37,7 @@ class _SelectPickupState extends State<SelectPickup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Where should we pick you up?"),
+        title: Text("SELECT PICKUP LOCATION"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
@@ -61,7 +62,7 @@ class _SelectPickupState extends State<SelectPickup> {
                         },
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            labelText: 'Search for Pickup Location',
+                            labelText: 'Search for Pickup Locations',
                             border: OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),
@@ -84,7 +85,7 @@ class _SelectPickupState extends State<SelectPickup> {
                             :FirebaseFirestore.instance.collection("cities").where('searchIndex', arrayContains: searchString).snapshots(),
 
                         builder: (context,snapshot){
-                          if(snapshot.data == null) return CircularProgressIndicator();
+                          if(snapshot.data == null) return SpinKitDualRing(color: Colors.black87);
 
                           if(snapshot.hasError){
                             return Text("Error ${snapshot.error}");
