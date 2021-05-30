@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tma_bus/screens/home/home.dart';
 
+enum SingingCharacter { lafayette, jefferson }
 
+SingingCharacter _character = SingingCharacter.lafayette;
 
 class ReportEmergencyView extends StatefulWidget {
   @override
@@ -28,6 +31,9 @@ class _EmergencyState extends State<ReportEmergencyView> {
   TextEditingController ComplaintDescription= new TextEditingController();
 
   DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) ;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,54 @@ class _EmergencyState extends State<ReportEmergencyView> {
               padding: EdgeInsets.symmetric(horizontal: 18.0),
               children: <Widget>[
 
+                DropDownFormField(
+                  titleText: 'My workout',
+                  hintText: 'Please choose one',
+                  value: _emergencyType,
+                  onSaved: (value) {
+                    setState(() {
+                      _emergencyType = value;
+                    });
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      _emergencyType = value;
+                    });
+                  },
+                  dataSource: [
+                    {
+                      "display": "Running",
+                      "value": "Running",
+                    },
+                    {
+                      "display": "Climbing",
+                      "value": "Climbing",
+                    },
+                    {
+                      "display": "Walking",
+                      "value": "Walking",
+                    },
+                  ],
+                  textField: 'display',
+                  valueField: 'value',
+                ),
 
+          Column(
+            children: <Widget>[
+              RadioListTile<SingingCharacter>(
+                title: const Text('Lafayette'),
+                value: SingingCharacter.lafayette,
+                groupValue: _character,
+                onChanged: (SingingCharacter value) { setState(() { _character = value; }); },
+              ),
+              RadioListTile<SingingCharacter>(
+                title: const Text('Thomas Jefferson'),
+                value: SingingCharacter.jefferson,
+                groupValue: _character,
+                onChanged: (SingingCharacter value) { setState(() { _character = value; }); },
+              ),
+            ],
+          ),
 
                 Column(
                   children: <Widget>[
@@ -64,7 +117,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
                     }
                   },
                   onSaved: (String EmergencyType){
-                    _emergencyType = EmergencyType ;
+                    _emergencyType = EmergencyType;
                   },
                   controller: EmergencyType,
                   decoration: InputDecoration(
@@ -81,6 +134,12 @@ class _EmergencyState extends State<ReportEmergencyView> {
                   ],
                 ),
                 TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Label text',
+                    labelStyle: TextStyle(fontSize: 15),
+                    filled: true,
+                    border: OutlineInputBorder(),
+                  ),
                   validator: (String value) {
                     if (value.isEmpty){
 
@@ -96,11 +155,6 @@ class _EmergencyState extends State<ReportEmergencyView> {
                     _complaintDescription = complaintDescription;
                   },
                   controller: ComplaintDescription,
-                  decoration: InputDecoration(
-                    //labelText: "Title",
-                    labelStyle: TextStyle(fontSize: 15),
-                    filled: true,
-                  ),
                   maxLines: 8,
                 ),
                 SizedBox(height: 30.0,),
