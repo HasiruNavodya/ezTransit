@@ -14,7 +14,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
-  String _name,_email,_nic,_password,_confirmPassword;
+  String _name,_email,_nic,_password,_confirmPassword,_phoneNo;
 
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
@@ -24,13 +24,24 @@ class _RegisterState extends State<Register> {
   TextEditingController fullName= new TextEditingController();
   TextEditingController email= new TextEditingController();
   TextEditingController nIC= new TextEditingController();
+  TextEditingController phoneNo= new TextEditingController();
+
 /*  TextEditingController password= new TextEditingController();
   TextEditingController confirmPassword= new TextEditingController();*/
+
+  @override
+  void initState() {
+    super.initState();
+
+    //phoneNo.text = '+94';
+
+  }
+
   @override
   Widget build(BuildContext context)  {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome"),
+        title: Text("SIGN UP"),
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
@@ -40,11 +51,11 @@ class _RegisterState extends State<Register> {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             children: <Widget>[
-              SizedBox(height: 10.0,),
+              SizedBox(height: 20.0,),
               Icon(
                 Icons.account_circle,
                 color: Colors.black,
-                size:150.0,
+                size:50.0,
               ),
 
 
@@ -52,7 +63,7 @@ class _RegisterState extends State<Register> {
               Column(
                 children: <Widget>[
 
-                  Text('Create Account', style: TextStyle(fontSize:22,fontWeight: FontWeight.bold,color:Colors.black,),),
+                  Text('Welcome to ezTransit !', style: TextStyle(fontSize:22,fontWeight: FontWeight.bold,color:Colors.black,),),
                 ],
               ),
               SizedBox(height: 20.0,),
@@ -72,6 +83,11 @@ class _RegisterState extends State<Register> {
                   labelText: "Full Name",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.person,
+                  ),
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -97,6 +113,11 @@ class _RegisterState extends State<Register> {
                   labelText: "Email",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.email,
+                  ),
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -105,11 +126,11 @@ class _RegisterState extends State<Register> {
                 validator: (String value){
                   if(value.isEmpty)
                   {
-                    return "Please Enter NIC";
+                    return "Please Enter NIC Number";
                   }
                   if(!RegExp(r"^([0-9]{9}[x|X|v|V]|[0-9]{12})$").hasMatch(value))
                   {
-                    return "Please Enter Valid NIC";
+                    return "Please Enter Valid NIC Number";
                   }
                   return null;
                 },
@@ -119,9 +140,41 @@ class _RegisterState extends State<Register> {
 
                 controller: nIC,
                 decoration: InputDecoration(
-                  labelText: "NIC",
+                  labelText: "NIC Number",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.credit_card,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              TextFormField(
+
+                controller: phoneNo,
+
+                validator: (String value){
+                  if(value.isEmpty)
+                  {
+                    return "Please Enter Phone Number";
+                  }
+                  return null;
+                },
+                onSaved: (String phonenum){
+                  _phoneNo = phonenum;
+                },
+
+                decoration: InputDecoration(
+                  labelText: "Phone Number (07XXXXXXXX)",
+                  labelStyle: TextStyle(fontSize: 15.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.phone_android,
+                  ),
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -145,7 +198,11 @@ class _RegisterState extends State<Register> {
                   labelText: "Password",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
-
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.lock,
+                  ),
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -170,32 +227,43 @@ class _RegisterState extends State<Register> {
                   labelText: "Confirm Password",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(
+                    Icons.lock,
+                  ),
 
                 ),
               ),
               SizedBox(height: 30.0,),
               Column(
                 children: <Widget>[
-                  ButtonTheme(
-                    height: 50,
-                    disabledColor: Colors.grey,
-                    child: RaisedButton(color:Colors.black87,
-                      onPressed:(){
-
-                        if(_formkey.currentState.validate())
-                          {
-                            Map <String,dynamic> data= {"FullName": fullName.text,"Email": email.text, "NIC": nIC.text, "Password": password.text, "ConfirmPassword": confirmPassword.text};
-                            FirebaseFirestore.instance.collection("passengers").doc(email.text).set(data);
-                            signUp();
-                          }else
-                            {
-                              print("unsuccessfull");
-                            }
-
-
-                      },
-                      child: Text('Sign Up',style: TextStyle(fontSize: 15, color: Colors.white)),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
                     ),
+                    onPressed:(){
+
+                      if(_formkey.currentState.validate())
+                        {
+                          Map <String,dynamic> data= {
+                            "FullName": fullName.text,
+                            "Email": email.text,
+                            "NIC": nIC.text,
+                            "PhoneNo": phoneNo.text,
+                            "Password": password.text,
+                            "ConfirmPassword": confirmPassword.text
+                          };
+                          FirebaseFirestore.instance.collection("passengers").doc(email.text).set(data);
+                          signUp();
+                        }else
+                          {
+                            print("unsuccessfull");
+                          }
+
+
+                    },
+                    child: Text('SIGN UP',style: TextStyle(fontSize: 15, color: Colors.white)),
                   ),
                   SizedBox(height: 20.0,),
 
@@ -219,7 +287,7 @@ class _RegisterState extends State<Register> {
         var future = Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
         print("alks;fjlkjd");
       }catch(e) {
-        print("e.message");
+        print(e.message);
       }
     }
 
