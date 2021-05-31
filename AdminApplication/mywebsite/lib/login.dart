@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mywebsite/auth.dart';
 import 'package:mywebsite/reset.dart';
+import 'package:mywebsite/signup.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -106,9 +107,6 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment(1.0, 0.0),
                   padding: EdgeInsets.only(top: 15.0, left: 20.0),
                   child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
                       child: Text('Forgot Password',
                           style: TextStyle(
                               color: greenColor,
@@ -130,17 +128,25 @@ class _LoginPageState extends State<LoginPage> {
                     color: greenColor,
                     elevation: 7.0,
                     child: Center(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('LOGIN',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Trueno',
-                                )))))),
+                        child: Text('LOGIN',
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'Trueno'))))),
           ),
           SizedBox(height: 25.0),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text('SignUp as a new admin'),
+            SizedBox(width: 5.0),
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SignupPage()));
+                },
+                child: Text('Register',
+                    style: TextStyle(
+                        color: greenColor,
+                        fontFamily: 'Trueno',
+                        decoration: TextDecoration.underline)))
+          ])
         ]));
   }
 }
