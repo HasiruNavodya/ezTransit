@@ -69,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   onSaved: (input) => _email = input,
                   decoration: InputDecoration(
-                    fillColor: Colors.white,
                     labelText: "Email",
                     labelStyle: TextStyle(fontSize: 15),
                     filled: true,
                     border: OutlineInputBorder(),
+                    fillColor: Colors.white,
                     suffixIcon: Icon(
                       Icons.email,
                     ),

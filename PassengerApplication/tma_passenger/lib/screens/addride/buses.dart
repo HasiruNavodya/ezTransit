@@ -21,18 +21,21 @@ String ticketprice;
 String tripid;
 String startcity;
 String endcity;
+String ptime;
+String dtime;
 
 class SelectBus extends StatefulWidget {
-
   SelectBus(this.pickuLocation, this.destinationLocation);
   final String pickuLocation;
   final String destinationLocation;
 
   @override
-  _SelectBusState createState() => _SelectBusState(); //need to pass parameters here pickuLocation,destinationLocation
+  _SelectBusState createState() =>
+      _SelectBusState(); //need to pass parameters here pickuLocation,destinationLocation
 }
 
 class _SelectBusState extends State<SelectBus> {
+  TextEditingController infoC = new TextEditingController();
 
   BitmapDescriptor busicon;
 
@@ -44,6 +47,7 @@ class _SelectBusState extends State<SelectBus> {
     if (pnoSet == 'no') {
       getpno();
     }
+
     //print(widget.partName);
   }
 
@@ -53,7 +57,8 @@ class _SelectBusState extends State<SelectBus> {
   final Set<Marker> _markers = {};
 
   void getpno() {
-    partNameGlobal = '${widget.destinationLocation}' + '-' + '${widget.pickuLocation}';
+    partNameGlobal =
+        '${widget.destinationLocation}' + '-' + '${widget.pickuLocation}';
 
     FirebaseFirestore.instance
         .collection('partialroutes')
@@ -75,6 +80,37 @@ class _SelectBusState extends State<SelectBus> {
         });
       }
     });
+  }
+
+  String getPickupAt(String tripidfn) {
+
+    FirebaseFirestore.instance.collection("trips").doc(tripidfn).collection("stops").doc(widget.pickuLocation).get().then((documentSnapshot) {
+      if (documentSnapshot.exists) {
+        ptime = documentSnapshot.data()['time'].toString();
+        print(ptime);
+      } else {
+        ptime = '';
+      }
+    });
+    return ptime;
+  }
+
+  String getDropAt(String tripidfn) {
+    String dtime;
+    FirebaseFirestore.instance
+        .collection("trips")
+        .doc(tripidfn)
+        .collection("stops")
+        .doc(widget.destinationLocation)
+        .get()
+        .then((documentSnapshot) {
+      if (documentSnapshot.exists) {
+        dtime = documentSnapshot.data()['time'].toString();
+      } else {
+        dtime = '';
+      }
+    });
+    return dtime;
   }
 
   final spinkit = SpinKitFadingCircle(
@@ -113,10 +149,8 @@ class _SelectBusState extends State<SelectBus> {
                         zoom: 15.0,
                       ),
                       myLocationEnabled: true,
-                      // Add little blue dot for device location, requires permission from user
                       mapType: MapType.normal,
                       compassEnabled: true,
-                      //onCameraMove: _onCameraMove,
                       markers: _markers,
                     ),
                   ],
@@ -127,10 +161,7 @@ class _SelectBusState extends State<SelectBus> {
                 child: Container(
                   color: Colors.grey.shade200,
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('trips')
-                        .where('parts', arrayContains: pno)
-                        .snapshots(),
+                    stream: FirebaseFirestore.instance.collection('trips').where('parts', arrayContains: pno).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Text('Something went wrong');
@@ -141,22 +172,20 @@ class _SelectBusState extends State<SelectBus> {
                       }
 
                       return new ListView(
-                        children:
-                            snapshot.data.docs.map((DocumentSnapshot document) {
-                          CollectionReference users =
-                              FirebaseFirestore.instance.collection('buses');
+                        children: snapshot.data.docs.map((DocumentSnapshot document) {
+
+                          CollectionReference users = FirebaseFirestore.instance.collection('buses');
 
                           return FutureBuilder<DocumentSnapshot>(
+
                             future: users.doc(document.data()['bus']).get(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
                               if (snapshot.hasError) {
                                 return Text("Something went wrong");
                               }
 
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                Map<String, dynamic> data = snapshot.data.data();
+                              if (snapshot.connectionState == ConnectionState.done) {Map<String, dynamic> data = snapshot.data.data();
 
                                 tripid = document.data()['tripID'];
                                 print(tripid);
@@ -176,6 +205,24 @@ class _SelectBusState extends State<SelectBus> {
                                   standingcount = 0;
                                 }
 
+                              FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.pickuLocation).get().then((documentSnapshot) {
+                                if (documentSnapshot.exists) {
+                                  ptime = documentSnapshot.data()['time'].toString();
+                                  print(ptime);
+                                } else {
+                                  ptime = '';
+                                }
+                              });
+
+                              FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.destinationLocation).get().then((documentSnapshot) {
+                                if (documentSnapshot.exists) {
+                                  dtime = documentSnapshot.data()['time'].toString();
+                                  print(dtime);
+                                } else {
+                                  dtime = '';
+                                }
+                              });
+
                                 return Container(
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -187,17 +234,21 @@ class _SelectBusState extends State<SelectBus> {
                                           children: [
                                             Container(
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Column(
                                                     children: [
-                                                      Text(document.data()['name'],
-                                                          style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              //fontWeight: FontWeight.bold
-                                                            ),),
+                                                      Text(
+                                                        document.data()['name'],
+                                                        style: TextStyle(
+                                                          fontSize: 15.0,
+                                                          //fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
                                                       //Text(''),
-                                                      Text(document.data()['startTime'] + ' - ' + document.data()['endTime'],
+                                                      Text(
+                                                        document.data()['startTime'] + ' - ' + document.data()['endTime'],
                                                         style: TextStyle(
                                                           fontSize: 15.0,
                                                           //fontWeight: FontWeight.bold
@@ -216,38 +267,40 @@ class _SelectBusState extends State<SelectBus> {
                                                 Expanded(
                                                   flex: 3,
                                                   child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
-                                                          'Pickup At: ' +
-                                                              document.data()[
-                                                                  'startTime'],
+                                                          'Pickup At: ' + ptime.toString(),
                                                           style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              //fontWeight: FontWeight.bold
+                                                            fontSize: 16.0,
+                                                            //fontWeight: FontWeight.bold
                                                           )),
                                                       Text(
-                                                          'Dropping At: ' +
-                                                              document.data()[
-                                                              'startTime'],
+                                                          'Dropping At: ' + dtime.toString(),
                                                           style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              //fontWeight: FontWeight.bold
+                                                            fontSize: 16.0,
+                                                            //fontWeight: FontWeight.bold
                                                           )),
                                                       Text(''),
-                                                      Text('Comfort Level: ' + data['Luxury Level'],
+                                                      Text(
+                                                          'Comfort Level: ' +
+                                                              data[
+                                                                  'Luxury Level'],
                                                           style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              //fontWeight: FontWeight.bold
+                                                            fontSize: 15.0,
+                                                            //fontWeight: FontWeight.bold
                                                           )),
                                                       //Text(''),
-                                                      Text(data['Public or Private'] + ' Bus',
+                                                      Text(
+                                                          data['Public or Private'] +
+                                                              ' Bus',
                                                           style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              //fontWeight: FontWeight.bold
+                                                            fontSize: 15.0,
+                                                            //fontWeight: FontWeight.bold
                                                           )),
                                                       Text(''),
-
                                                     ],
                                                   ),
                                                 ),
@@ -255,25 +308,30 @@ class _SelectBusState extends State<SelectBus> {
                                                   children: [
                                                     Text(
                                                         'Free Seats: ' +
-                                                            newseatcount.toString(),
+                                                            newseatcount
+                                                                .toString(),
                                                         style: TextStyle(
-                                                            fontSize: 15.0,
-                                                            //fontWeight: FontWeight.bold
+                                                          fontSize: 15.0,
+                                                          //fontWeight: FontWeight.bold
                                                         )),
                                                     //Text(''),
                                                     Text(
-                                                        'Standing: ' +
-                                                            standingcount.toString(),
-                                                        style: TextStyle(
-                                                            fontSize: 15.0,
-                                                            //fontWeight: FontWeight.bold,
-                                                        ),),
+                                                      'Standing: ' +
+                                                          standingcount
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        //fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
                                                     Text(''),
                                                     ButtonTheme(
                                                       child: OutlinedButton(
                                                         //color: Colors.black87,
                                                         onPressed: () {
-                                                          showBusLocation();
+                                                          showBusLocation(
+                                                              document.data()[
+                                                                  'bus']);
                                                           //Navigator.push(context, MaterialPageRoute(),);
                                                           /*_markers.add(
                                                           Marker(
@@ -290,38 +348,45 @@ class _SelectBusState extends State<SelectBus> {
                                                         ),
                                                       ),
                                                     ),
-
-
                                                   ],
                                                 ),
                                               ],
                                             ),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     OutlinedButton(
                                                       style: ButtonStyle(
-                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black54),
-                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
+                                                        foregroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                    .black54),
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                    .black87),
                                                       ),
                                                       //color: Colors.black87,
                                                       onPressed: () {
                                                         Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ConfirmTicket(
-                                                                      widget.destinationLocation,
-                                                                      widget.pickuLocation,
-                                                                      document.data()[
+                                                              builder: (context) => ConfirmTicket(
+                                                                  widget
+                                                                      .destinationLocation,
+                                                                  widget
+                                                                      .pickuLocation,
+                                                                  document.data()[
                                                                       'bus'],
-                                                                      ticketprice,
-                                                                      tripid,
-                                                                      startcity,
-                                                                      endcity)),
+                                                                  ticketprice,
+                                                                  tripid,
+                                                                  startcity,
+                                                                  endcity)),
                                                         );
                                                       },
                                                       child: Row(
@@ -329,10 +394,16 @@ class _SelectBusState extends State<SelectBus> {
                                                           Text(
                                                             "Select This Bus ",
                                                             style: TextStyle(
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                             ),
                                                           ),
-                                                          Icon(Icons.done,color: Colors.white60,size: 18,)
+                                                          Icon(
+                                                            Icons.done,
+                                                            color:
+                                                                Colors.white60,
+                                                            size: 18,
+                                                          )
                                                         ],
                                                       ),
                                                     ),
@@ -340,7 +411,6 @@ class _SelectBusState extends State<SelectBus> {
                                                 ),
                                               ],
                                             )
-
                                           ],
                                         ),
                                       ),
@@ -397,24 +467,31 @@ class _SelectBusState extends State<SelectBus> {
     });
   }
 
-  void showBusLocation() async {
-
+  void showBusLocation(String busPN) async {
     setState(() {
-
-      FirebaseFirestore.instance.collection('buses').doc('GE-3412').snapshots().listen((DocumentSnapshot busLocation) {
-
+      FirebaseFirestore.instance
+          .collection('buses')
+          .doc(busPN)
+          .snapshots()
+          .listen((DocumentSnapshot busLocation) {
         print("location updated");
 
-        _markers.add(Marker(markerId: MarkerId('bus'), position: LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude), icon: busicon));
+        _markers.add(Marker(
+            markerId: MarkerId('bus'),
+            position: LatLng(busLocation.data()['location'].latitude,
+                busLocation.data()['location'].longitude),
+            icon: busicon));
 
-        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude)));
-
+        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(
+            busLocation.data()['location'].latitude,
+            busLocation.data()['location'].longitude)));
       });
     });
   }
 
-  void setMapMarker() async{
-    busicon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(60,60)), 'assets/bus.png');
+  void setMapMarker() async {
+    busicon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(60, 60)), 'assets/bus.png');
   }
 
   // String getLux(){

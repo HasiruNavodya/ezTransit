@@ -37,7 +37,7 @@ class AddRide extends StatelessWidget {
                 shape: CircleBorder(),
               ),
               Text(
-                "\nAdd New Ride",
+                "\nADD NEW RIDE",
                 style: TextStyle(
                   fontSize: 20,
                   //fontWeight: FontWeight.bold,

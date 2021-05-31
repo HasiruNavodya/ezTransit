@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tma_passenger/screens/home/ride.dart';
 
 import 'home.dart';
 
@@ -10,7 +11,9 @@ import 'home.dart';
 
 class Complaints extends StatefulWidget {
 
+  Complaints(this.plateno);
 
+  final String plateno;
 
   @override
   _ComplaintsState createState() => _ComplaintsState();
@@ -41,6 +44,13 @@ class _ComplaintsState extends State<Complaints> {
   String time;
 
 
+  @override
+  void initState() {
+    super.initState();
+
+    ComplaintBusNo.text = widget.plateno;
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,27 +75,28 @@ class _ComplaintsState extends State<Complaints> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('User Complaints'),
+        title: Text('SUBMIT COMPLAINT'),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
         child: Form(
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.always,
           key: formkey,
           child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 18.0),
               children: <Widget>[
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 60.0,),
-                    Text('Bus Number', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
+                    SizedBox(height: 30.0,),
+                    Text('Bus Plate Number', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
                     SizedBox(height: 20.0,),
                   ],
                 ),
                 TextFormField(
                   validator: (value) {
                     if (value.isEmpty){
-                      return 'Enter Title';
+                      return 'Enter Plate No of the Bus';
                     }
                     else{
                       return null;
@@ -96,12 +107,15 @@ class _ComplaintsState extends State<Complaints> {
                   },*/
                   controller: ComplaintBusNo,
                   decoration: InputDecoration(
-                    //labelText: "Title",
+                    labelText: "Bus Plate No",
                     labelStyle: TextStyle(fontSize: 15),
                     filled: true,
+                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
                   ),
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 40.0,),
                     Text('Complaint', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
@@ -111,7 +125,7 @@ class _ComplaintsState extends State<Complaints> {
                 TextFormField(
                   validator: (value) {
                     if (value.isEmpty){
-                      return 'Please Describe ';
+                      return 'Please Describe';
                     }
                     else{
                       return null;
@@ -122,11 +136,13 @@ class _ComplaintsState extends State<Complaints> {
                   },*/
                   controller: ComplaintDescription,
                   decoration: InputDecoration(
-                    //labelText: "Title",
+                    labelText: "Complaint",
                     labelStyle: TextStyle(fontSize: 15),
                     filled: true,
+                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
                   ),
-                  maxLines: 8,
+                  maxLines: 10,
                 ),
                 SizedBox(height: 30.0,),
                 Column(
