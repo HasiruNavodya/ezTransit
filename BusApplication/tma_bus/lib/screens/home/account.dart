@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../main.dart';
 import '../auth/login.dart';
@@ -62,7 +63,7 @@ class _AccountState extends State<Account> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading");
+                  return SpinKitDualRing(color: Colors.black87);
                 }
 
                 return Padding(

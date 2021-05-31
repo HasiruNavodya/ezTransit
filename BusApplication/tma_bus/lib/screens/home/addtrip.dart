@@ -52,7 +52,7 @@ class _AddTripViewState extends State<AddTripView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start Trip'),
+        title: Text('SELECT TRIP'),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -72,43 +72,48 @@ class _AddTripViewState extends State<AddTripView> {
             );
           }
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new ListView(
-              children: snapshot.data.docs.map((DocumentSnapshot document) {
-                return Container(
-                  color: Colors.white70,
-                  margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                  child: new OutlinedButton(
-                    onPressed: () {
-                      tripID = document.data()['tripID'];
-                      print(tripID);
-                      showAlertDialog(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            '${document.data()['startTime'] ?? 'default'}' + ' ' + '-' + ' ' '${document.data()['endTime']??'default'}',
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.black87
+          return Container(
+            color: Colors.grey.shade300,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new ListView(
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return Container(
+                    //color: Colors.white,
+                    //margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: new ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
+                      onPressed: () {
+                        tripID = document.data()['tripID'];
+                        print(tripID);
+                        showAlertDialog(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${document.data()['startTime'] ?? 'default'}' + ' ' + '-' + ' ' '${document.data()['endTime']??'default'}',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.black87
+                              ),
                             ),
-                          ),
-                          Text(
-                            document.data()['name']??'default',
-                            style: TextStyle(
-                                color: Colors.black87
+                            Text(
+                              document.data()['name']??'default',
+                              style: TextStyle(
+                                  fontSize: 17.0,
+                                  color: Colors.black87
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-                //Card(child: Text(document.data()['name']??'default'),);
-              }).toList(),
+                  );
+                  //Card(child: Text(document.data()['name']??'default'),);
+                }).toList(),
+              ),
             ),
           );
         },
@@ -130,8 +135,8 @@ class _AddTripViewState extends State<AddTripView> {
         print(sval);
         streamController.add(sval);
         tripIDStream.add(tripID);
-        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => TmaMainApp()));
         Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
       },
     );
     Widget continueButton = TextButton(

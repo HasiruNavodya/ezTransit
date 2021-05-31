@@ -133,6 +133,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
                       height: 40,
                       disabledColor: Colors.grey,
                       child: ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black87)),
                         onPressed: () {
                           if (formkey.currentState.validate()) {
                             FirebaseFirestore.instance
@@ -158,7 +159,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
                           // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
                         },
                         child: Text(
-                          'Submit',
+                          'SUBMIT',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -204,8 +205,13 @@ class _EmergencyState extends State<ReportEmergencyView> {
 
   showAlertDialogTwo(BuildContext context) {
     // set up the button
-    Widget okButton = OutlinedButton(
-      child: Text("OK"),
+    Widget okButton = TextButton(
+      child: Text("OK",
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.black87,
+        ),
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
@@ -214,7 +220,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Alert"),
-      content: Text("Please Fill All The Records"),
+      content: Text("Please Fill All The Fields"),
       actions: [
         okButton,
       ],

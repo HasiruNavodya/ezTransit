@@ -8,11 +8,11 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
-//import 'package:tma_bus/screens/home/addtrip.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
+
+import 'package:tma_bus/screens/home/report.dart';
 
 int lastStopPassed = 0;
 int nextStop = 1;
@@ -24,24 +24,23 @@ double stopLng;
 String stopID;
 int geoGate = 0;
 String tripState = "on";
-String busNo = 'GE-3412';
+String busNo = '';
 LocationData lastLocation;
 String test;
 String startCity;
 String endCity;
+String nextStopName;
 String busEmail;
 String bus;
 DatabaseReference pCount;
 
 StreamController<String> getTripID = StreamController<String>();
 
-// ignore: must_be_immutable
 class TripView extends StatefulWidget {
 
   void setTripID(String tripid) {
     tripID = tripid;
   }
-
 
   @override
   _TripViewState createState() => _TripViewState();
@@ -56,15 +55,23 @@ class _TripViewState extends State<TripView> {
   final myController2 = TextEditingController();
 
   final ValueNotifier<int> vnBodyCount = ValueNotifier<int>(0);
+  final ValueNotifier<int> vnPickupCount = ValueNotifier<int>(0);
+  final ValueNotifier<int> vnDropCount = ValueNotifier<int>(0);
+  final ValueNotifier<String> vnStopName = ValueNotifier<String>('TRIP START');
 
-  var _textStyle = TextStyle(
+  List<String> stopList = [];
+  int ns = 0;
+
+/*  var _textStyle = TextStyle(
     color: Colors.red,
     fontSize: 50,
-  );
+  );*/
 
   @override
   void initState() {
     super.initState();
+
+    tripState = 'on';
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -84,12 +91,12 @@ class _TripViewState extends State<TripView> {
   @override
   Widget build(BuildContext context) {
 
+
     if (tripState == 'on') {
       if(geoGate == 0){
         initTrip();
-        streamLiveLocation();
-        getIRCount();
       }
+
 
       return FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
@@ -105,7 +112,7 @@ class _TripViewState extends State<TripView> {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text('Current Trip Info'),
+                title: Text('TRIP INFO'),
                 centerTitle: true,
                 backgroundColor: Colors.black,
               ),
@@ -204,12 +211,17 @@ class _TripViewState extends State<TripView> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(15.0),
-                                    child: Text('NEXT STOP',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0,
-                                          color: Colors.black87
-                                      ),
+                                    child: ValueListenableBuilder(
+                                      builder: (BuildContext context, String value, Widget child) {
+                                        return Text('$value',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0,
+                                              color: Colors.black87
+                                          ),
+                                        );
+                                      },
+                                      valueListenable: vnStopName,
                                     ),
                                   ),
                                   SizedBox(
@@ -256,7 +268,7 @@ class _TripViewState extends State<TripView> {
                                                         ),
                                                       );
                                                     },
-                                                    valueListenable: vnBodyCount,
+                                                    valueListenable: vnPickupCount,
                                                   ),
                                                 ],
                                               ),
@@ -310,7 +322,7 @@ class _TripViewState extends State<TripView> {
                                                         ),
                                                       );
                                                     },
-                                                    valueListenable: vnBodyCount,
+                                                    valueListenable: vnDropCount,
                                                   ),
                                                 ],
                                               ),
@@ -384,7 +396,9 @@ class _TripViewState extends State<TripView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   OutlinedButton.icon(
-                                    onPressed: (){},
+                                    onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ReportEmergencyView()),);
+                                      },
                                     icon: Icon(Icons.bus_alert, size: 18, color: Colors.black,),
                                     label: Text('REPORT EMERGENCY',
                                       style: TextStyle(
@@ -393,7 +407,7 @@ class _TripViewState extends State<TripView> {
                                     ),
                                   ),
                                   OutlinedButton.icon(
-                                    onPressed: (){endTrip();},
+                                    onPressed: (){showAlertDialog(context);},
                                     icon: Icon(Icons.dangerous, size: 18, color: Colors.black,),
                                     label: Text('STOP TRIP',
                                       style: TextStyle(
@@ -431,7 +445,7 @@ class _TripViewState extends State<TripView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'You Have Reached the Trip Destination. \nEnding Trip Now...\n\n\n',
+                  'Ending Trip\n\n\n',
                   style: TextStyle(fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
@@ -448,11 +462,12 @@ class _TripViewState extends State<TripView> {
 
     print(tripID);
 
-    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection("stops").orderBy("order").get().then((querySnapshot) {
       querySnapshot.docs.forEach((stopDoc) {
-        print(stopDoc.data()['name']);
-  
+        print("XXXXX"+stopDoc.id.toString());
+
         stopID = stopDoc.id;
+        stopList.add(stopID);
         stopLat = stopDoc.data()['location'].latitude.toDouble();
         stopLng = stopDoc.data()['location'].longitude.toDouble();
   
@@ -475,6 +490,7 @@ class _TripViewState extends State<TripView> {
           geofenceService.start(geofenceList).catchError(onError);
         });
     });
+      getPDCount(stopList.elementAt(0));
       
     }).catchError((onError) {
       print("Database Error!");
@@ -493,17 +509,17 @@ class _TripViewState extends State<TripView> {
 
     geoGate = 1;
     print(geoGate);
+    getIRCount();
     //streamLiveLocation();
 
   }
 
   void streamLiveLocation() async{
     positionStream = Geolocator.getPositionStream().listen((Position position) {
-      //print(position.latitude.toString() + ', ' + position.longitude.toString());
-
-      /*FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+      print(position.latitude.toString() + ', ' + position.longitude.toString());
+      FirebaseFirestore.instance.collection('buses').doc(bus).update({
         'location' : GeoPoint(position.latitude, position.longitude)
-      });*/
+      });
     });
   }
 
@@ -534,9 +550,6 @@ class _TripViewState extends State<TripView> {
     String geoStatus = geofenceStatus.toString();
 
     if (geoStatus == 'GeofenceStatus.ENTER') {
-      /*FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
-        'lastStopPassed' : passed
-      });*/
 
       FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(geofence.id).update({
         'passed' : 'true'
@@ -548,6 +561,11 @@ class _TripViewState extends State<TripView> {
         });
         endTrip();
       }
+    }
+
+    if (geoStatus == 'GeofenceStatus.EXIT'){
+      ns = ns + 1;
+      getPDCount(stopList.elementAt(ns));
     }
 
   }
@@ -572,7 +590,7 @@ class _TripViewState extends State<TripView> {
 
   void endTrip(){
 
-    positionStream.cancel();
+    //positionStream.cancel();
 
     setState(() {
       tripState = 'off';
@@ -591,7 +609,7 @@ class _TripViewState extends State<TripView> {
     });
 
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       streamController.add(0);
     });
 
@@ -616,13 +634,70 @@ class _TripViewState extends State<TripView> {
     pCount = FirebaseDatabase.instance.reference();
     pCount.onValue.listen((event){
       var test = event.snapshot;
-      print(test.value["PCount"]["testbus"]);
-      vnBodyCount.value = test.value["PCount"]["testbus"];
+      print(test.value["PCount"][bus]);
+      vnBodyCount.value = test.value["PCount"][bus];
       //var pulse = snapshot.value["PCount"]["testbus"];
       //print(pulse);
       //var temp  = snapshot.value["temperature"];
     });
 
+  }
+
+  void getPDCount(String next){
+    FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc('$next').get().then((DocumentSnapshot nextdoc) {
+      if (nextdoc.exists) {
+        print('Next Stop'+nextdoc.id.toString());
+        print('Pickup'+nextdoc.data()['pickupCount'].toString());
+        print('Pickup'+nextdoc.data()['dropCount'].toString());
+        vnPickupCount.value = nextdoc.data()['pickupCount'];
+        vnDropCount.value = nextdoc.data()['dropCount'];
+      }
+    });
+    if(ns!=0){
+      vnStopName.value = 'NEXT STOP: ' + next;
+    }
+    if(next==endCity){
+      vnStopName.value = 'TRIP END: ' + next;
+    }
+    if(next==startCity){
+      vnStopName.value = 'TRIP START: ' + next;
+    }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("YES",style: TextStyle(fontSize: 18,color: Colors.red,fontWeight: FontWeight.bold),),
+      onPressed: () {
+        endTrip();
+        Navigator.pop(context);
+      },
+    );
+
+    Widget noButton = TextButton(
+      child: Text("CLOSE",style: TextStyle(fontSize: 18,color: Colors.black87),),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm"),
+      content: Text("Stop Current Trip?"),
+      actions: [
+        okButton,
+        noButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 }
