@@ -82,36 +82,6 @@ class _SelectBusState extends State<SelectBus> {
     });
   }
 
-  String getPickupAt(String tripidfn) {
-
-    FirebaseFirestore.instance.collection("trips").doc(tripidfn).collection("stops").doc(widget.pickuLocation).get().then((documentSnapshot) {
-      if (documentSnapshot.exists) {
-        ptime = documentSnapshot.data()['time'].toString();
-        print(ptime);
-      } else {
-        ptime = '';
-      }
-    });
-    return ptime;
-  }
-
-  String getDropAt(String tripidfn) {
-    String dtime;
-    FirebaseFirestore.instance
-        .collection("trips")
-        .doc(tripidfn)
-        .collection("stops")
-        .doc(widget.destinationLocation)
-        .get()
-        .then((documentSnapshot) {
-      if (documentSnapshot.exists) {
-        dtime = documentSnapshot.data()['time'].toString();
-      } else {
-        dtime = '';
-      }
-    });
-    return dtime;
-  }
 
   final spinkit = SpinKitFadingCircle(
     itemBuilder: (BuildContext context, int index) {
@@ -174,6 +144,24 @@ class _SelectBusState extends State<SelectBus> {
                       return new ListView(
                         children: snapshot.data.docs.map((DocumentSnapshot document) {
 
+                          FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.pickuLocation).get().then((documentSnapshot) {
+                            if (documentSnapshot.exists) {
+                              ptime = documentSnapshot.data()['time'].toString();
+                              print(ptime);
+                            } else {
+                              ptime = '';
+                            }
+                          });
+
+                          FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.destinationLocation).get().then((documentSnapshot) {
+                            if (documentSnapshot.exists) {
+                              dtime = documentSnapshot.data()['time'].toString();
+                              print(dtime);
+                            } else {
+                              dtime = '';
+                            }
+                          });
+
                           CollectionReference users = FirebaseFirestore.instance.collection('buses');
 
                           return FutureBuilder<DocumentSnapshot>(
@@ -204,24 +192,6 @@ class _SelectBusState extends State<SelectBus> {
                                 } else {
                                   standingcount = 0;
                                 }
-
-                              FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.pickuLocation).get().then((documentSnapshot) {
-                                if (documentSnapshot.exists) {
-                                  ptime = documentSnapshot.data()['time'].toString();
-                                  print(ptime);
-                                } else {
-                                  ptime = '';
-                                }
-                              });
-
-                              FirebaseFirestore.instance.collection("trips").doc(document.data()['tripID'].toString()).collection("stops").doc(widget.destinationLocation).get().then((documentSnapshot) {
-                                if (documentSnapshot.exists) {
-                                  dtime = documentSnapshot.data()['time'].toString();
-                                  print(dtime);
-                                } else {
-                                  dtime = '';
-                                }
-                              });
 
                                 return Container(
                                   child: Padding(
@@ -468,24 +438,25 @@ class _SelectBusState extends State<SelectBus> {
   }
 
   void showBusLocation(String busPN) async {
-    setState(() {
-      FirebaseFirestore.instance
-          .collection('buses')
-          .doc(busPN)
-          .snapshots()
-          .listen((DocumentSnapshot busLocation) {
-        print("location updated");
 
-        _markers.add(Marker(
-            markerId: MarkerId('bus'),
-            position: LatLng(busLocation.data()['location'].latitude,
-                busLocation.data()['location'].longitude),
-            icon: busicon));
+setState(() {
+  FirebaseFirestore.instance
+      .collection('buses')
+      .doc(busPN)
+      .snapshots()
+      .listen((DocumentSnapshot busLocation) {
+    print("location updated");
 
-        mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(
-            busLocation.data()['location'].latitude,
-            busLocation.data()['location'].longitude)));
-      });
+    _markers.add(Marker(
+        markerId: MarkerId(busPN),
+        position: LatLng(busLocation.data()['location'].latitude,
+            busLocation.data()['location'].longitude),
+        icon: busicon));
+
+    mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(
+        busLocation.data()['location'].latitude,
+        busLocation.data()['location'].longitude)));
+  });
     });
   }
 
