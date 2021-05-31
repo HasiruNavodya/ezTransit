@@ -13,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String email, password;
 
- Color greenColor = Colors.blue;
+  Color greenColor = Colors.blue;
 
   //To check fields during submit
   checkFields() {
@@ -133,20 +133,6 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.white, fontFamily: 'Trueno'))))),
           ),
           SizedBox(height: 25.0),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('SignUp as a new admin'),
-            SizedBox(width: 5.0),
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignupPage()));
-                },
-                child: Text('Register',
-                    style: TextStyle(
-                        color: greenColor,
-                        fontFamily: 'Trueno',
-                        decoration: TextDecoration.underline)))
-          ])
         ]));
   }
 }
