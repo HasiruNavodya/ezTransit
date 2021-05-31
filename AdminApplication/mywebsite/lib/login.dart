@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'Trueno'))))),
           ),
- 
+          SizedBox(height: 25.0),
         ]));
   }
 }
