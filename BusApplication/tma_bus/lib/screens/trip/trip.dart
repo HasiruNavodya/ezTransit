@@ -3,15 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:geofence_service/geofence_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
+//import 'package:tma_bus/screens/home/addtrip.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 int lastStopPassed = 0;
 int nextStop = 1;
 int stopCount;
-String tripID = 'T3000';
+String tripID;
 String tripName;
 double stopLat;
 double stopLng;
@@ -23,8 +29,20 @@ LocationData lastLocation;
 String test;
 String startCity;
 String endCity;
+String busEmail;
+String bus;
+DatabaseReference pCount;
 
+StreamController<String> getTripID = StreamController<String>();
+
+// ignore: must_be_immutable
 class TripView extends StatefulWidget {
+
+  void setTripID(String tripid) {
+    tripID = tripid;
+  }
+
+
   @override
   _TripViewState createState() => _TripViewState();
 }
@@ -37,19 +55,42 @@ class _TripViewState extends State<TripView> {
   final myController = TextEditingController();
   final myController2 = TextEditingController();
 
+  final ValueNotifier<int> vnBodyCount = ValueNotifier<int>(0);
+
+  var _textStyle = TextStyle(
+    color: Colors.red,
+    fontSize: 50,
+  );
+
   @override
   void initState() {
     super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      busEmail = auth.currentUser.email;
+      List list = busEmail.split('@');
+      bus = list[0].toString().toUpperCase();
+      print(bus);
+    }
+
     print(tripState);
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+
     if (tripState == 'on') {
       if(geoGate == 0){
         initTrip();
         streamLiveLocation();
+        getIRCount();
       }
+
       return FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -63,35 +104,307 @@ class _TripViewState extends State<TripView> {
             lastStopPassed = data['lastStopPassed'];
 
             return Scaffold(
-              /*appBar: AppBar(
+              appBar: AppBar(
                 title: Text('Current Trip Info'),
                 centerTitle: true,
                 backgroundColor: Colors.black,
-              ),*/
-              body: Center(
-                child: Container(
+              ),
+              body: Container(
+                color: Colors.grey.shade700,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${data['startCity']}' + ' - ' + '${data['endCity']}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
+                      Expanded(
+                        flex: 3,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
                             ),
+                          ),*/
+                          child: StreamBuilder(
+                            stream: Stream.periodic(const Duration(seconds: 1)),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: Text(
+                                  DateFormat().add_jms().format(DateTime.now()),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        ],
+                        ),
                       ),
-                      Text(
-                        '${data['startTime']}' + ' - ' + '${data['endTime']}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),*/
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${data['startCity']}' + ' - ' + '${data['endCity']}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${data['startTime']}' + ' - ' + '${data['endTime']}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),*/
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                //mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text('NEXT STOP',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                          color: Colors.black87
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(4.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.arrow_forward_rounded, size: 25, color: Colors.green.shade800,),
+                                                        Icon(Icons.directions_walk, size: 35, color: Colors.black,),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text('PICKUP',
+                                                    style: TextStyle(
+                                                      //fontWeight: FontWeight.bold,
+                                                        fontSize: 15.0,
+                                                        color: Colors.black87
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ValueListenableBuilder(
+                                                    builder: (BuildContext context, int value, Widget child) {
+                                                      return Text('$value',
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 40.0,
+                                                          color: Colors.green.shade800,
+                                                        ),
+                                                      );
+                                                    },
+                                                    valueListenable: vnBodyCount,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 65,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(4.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.arrow_back_rounded, size: 25, color: Colors.blue.shade800,),
+                                                        Transform(
+                                                          alignment: Alignment.center,
+                                                          transform: Matrix4.rotationY(math.pi),
+                                                          child: Icon(Icons.directions_walk, size: 35, color: Colors.black,),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text('DROP',
+                                                    style: TextStyle(
+                                                      //fontWeight: FontWeight.bold,
+                                                        fontSize: 15.0,
+                                                        color: Colors.black87
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ValueListenableBuilder(
+                                                    builder: (BuildContext context, int value, Widget child) {
+                                                      return Text('$value',
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 40.0,
+                                                          color: Colors.blue.shade800,
+                                                        ),
+                                                      );
+                                                    },
+                                                    valueListenable: vnBodyCount,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.black45,
+                              width: 1.0,
+                            ),
+                          ),*/
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Passengers in Bus: ',
+                                  style: TextStyle(
+                                    //fontWeight: FontWeight.bold,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                                ValueListenableBuilder(
+                                  builder: (BuildContext context, int value, Widget child) {
+                                    return Text('$value',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                      ),
+                                    );
+                                  },
+                                  valueListenable: vnBodyCount,
+                                ),
+                              ],
+                            ),
+                        ),
+                      ),
+
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          /*elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),*/
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  OutlinedButton.icon(
+                                    onPressed: (){},
+                                    icon: Icon(Icons.bus_alert, size: 18, color: Colors.black,),
+                                    label: Text('REPORT EMERGENCY',
+                                      style: TextStyle(
+                                          color: Colors.black
+                                      ),
+                                    ),
+                                  ),
+                                  OutlinedButton.icon(
+                                    onPressed: (){endTrip();},
+                                    icon: Icon(Icons.dangerous, size: 18, color: Colors.black,),
+                                    label: Text('STOP TRIP',
+                                      style: TextStyle(
+                                          color: Colors.red
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -172,7 +485,7 @@ class _TripViewState extends State<TripView> {
       if (tripDoc.exists) {
         print('Document exists on the database');
         //lastStopPassed = tripDoc.data()['lastStopPassed'];
-        stopCount = tripDoc.data()['stopCount'];
+        //stopCount = tripDoc.data()['stopCount'];
         startCity = tripDoc.data()['startCity'];
         endCity = tripDoc.data()['endCity'];
       }
@@ -186,11 +499,11 @@ class _TripViewState extends State<TripView> {
 
   void streamLiveLocation() async{
     positionStream = Geolocator.getPositionStream().listen((Position position) {
-      print(position.latitude.toString() + ', ' + position.longitude.toString());
+      //print(position.latitude.toString() + ', ' + position.longitude.toString());
 
-      FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
+      /*FirebaseFirestore.instance.collection('buses').doc('GE-3412').update({
         'location' : GeoPoint(position.latitude, position.longitude)
-      });
+      });*/
     });
   }
 
@@ -203,7 +516,6 @@ class _TripViewState extends State<TripView> {
     print('resumed');
     positionStream.resume();
   }
-
 
 
   final geofenceService = GeofenceService(
@@ -292,6 +604,25 @@ class _TripViewState extends State<TripView> {
       return;
     }
     print('ErrorCode: $errorCode');
+  }
+
+  void getIRCount(){
+    /*pCount.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      String value = snapshot.value['testbus'];
+      print('Value is $value');
+    });*/
+
+    pCount = FirebaseDatabase.instance.reference();
+    pCount.onValue.listen((event){
+      var test = event.snapshot;
+      print(test.value["PCount"]["testbus"]);
+      vnBodyCount.value = test.value["PCount"]["testbus"];
+      //var pulse = snapshot.value["PCount"]["testbus"];
+      //print(pulse);
+      //var temp  = snapshot.value["temperature"];
+    });
+
   }
 
 }

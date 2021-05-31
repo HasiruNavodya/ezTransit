@@ -12,15 +12,15 @@ class MapViewState extends State<MapView> {
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    target: LatLng(90.0000, 135.0000),
+    zoom: 0.0,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
+/*  static final CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
       tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      zoom: 19.151926040649414);*/
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text("Map"),
+        title: Text("MAP"),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -69,7 +69,7 @@ class MapViewState extends State<MapView> {
       CameraPosition(
         bearing: 0,
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
-        zoom: 17.0,
+        zoom: 10.0,
       ),
     ));
   }

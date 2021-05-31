@@ -11,7 +11,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   String email;
 
-  Color greenColor = Color(0xFF00AF19);
+  Color greenColor = Colors.blue;
 
   //To check fields during submit
   checkFields() {
@@ -89,9 +89,15 @@ class _ResetPasswordState extends State<ResetPassword> {
                     color: greenColor,
                     elevation: 7.0,
                     child: Center(
-                        child: Text('RESET',
-                            style: TextStyle(
-                                color: Colors.white, fontFamily: 'Trueno'))))),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('RESET',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Trueno',
+                                )))))),
           ),
           SizedBox(height: 20.0),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [

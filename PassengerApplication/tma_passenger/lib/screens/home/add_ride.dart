@@ -6,35 +6,28 @@ class AddRide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add a New Ride"),
-        backgroundColor: Colors.black,
+        title: Text("ezTransit"),
+        backgroundColor: Colors.black87,
         centerTitle: true,
       ),
       //backgroundColor: Colors.red,
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/mapbg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "New Ride \n\n",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'SourceSansPro',
-                  color: Colors.black87,
-                  letterSpacing: 2.5,
 
-                ),
-              ),
               MaterialButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SelectDestination()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDestination()),);
                 },
-                color: Colors.black,
+                color: Colors.black87,
                 textColor: Colors.white,
                 child: Icon(
                   Icons.add,
@@ -42,7 +35,15 @@ class AddRide extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(16),
                 shape: CircleBorder(),
-              )
+              ),
+              Text(
+                "\nADD NEW RIDE",
+                style: TextStyle(
+                  fontSize: 20,
+                  //fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
             ],
           ),
         ),

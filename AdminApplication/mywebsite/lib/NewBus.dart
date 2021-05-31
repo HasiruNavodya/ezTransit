@@ -15,6 +15,7 @@ class _NewBusState extends State<NewBus> {
 
   String _plateNumber;
   String _driverName;
+  String _owneremail;
   String _licenseNumber;
   String _color;
   String _publicPrivate;
@@ -24,6 +25,7 @@ class _NewBusState extends State<NewBus> {
 //get data from textformfield
   TextEditingController plateNumber = new TextEditingController();
   TextEditingController driverName = new TextEditingController();
+  TextEditingController owneremail = new TextEditingController();
   TextEditingController licenseNumber = new TextEditingController();
   TextEditingController color = new TextEditingController();
   TextEditingController publicPrivate = new TextEditingController();
@@ -63,6 +65,26 @@ class _NewBusState extends State<NewBus> {
       },
       onSaved: (String value) {
         _driverName = value;
+      },
+    );
+  }
+
+
+
+  Widget _buildOwnerEmail() {
+    return TextFormField(
+      controller: owneremail,
+      decoration: InputDecoration(
+          labelText: 'Owner Email',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Owner Email is required';
+        }
+      },
+      onSaved: (String value) {
+        _owneremail = value;
       },
     );
   }
@@ -222,6 +244,8 @@ class _NewBusState extends State<NewBus> {
                         SizedBox(height: 10.0),
                         _buildDriverName(),
                         SizedBox(height: 10.0),
+                        _buildOwnerEmail(),
+                        SizedBox(height: 10.0),
                         _buildLicenseNumber(),
                         SizedBox(height: 10.0),
                         _buildColor(),
@@ -260,18 +284,22 @@ class _NewBusState extends State<NewBus> {
                                       // validate the form based on it's current state
                                       if (_formKey.currentState.validate()) {
                                         Map<String, dynamic> data = {
-                                          "plateNumber": plateNumber.text,
-                                          "driverName": driverName.text,
-                                          "licenseNumber": licenseNumber.text,
-                                          "color": color.text,
-                                          "public/Private": publicPrivate.text,
-                                          "luxuryLevel": luxeryLevel.text,
-                                          "seatCount": seat.text,
+                                          "Plate Number": plateNumber.text,
+                                          "Driver Name": driverName.text,
+                                          "License Number": licenseNumber.text,
+                                          "Color": color.text,
+                                          "Public or Private": publicPrivate.text,
+                                          "Luxury Level": luxeryLevel.text,
+                                          "Seat Count": seat.text,
+                                          "Owner": owneremail.text,
                                         };
+
+                                        String plateno=plateNumber.text;
 
                                         FirebaseFirestore.instance
                                             .collection('buses')
-                                            .add(data);
+                                            .doc('$plateno')
+                                            .set(data);
 
                                         showDialog(
                                             context: context,

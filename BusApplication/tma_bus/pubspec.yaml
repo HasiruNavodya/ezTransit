@@ -33,13 +33,20 @@ dependencies:
   geofence_service: ^2.0.0
   location_permissions: ^3.0.0+1
   permission_handler: ^6.1.1
-
+  firebase_auth: ^1.0.1
+  firebase_database: ^6.1.1
+  slide_digital_clock: ^1.0.0
+  intl: ^0.17.0
   flutter_spinkit: ^5.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  toast: ^0.1.5
+  dropdown_formfield: ^0.1.3
+  geocoding: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +67,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/mapbg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

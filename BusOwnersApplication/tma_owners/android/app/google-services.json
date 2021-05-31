@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "331408941592",
+    "firebase_url": "https://tma42-898f9-default-rtdb.firebaseio.com",
+    "project_id": "tma42-898f9",
+    "storage_bucket": "tma42-898f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331408941592:android:f627c3786b4a7ed5d5996d",
+        "android_client_info": {
+          "package_name": "team42.tma.tma_owners"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOPm6z2wT_c81uIgEYsQ_qJaqJAv0gxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331408941592:android:bd7e164691f4035ad5996d",
+        "android_client_info": {
+          "package_name": "team42.tma_bus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOPm6z2wT_c81uIgEYsQ_qJaqJAv0gxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331408941592:android:6952e8dc5bfce4ccd5996d",
+        "android_client_info": {
+          "package_name": "team42.tma_passenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331408941592-664v7elg6odlkt4n3k5damj4p22gaum0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team42.tma_passenger",
+            "certificate_hash": "a8130233e995ccd15ec01a8268b868eefdb3b8d8"
+          }
+        },
+        {
+          "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOPm6z2wT_c81uIgEYsQ_qJaqJAv0gxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331408941592-ns9kls1tm90f7irhhc0t0bp5oftffv45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

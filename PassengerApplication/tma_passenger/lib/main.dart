@@ -22,9 +22,10 @@ class TmaPassengerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TMA Passenger',
-      theme: ThemeData(
+      /*theme: ThemeData(
         primarySwatch: Colors.blue,
-      ),
+        //fontFamily: 'Nexa',
+      ),*/
       home: ViewController(streamController.stream),
       debugShowCheckedModeBanner: false,
     );
@@ -40,27 +41,32 @@ class ViewController extends StatefulWidget {
 }
 
 class _ViewControllerState extends State<ViewController> {
+
+  void setAppState(int appStateValue) {
+    setState(() {
+      appState = appStateValue;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
-    void mySetState(int appStateValue) {
-      setState(() {
-        appState = appStateValue;
-      });
-    }
+
 
     widget.stream.listen((appStateValue) {
-      mySetState(appStateValue);
+      setAppState(appStateValue);
     });
 
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
-        mySetState(2);
+        setAppState(2);
       } else {
         print('User is signed in!');
-        mySetState(0);
+
+        setAppState(0);
+
       }
     });
   }
@@ -70,13 +76,16 @@ class _ViewControllerState extends State<ViewController> {
     if (appState == 0) {
       print(appState);
       return HomeView();
-    } else if (appState == 1) {
+    }
+    else if (appState == 1) {
       print(appState);
       return RideView();
-    } else if (appState == 2) {
+    }
+    else if (appState == 2) {
       print(appState);
       return LoginPage();
-    } else {
+    }
+    else {
       return Scaffold(
         body: Container(
           child: SpinKitDualRing(color: Colors.black87),

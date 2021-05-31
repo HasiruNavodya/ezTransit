@@ -6,26 +6,46 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:mywebsite/Home%20View.dart';
 import 'package:mywebsite/SideBar.dart';
-//import 'package:mywebsite/initializeTrip.dart';
-//import 'page.dart';
+import 'package:mywebsite/initializeTrip.dart';
+
+double lat;
+double long;
 
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
 
-class MapClickPageNew extends StatelessWidget {
-  //MapClickPage() : super(const Icon(icons.mouse), 'Map click');
+class MapClickPageNew extends StatefulWidget {
+  String tripid;
+  MapClickPageNew(tripid){
+    this.tripid=tripid;
+  }
 
   @override
+  _MapClickPageNewState createState() => _MapClickPageNewState(tripid);
+}
+
+class _MapClickPageNewState extends State<MapClickPageNew> {
+  String tripid;
+  _MapClickPageNewState(tripid)
+  {
+    this.tripid=tripid;
+  }
+  @override
   Widget build(BuildContext context) {
-    return const _MapClickBody();
+    return _MapClickBody(tripid);
   }
 }
 
 class _MapClickBody extends StatefulWidget {
-  const _MapClickBody();
+
+  String tripid;
+  _MapClickBody(tripid)
+  {
+    this.tripid=tripid;
+  }
 
   @override
-  State<StatefulWidget> createState() => _MapClickBodyState();
+  State<StatefulWidget> createState() => _MapClickBodyState(tripid);
 }
 
 class AlertBox extends StatelessWidget {
@@ -53,7 +73,12 @@ class AlertBox extends StatelessWidget {
 }
 
 class _MapClickBodyState extends State<_MapClickBody> {
-  _MapClickBodyState();
+
+  String tripid;
+  _MapClickBodyState(tripid)
+  {
+    this.tripid=tripid;
+  }
 
   GoogleMapController mapController;
   LatLng _lastTap;
@@ -66,6 +91,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
   String _stopName;
   String _arrivingTime;
   String _timeDu;
+
+  String tid = InitializeTrip.tid;
 
 //get data from textformfield
   TextEditingController stopName = new TextEditingController();
@@ -192,10 +219,14 @@ class _MapClickBodyState extends State<_MapClickBody> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 130,
+                          SizedBox(
+                            width: 130,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20,),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 20,
+                                  ),
                                   child: Text(
                                     'Add',
                                     style: TextStyle(fontSize: 20),
@@ -206,39 +237,45 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   onPrimary: Colors.white, // foreground
                                 ),
                                 onPressed: () async {
+
+                                  String stname=stopName.text;
+
                                   // validate the form based on it's current state
 
                                   Map<String, dynamic> data = {
-                                    "Stop Name": stopName.text,
-                                    "Ariving Time": arrivingTime.text,
+                                    "name": stopName.text,
+                                    "time": arrivingTime.text,
                                     "Time Duration ": timeDu.text,
-                                    "Latitude": cnlatitude.text,
-                                    "Longitude": cnlongitude.text,
-                                  };
+                                    // "Latitude": cnlatitude.text,
+                                    // "Longitude": cnlongitude.text,
+                                   "location":GeoPoint(lat,long),
 
+
+                                  };
+                                  //  String a = InitializeTrip.tid;
+                                  print("fdssssss"+tripid);
                                   FirebaseFirestore.instance
                                       .collection("trips")
-                                      .doc("initializeTrip")
-                                      .collection("stop")
-                                      .add(data);
+                                      .doc("$tripid")
+                                      .collection("stops")
+                                      .doc('$stname')
+                                      .set(data);
 
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertBox('Successfully Inserted!');
+                                        return AlertBox(
+                                            'Successfully Inserted!');
                                       });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              MapClickPageNew()));
                                 }),
                           ),
                           SizedBox(width: 50.0),
-                          SizedBox(width: 130,
+                          SizedBox(
+                            width: 130,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
                                   child: Text(
                                     'Finish',
                                     style: TextStyle(fontSize: 20),
@@ -272,6 +309,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
                       onTap: (LatLng pos) {
                         cnlatitude.text = pos.latitude.toString();
                         cnlongitude.text = pos.longitude.toString();
+                        lat=pos.latitude;
+                         long=pos.longitude;
                         setState(() {
                           _lastTap = pos;
                         });

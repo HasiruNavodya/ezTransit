@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -5,6 +6,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tma_passenger/screens/home/complains.dart';
 
 import '../../main.dart';
 
@@ -12,12 +14,21 @@ double pickupLat;
 double pickupLng;
 double distanceInMeters;
 String rideState = 'fetching';
-String ticketID = 'tck1000';
+String ticketID = '';
+String userEmail;
+var payColor;
+
 Map ticketData;
 Map tripData;
 Map busData;
 
 class RideView extends StatefulWidget {
+
+  void setTID(String tidfrompay){
+    ticketID = tidfrompay;
+  }
+
+
   @override
   _RideViewState createState() => _RideViewState();
 }
@@ -29,7 +40,7 @@ class _RideViewState extends State<RideView> {
   @override
   void initState() {
     super.initState();
-
+    getUserInfo();
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
       LocationPermission permission;
@@ -55,6 +66,14 @@ class _RideViewState extends State<RideView> {
 
   }
 
+  void getUserInfo(){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      userEmail = auth.currentUser.email;
+      print(auth.currentUser.email);
+    }
+  }
+
   GoogleMapController mapController;
   static const _initialPosition = LatLng(7.2906, 80.6337);
   LatLng _lastPostion = _initialPosition;
@@ -73,7 +92,7 @@ class _RideViewState extends State<RideView> {
       listenToRidepEnd();
       return Scaffold(
         appBar: AppBar(
-          title: Text("Wait For Your Bus"),
+          title: Text("WAIT FOR BUS"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -99,14 +118,14 @@ class _RideViewState extends State<RideView> {
             ),
 
             Expanded(
-              flex: 10,
+              flex: 12,
               child: Container(
                 child: Column(
                   children: [
                     Expanded(
                       flex: 6,
                       child: Container(
-                        //color: Colors.red,
+                        color: Colors.grey.shade300,
                         constraints: BoxConstraints.tightForFinite(height: 300),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -114,114 +133,169 @@ class _RideViewState extends State<RideView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text(ticketData['pickup'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
+                              Expanded(
+                                flex:2,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text("Bus: "+tripData['startCity'] + ' - ' +tripData['endCity'],
+                                            style: TextStyle(
+                                              fontSize: 17,
                                             ),
-                                            Text(" to ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
+                                          ),
+                                          Text("Plate No: "+tripData['bus'],
+                                            style: TextStyle(
+                                              fontSize: 17,
                                             ),
-                                            Text(ticketData['drop'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
+                                          ),
+                                          Text("Color: " +busData['Color'],
+                                            style: TextStyle(
+                                              fontSize: 17,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex:1,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text("Distance to Pickup Location : ",
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                ),
+                                              ),
+                                              ValueListenableBuilder<int>(
+                                                  valueListenable: distance,
+                                                  builder: (BuildContext context, distance, Widget child) {
+                                                    return Text("$distance",
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                      ),
+                                                    );
+                                                  }
+                                              ),
+                                              Text(" m",
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
 
-                                        Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
-                                          style: TextStyle(
-                                            fontSize: 16,
+
+                              Expanded(
+                                flex:2,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text('Ticket ID: '+ticketData['ticketID'],
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
-                                        Text("Bus: "+tripData['startCity'] + ' - ' +tripData['endCity'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text("Plate No: "+tripData['bus'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text("Color: " +busData['color'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text("Distance to Pickup Location : ",
-                                              style: TextStyle(
-                                                fontSize: 16,
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+
+                                              Text(ticketData['pickup'],
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                ),
                                               ),
-                                            ),
-                                            ValueListenableBuilder<int>(
-                                              valueListenable: distance,
-                                              builder: (BuildContext context, distance, Widget child) {
-                                                return Text("$distance");
-                                              }
-                                            ),
-                                            Text(" m",
-                                              style: TextStyle(
-                                                fontSize: 16,
+                                              Text(" to ",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                ),
                                               ),
+                                              Text(ticketData['drop'],
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
+                                            style: TextStyle(
+                                              fontSize: 16,
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                              TextButton(
-                                onPressed: (){},
-                                child: Text(
-                                  'Cancel Ride',
-                                  style: TextStyle(color: Colors.red),
+
+                              Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    OutlinedButton(
+                                      onPressed: (){
+                                        showAlertDialog(context);
+                                      },
+                                      child: Text(
+                                        'Canel Ride',
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    OutlinedButton(
+                                      onPressed: (){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Complaints(tripData['bus'])),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Report Complaint',
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -241,7 +315,7 @@ class _RideViewState extends State<RideView> {
     else if(rideState == 'onbus'){
       return Scaffold(
         appBar: AppBar(
-          title: Text("On the Bus"),
+          title: Text("RIDE INFO"),
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
@@ -266,14 +340,14 @@ class _RideViewState extends State<RideView> {
             ),
 
             Expanded(
-              flex: 7,
+              flex: 9,
               child: Container(
                 child: Column(
                   children: [
                     Expanded(
                       flex: 6,
                       child: Container(
-                        //color: Colors.red,
+                        color: Colors.grey.shade300,
                         constraints: BoxConstraints.tightForFinite(height: 300),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -281,98 +355,151 @@ class _RideViewState extends State<RideView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text("Ticket ID: " + ticketData['ticketID'],
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold
+                              Expanded(
+                                flex: 1,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text("Ticket ID: " + ticketData['ticketID'],
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white70,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 400,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text(ticketData['pickup'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            Text(" to ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            Text(ticketData['drop'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(ticketData['pickup'],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              Text(" to ",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              Text(ticketData['drop'],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          Text(ticketData['pickupTime']+" - "+ticketData['dropTime'],
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Card(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 400,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text("Fare: Rs. " + ticketData['fare'] + "  |  ",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold
+                                                    ),
+                                                  ),
+                                                  Text(ticketData['payment'],
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: payColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    onPressed: (){},
-                                    child: Text(
-                                      'Stop Ride Early',
-                                      style: TextStyle(color: Colors.indigo[900]),
+                              Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    OutlinedButton(
+                                      onPressed: (){
+                                        showAlertDialog(context);
+                                      },
+                                      child: Text(
+                                        'Exit Ride Mode',
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
                                     ),
-                                  ),
- /*                                 TextButton(
-                                    onPressed: (){},
-                                    child: Text(
-                                      'Extend Ride',
-                                      style: TextStyle(color: Colors.red),
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                  ),*/
-                                  TextButton(
-                                    onPressed: (){},
-                                    child: Text(
-                                      'Report Complaint',
-                                      style: TextStyle(color: Colors.red),
+                                    OutlinedButton(
+                                      onPressed: (){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Complaints(tripData['bus'])),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Report Complaint',
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -410,42 +537,58 @@ class _RideViewState extends State<RideView> {
 
   void endRide() {
     print('Ride Ended>>>>>>>>>>>>>>>>>>>>>>>');
+    FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({"onRide": "False"})
+        .then((value) => print("Records Added Successfully!"))
+        .catchError((error) => print("Failed: $error"));
     streamController.add(0);
   }
 
   void getRideData(){
 
-    FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
-      if (ticket.exists) {
-        ticketData = ticket.data();
-        print(ticketData);
+    FirebaseFirestore.instance.collection('passengers').doc(userEmail).get().then((DocumentSnapshot user) {
+      if (user.exists) {
+        print("qweqweqweqweqweqwe");
+        ticketID = user.data()['currentTicketNo'];
 
-        if(ticketData['tripID'] != null){
-          FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).get().then((DocumentSnapshot trip) {
-            if (trip.exists) {
-              tripData = trip.data();
-              print(tripData);
-              FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupLoc) {
+        FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
+          if (ticket.exists) {
+            ticketData = ticket.data();
+            print(ticketData);
+
+            if(ticketData['tripID'] != null){
+              FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).get().then((DocumentSnapshot trip) {
                 if (trip.exists) {
-                  pickupLat = pickupLoc.data()['location'].latitude;
-                  pickupLng = pickupLoc.data()['location'].longitude;
+                  tripData = trip.data();
+                  print(tripData);
+                  FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupLoc) {
+                    if (trip.exists) {
+                      pickupLat = pickupLoc.data()['location'].latitude;
+                      pickupLng = pickupLoc.data()['location'].longitude;
+                    }
+                  });
                 }
               });
             }
-          });
-        }
 
-        if(ticketData['bus'] != null){
-          FirebaseFirestore.instance.collection('buses').doc(ticketData['bus']).get().then((DocumentSnapshot bus) {
-            if (bus.exists) {
-              busData = bus.data();
-              setState(() {
-                rideState = 'waiting';
+            if(ticketData['bus'] != null){
+              FirebaseFirestore.instance.collection('buses').doc(ticketData['bus']).get().then((DocumentSnapshot bus) {
+                if (bus.exists) {
+
+                  busData = bus.data();
+                  setState(() {
+                    rideState = 'waiting';
+                  });
+                }
               });
             }
-          });
-        }
 
+            if(ticketData['payment'] == 'Payed'){
+              payColor = Colors.indigo;
+            }else{
+              payColor = Colors.red;
+            }
+          }
+        });
       }
     });
   }
@@ -473,13 +616,13 @@ class _RideViewState extends State<RideView> {
         _markers.add(
           Marker(
             markerId: MarkerId('bus'),
-            position: LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
+            position: LatLng(6.844610383055133, 80.014490977822),
             icon: busicon,
           ));
 
         mapController?.animateCamera(
           CameraUpdate.newLatLng(
-            LatLng(busLocation.data()['location'].latitude,busLocation.data()['location'].longitude),
+            LatLng(6.844610383055133, 80.014490977822),
           ),
         );
 
@@ -514,5 +657,48 @@ class _RideViewState extends State<RideView> {
     busicon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(60,60)), 'assets/bus.png');
   }
 
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "NO",
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.black87,
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "YES",
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.red,
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+        endRide();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm"),
+      content: Text("Exit Ride Mode?"),
+      actions: [
+        continueButton,
+        cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 }

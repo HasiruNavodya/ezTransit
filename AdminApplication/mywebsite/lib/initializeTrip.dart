@@ -6,6 +6,10 @@ import 'package:mywebsite/mapnew.dart';
 
 class InitializeTrip extends StatefulWidget {
   static const String id = 'initializeTrip';
+
+  static String tid;
+
+  static String tripID;
   @override
   _InitializeTripState createState() => _InitializeTripState();
 }
@@ -15,15 +19,21 @@ class _InitializeTripState extends State<InitializeTrip> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _tripID;
-  String _busName;
+  String _bus;
   String _startCity;
+  String _startTime;
   String _endCity;
+  String _endTime;
+  String _stopCount;
 
 //get data from textformfield
   TextEditingController tripID = new TextEditingController();
-  TextEditingController busName = new TextEditingController();
+  TextEditingController bus = new TextEditingController();
   TextEditingController startCity = new TextEditingController();
+  TextEditingController startTime = new TextEditingController();
   TextEditingController endCity = new TextEditingController();
+  TextEditingController endTime = new TextEditingController();
+  TextEditingController stopCount = new TextEditingController();
 
   Widget _buildtripID() {
     return TextFormField(
@@ -45,10 +55,10 @@ class _InitializeTripState extends State<InitializeTrip> {
 
   Widget _buildbusName() {
     return TextFormField(
-      controller: busName,
+      controller: bus,
       // maxLength: 30,
       decoration: InputDecoration(
-          labelText: 'Bus Name',
+          labelText: 'Bus',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
 
@@ -58,7 +68,7 @@ class _InitializeTripState extends State<InitializeTrip> {
         }
       },
       onSaved: (String value) {
-        _busName = value;
+        _bus = value;
       },
     );
   }
@@ -81,6 +91,24 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 
+  Widget _buildstartTime() {
+    return TextFormField(
+      controller: startTime,
+      decoration: InputDecoration(
+          labelText: 'Start Time',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Start Time is required';
+        }
+      },
+      onSaved: (String value) {
+        _startTime = value;
+      },
+    );
+  }
+
   Widget _buildendCity() {
     return TextFormField(
       controller: endCity,
@@ -99,6 +127,42 @@ class _InitializeTripState extends State<InitializeTrip> {
     );
   }
 
+  Widget _buildendTime() {
+    return TextFormField(
+      controller: endTime,
+      decoration: InputDecoration(
+          labelText: 'End Time',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return ('End Time is required');
+        }
+      },
+      onSaved: (String value) {
+        _endTime = value;
+      },
+    );
+  }
+
+  Widget _buildstopCount() {
+    return TextFormField(
+      controller: stopCount,
+      decoration: InputDecoration(
+          labelText: 'Stop Count',
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          border: OutlineInputBorder()),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return ('Stop Count is required');
+        }
+      },
+      onSaved: (String value) {
+        _stopCount = value;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
@@ -112,8 +176,8 @@ class _InitializeTripState extends State<InitializeTrip> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            width: 1.3 * MediaQuery.of(context).size.width,
-            height: 0.9 * MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+            height: 1.3 * MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 /* gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -151,17 +215,24 @@ class _InitializeTripState extends State<InitializeTrip> {
                       SizedBox(height: 10.0),
                       _buildstartCity(),
                       SizedBox(height: 10.0),
+                      _buildstartTime(),
+                      SizedBox(height: 10.0),
                       _buildendCity(),
                       SizedBox(height: 30.0),
-                      
+                      _buildendTime(),
+                      SizedBox(height: 30.0),
+                      _buildstopCount(),
+                      SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 175,
+                          SizedBox(
+                            width: 175,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20),
                                   child: Text(
                                     'Submit',
                                     style: TextStyle(fontSize: 20),
@@ -175,15 +246,18 @@ class _InitializeTripState extends State<InitializeTrip> {
                                   // validate the form based on it's current state
                                   if (_formKey.currentState.validate()) {
                                     Map<String, dynamic> data = {
-                                      "Trip ID": tripID.text,
-                                      "Bus Name": busName.text,
-                                      "Start City": startCity.text,
-                                      "End City": endCity.text,
+                                      "tripID": tripID.text,
+                                      "bus": bus.text,
+                                      "startCity": startCity.text,
+                                      "startTime": startTime.text,
+                                      "endCity": endCity.text,
+                                      "endTime": endTime.text,
+                                      "stopCount": stopCount.text,
                                     };
-
+                                    String tid = tripID.text;
                                     FirebaseFirestore.instance
                                         .collection("trips")
-                                        .doc("initializeTrip")
+                                        .doc("$tid")
                                         .set(data);
 
                                     showDialog(
@@ -196,17 +270,19 @@ class _InitializeTripState extends State<InitializeTrip> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                MapClickPageNew()));
+                                                MapClickPageNew(tripID.text)));
 
                                     ;
                                   }
                                 }),
                           ),
                           SizedBox(width: 90.0),
-                          SizedBox(width: 175,
+                          SizedBox(
+                            width: 175,
                             child: ElevatedButton(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20.0),
                                   child: Text(
                                     'Cancel',
                                     style: TextStyle(fontSize: 20),
