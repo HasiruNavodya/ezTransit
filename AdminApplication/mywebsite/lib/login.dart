@@ -132,21 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'Trueno'))))),
           ),
-          SizedBox(height: 25.0),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('SignUp as a new admin'),
-            SizedBox(width: 5.0),
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignupPage()));
-                },
-                child: Text('Register',
-                    style: TextStyle(
-                        color: greenColor,
-                        fontFamily: 'Trueno',
-                        decoration: TextDecoration.underline)))
-          ])
+ 
         ]));
   }
 }
