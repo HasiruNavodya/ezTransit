@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts : ^2.0.0
   flutter_admin_scaffold: ^0.0.5
+  intl: ^0.17.0
   firebase_core: ^1.0.1
   firebase_auth: ^1.0.1
   firebase_auth_web: ^1.0.2
@@ -38,6 +39,8 @@ dependencies:
   google_maps_flutter_web: ^0.2.1
   cloud_firestore: ^1.0.2
   draggable_scrollbar: ^0.0.4
+  form_field_validator: ^1.1.0
+
   
 
   flutter_vector_icons: ^1.0.0

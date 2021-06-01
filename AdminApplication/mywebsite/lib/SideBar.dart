@@ -33,7 +33,7 @@ class SideBarWidget {
          MenuItem(
           title: 'Partial Route',
           route: Partial.id,
-          icon: Icons.add_road_rounded,
+          icon: Icons.add_road,
         ),
         MenuItem(
           title: 'Emergency',
