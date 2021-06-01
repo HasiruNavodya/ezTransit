@@ -14,6 +14,10 @@ import 'package:tma_passenger/screens/home/complains.dart';
 double pickupLat;
 double pickupLng;
 double distanceInMeters;
+double distanceInMeters2;
+double distancenew;
+double speed;
+double time;
 String rideState = 'fetching';
 String userEmail;
 var payColor;
@@ -82,7 +86,7 @@ class _RideViewState extends State<RideView> {
 
   dynamic data;
 
-  final ValueNotifier<int> distance = ValueNotifier<int>(0);
+  final ValueNotifier<String> distance = ValueNotifier<String>('Calculating..');
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +186,12 @@ class _RideViewState extends State<RideView> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              Text("Distance to Pickup Location : ",
+                                              Text("Bus will arrive in [Approx] : ",
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                 ),
                                               ),
-                                              ValueListenableBuilder<int>(
+                                              ValueListenableBuilder<String>(
                                                   valueListenable: distance,
                                                   builder: (BuildContext context, distance, Widget child) {
                                                     return Text("$distance",
@@ -196,11 +200,6 @@ class _RideViewState extends State<RideView> {
                                                       ),
                                                     );
                                                   }
-                                              ),
-                                              Text(" m",
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                ),
                                               ),
                                             ],
                                           ),
@@ -661,9 +660,24 @@ class _RideViewState extends State<RideView> {
         );
 
         distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
-        distance.value = distanceInMeters.round();
+        Future.delayed(const Duration(seconds: 10), () {
+          distanceInMeters2 = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+        });
+        speed = (distanceInMeters - distanceInMeters2)/10;
+        distancenew = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+        time = (distancenew/speed);
+        time = time/3600;
+        distance.value = time.round().toString() + ' min';
 
       });
+    });
+  }
+
+  void getPickupCord(){
+    FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupcord) {
+      if (pickupcord.exists) {
+
+      }
     });
   }
 
