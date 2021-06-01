@@ -19,7 +19,8 @@ class _LoginPageState extends State<LoginPage> {
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
-      body: SafeArea(
+      body: Container(
+        color: Colors.white,
         child: Form(
           key: _formkey,
           child: ListView(
@@ -27,11 +28,11 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Column(
                   children: <Widget>[
-                    SizedBox(height: 100.0,),
+                    SizedBox(height: 130.0,),
                     Icon(
                       Icons.directions_bus,
                       color: Colors.black87,
-                      size: 150.0,
+                      size: 50.0,
                     ),
                     SizedBox(height: 30.0,),
                     Text('LOG IN', style:TextStyle(fontSize:20,fontWeight: FontWeight.bold,color:Colors.black,
@@ -55,6 +56,9 @@ class _LoginPageState extends State<LoginPage> {
                   labelText: "Email",
                   labelStyle: TextStyle(fontSize: 15),
                   filled: true,
+                  border: OutlineInputBorder(),
+                  fillColor: Colors.white,
+                  suffixIcon: Icon(Icons.email)
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -73,6 +77,9 @@ class _LoginPageState extends State<LoginPage> {
                   labelText: "Password",
                   labelStyle: TextStyle(fontSize: 15.0),
                   filled: true,
+                  border: OutlineInputBorder(),
+                  fillColor: Colors.white,
+                  suffixIcon: Icon(Icons.lock)
                 ),
               ),
               SizedBox(height: 60.0,),

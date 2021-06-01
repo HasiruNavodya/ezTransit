@@ -20,7 +20,13 @@ class MapViewState extends State<MapView> {
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
       tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      zoom: 10.151926040649414);
+
+  @override
+  void initState() {
+    super.initState();
+    _currentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +42,11 @@ class MapViewState extends State<MapView> {
             mapType: MapType.normal,
             myLocationEnabled: true,
             initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+            onMapCreated: (GoogleMapController controller) {_controller.complete(controller);
             },
           ),
         ],
       ),
-      /*floatingActionButton: FloatingActionButton.extended(
-        onPressed: _currentLocation,
-        label: Text('My Location'),
-        icon: Icon(Icons.location_on),
-      ),*/
     );
   }
   void _currentLocation() async {
@@ -63,7 +63,7 @@ class MapViewState extends State<MapView> {
       CameraPosition(
         bearing: 0,
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
-        zoom: 17.0,
+        zoom: 13.0,
       ),
     ));
   }

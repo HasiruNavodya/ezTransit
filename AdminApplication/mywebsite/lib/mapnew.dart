@@ -16,8 +16,8 @@ const CameraPosition _kInitialPosition =
 
 class MapClickPageNew extends StatefulWidget {
   String tripid;
-  MapClickPageNew(tripid){
-    this.tripid=tripid;
+  MapClickPageNew(tripid) {
+    this.tripid = tripid;
   }
 
   @override
@@ -26,9 +26,8 @@ class MapClickPageNew extends StatefulWidget {
 
 class _MapClickPageNewState extends State<MapClickPageNew> {
   String tripid;
-  _MapClickPageNewState(tripid)
-  {
-    this.tripid=tripid;
+  _MapClickPageNewState(tripid) {
+    this.tripid = tripid;
   }
   @override
   Widget build(BuildContext context) {
@@ -37,11 +36,9 @@ class _MapClickPageNewState extends State<MapClickPageNew> {
 }
 
 class _MapClickBody extends StatefulWidget {
-
   String tripid;
-  _MapClickBody(tripid)
-  {
-    this.tripid=tripid;
+  _MapClickBody(tripid) {
+    this.tripid = tripid;
   }
 
   @override
@@ -73,11 +70,9 @@ class AlertBox extends StatelessWidget {
 }
 
 class _MapClickBodyState extends State<_MapClickBody> {
-
   String tripid;
-  _MapClickBodyState(tripid)
-  {
-    this.tripid=tripid;
+  _MapClickBodyState(tripid) {
+    this.tripid = tripid;
   }
 
   GoogleMapController mapController;
@@ -237,8 +232,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   onPrimary: Colors.white, // foreground
                                 ),
                                 onPressed: () async {
-
-                                  String stname=stopName.text;
+                                  String stname = stopName.text;
 
                                   // validate the form based on it's current state
 
@@ -248,12 +242,10 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                     "Time Duration ": timeDu.text,
                                     // "Latitude": cnlatitude.text,
                                     // "Longitude": cnlongitude.text,
-                                   "location":GeoPoint(lat,long),
-
-
+                                    "location": GeoPoint(lat, long),
                                   };
                                   //  String a = InitializeTrip.tid;
-                                  print("fdssssss"+tripid);
+                                  print("fdssssss" + tripid);
                                   FirebaseFirestore.instance
                                       .collection("trips")
                                       .doc("$tripid")
@@ -267,6 +259,12 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                         return AlertBox(
                                             'Successfully Inserted!');
                                       });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MapClickPageNew(tripid)),
+                                  );
                                 }),
                           ),
                           SizedBox(width: 50.0),
@@ -309,8 +307,8 @@ class _MapClickBodyState extends State<_MapClickBody> {
                       onTap: (LatLng pos) {
                         cnlatitude.text = pos.latitude.toString();
                         cnlongitude.text = pos.longitude.toString();
-                        lat=pos.latitude;
-                         long=pos.longitude;
+                        lat = pos.latitude;
+                        long = pos.longitude;
                         setState(() {
                           _lastTap = pos;
                         });

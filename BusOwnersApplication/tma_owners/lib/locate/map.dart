@@ -34,7 +34,7 @@ class _BusMapState extends State<BusMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bus " + widget.busNo + " Live Location"),
+        title: Text("Live Location [Bus: "+ widget.busNo+"]"),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
@@ -42,7 +42,7 @@ class _BusMapState extends State<BusMap> {
       body: Container(
         child: GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: LatLng(6.844688, 80.015283), zoom: 5.0,),
+          initialCameraPosition: CameraPosition(target: LatLng(6.844688, 80.015283), zoom: 13.0,),
           myLocationEnabled: true,
           mapType: MapType.normal,
           compassEnabled: true,
