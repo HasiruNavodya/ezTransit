@@ -310,7 +310,7 @@ class _UserDetailsState extends State<UserDetails> {
 
   void logout() async{
     await FirebaseAuth.instance.signOut();
-    streamController.add(2);
+    streamController.add('2');
   }
 
   showAlertDialog(BuildContext context) {

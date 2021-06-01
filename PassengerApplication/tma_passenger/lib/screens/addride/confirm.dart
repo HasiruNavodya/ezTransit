@@ -407,7 +407,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
               .then((value) => print("Records Added Successfully!"))
               .catchError((error) => print("Failed: $error"));
 
-          streamController.add(1);
+          streamController.add(ticketID);
           Navigator.of(context).popUntil((route) => route.isFirst);
         })
             .catchError((error) => print("Failed: $error"));
@@ -479,7 +479,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
             })
                 .then((value) {
                   print("Records Added Successfully!");
-                  streamController.add(1);
+                  streamController.add(ticketID);
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 })
                 .catchError((error) => print("Failed: $error"));

@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
           password: _password,
         );
         print("Logged In");
-        streamController.add(0);
+        streamController.add('0');
       } catch (e) {
         print("e.message");
         showAlertDialogTwo(context);
