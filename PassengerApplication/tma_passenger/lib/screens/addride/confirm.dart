@@ -438,23 +438,23 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
           "sandbox": true, // true if using Sandbox Merchant ID
           "merchant_id": "1216958", // Replace your Merchant ID
           "merchant_secret": "4q6h8wJ4gl74ZJ3DAH0GEm8m0UeEP0Hk14pCBjyrOCYg", // See step 4e
-          //"notify_url": "http://sample.com/notify",
+          "notify_url": "http://sample.com/notify",
           "order_id": ticketID,
           "items": "bus fare",
           "amount": widget.ticketprice,
           "currency": "LKR",
-         // "first_name": "Saman",
-          //"last_name": "Perera",
+          "first_name": "",
+          "last_name": "",
           "email": userEmail,
-          //"phone": "0771234567",
-          //"address": "No.1, Galle Road",
-          //"city": "Colombo",
-          //"country": "Sri Lanka",
-          //"delivery_address": "No. 46, Galle road, Kalutara South",
-          //"delivery_city": "Kalutara",
-          //"delivery_country": "Sri Lanka",
-          //"custom_1": "",
-          //"custom_2": ""
+          "phone": "",
+          "address": "",
+          "city": "",
+          "country": "",
+          "delivery_address": "",
+          "delivery_city": "",
+          "delivery_country": "",
+          "custom_1": "",
+          "custom_2": ""
         };
 
         PayHere.startPayment(paymentObject, (paymentId) {
