@@ -56,7 +56,7 @@ class _AccountState extends State<Account> {
               ),
             ),*/
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection("NewBus").where('Plate Number', isEqualTo: bus).snapshots(),
+              stream: FirebaseFirestore.instance.collection("buses").where('Plate Number', isEqualTo: bus).snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return Text('Something went wrong');

@@ -188,7 +188,7 @@ class Partial extends StatelessWidget {
                                     "fare": fare.text,
                                     "partNo ": partNoF.text,
                                     "startin": startIn.text,
-                                    "name": startIn.text + ' - ' + endIn.text,
+                                    "name": startIn.text + '-' + endIn.text,
                                   };
 
                                   String startinendin =

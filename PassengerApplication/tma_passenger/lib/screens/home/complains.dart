@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,7 @@ import 'package:tma_passenger/screens/home/ride.dart';
 
 import 'home.dart';
 
-
-
-
 class Complaints extends StatefulWidget {
-
   Complaints(this.plateno);
 
   final String plateno;
@@ -20,42 +15,36 @@ class Complaints extends StatefulWidget {
 }
 
 class _ComplaintsState extends State<Complaints> {
-
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-
-  void validate(){
-    if(formkey.currentState.validate()){
+  void validate() {
+    if (formkey.currentState.validate()) {
       print("not validated");
-    }else {
+    } else {
       print("validated");
     }
   }
 
+  DateTime dateToday =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
-  DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) ;
-
-
-  TextEditingController ComplaintBusNo= new TextEditingController();
-  TextEditingController ComplaintDescription= new TextEditingController();
+  TextEditingController ComplaintBusNo = new TextEditingController();
+  TextEditingController ComplaintDescription = new TextEditingController();
 
   String complaint;
   String plateno;
   String time;
-
 
   @override
   void initState() {
     super.initState();
 
     ComplaintBusNo.text = widget.plateno;
-
   }
 
   @override
   Widget build(BuildContext context) {
-    print('dsfsdfsdfdsfsdfdsfdsfdsfdsf'+dateToday.toString());
-
+    print('dsfsdfsdfdsfsdfdsfdsfdsfdsf' + dateToday.toString());
 
     //
     // Future<void> Complaints() {
@@ -69,8 +58,6 @@ class _ComplaintsState extends State<Complaints> {
     //       .then((value) => print("Reported Complaint Succesfully"))
     //       .catchError((error) => print("Failed: $error"));
     // }
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -88,17 +75,24 @@ class _ComplaintsState extends State<Complaints> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 30.0,),
-                    Text('Bus Plate Number', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
-                    SizedBox(height: 20.0,),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      'Bus Plate Number',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                   ],
                 ),
                 TextFormField(
                   validator: (value) {
-                    if (value.isEmpty){
+                    if (value.isEmpty) {
                       return 'Enter Plate No of the Bus';
-                    }
-                    else{
+                    } else {
                       return null;
                     }
                   },
@@ -117,17 +111,24 @@ class _ComplaintsState extends State<Complaints> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 40.0,),
-                    Text('Complaint', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
-                    SizedBox(height: 20.0,),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    Text(
+                      'Complaint',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                   ],
                 ),
                 TextFormField(
                   validator: (value) {
-                    if (value.isEmpty){
+                    if (value.isEmpty) {
                       return 'Please Describe';
-                    }
-                    else{
+                    } else {
                       return null;
                     }
                   },
@@ -144,56 +145,57 @@ class _ComplaintsState extends State<Complaints> {
                   ),
                   maxLines: 10,
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 Column(
                   children: <Widget>[
                     ButtonTheme(
                       height: 40,
                       disabledColor: Colors.grey,
-                      child: RaisedButton(color:Colors.black87,
+                      child: RaisedButton(
+                        color: Colors.black87,
                         disabledElevation: 4.0,
                         onPressed: () {
-
-                          if(formkey.currentState.validate())
-                          {
+                          if (formkey.currentState.validate()) {
                             // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
-                            FirebaseFirestore.instance.collection("complaints").add({"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":dateToday.toString()})
-                                .then((value) => print("Complain Reported Successfully!"))
-                                .catchError((error) => print("Failed to add user: $error"));
+                            FirebaseFirestore.instance
+                                .collection("complaints")
+                                .add({
+                                  "Plate Number": ComplaintBusNo.text,
+                                  "Complaint": ComplaintDescription.text,
+                                  "time": FieldValue.serverTimestamp(),
+                                })
+                                .then((value) =>
+                                    print("Complain Reported Successfully!"))
+                                .catchError((error) =>
+                                    print("Failed to add user: $error"));
                             showAlertDialog(context);
                             print("successfull");
-                          }else
-                          {
+                          } else {
                             showAlertDialogTwo(context);
                             print("unsuccessfull");
-
                           }
-
-
-
-
-
-
-
-
-
                         },
-                        child: Text('Submit',
-                          style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color:Colors.white,
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ]
-          ),
+              ]),
         ),
       ),
     );
   }
-  showAlertDialog(BuildContext context) {
 
+  showAlertDialog(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
@@ -208,7 +210,6 @@ class _ComplaintsState extends State<Complaints> {
       content: Text("Thank You!"),
       actions: [
         okButton,
-
       ],
     );
 
@@ -221,9 +222,7 @@ class _ComplaintsState extends State<Complaints> {
     );
   }
 
-
   showAlertDialogTwo(BuildContext context) {
-
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
@@ -238,7 +237,6 @@ class _ComplaintsState extends State<Complaints> {
       content: Text("Please Fill All The Fields"),
       actions: [
         okButton,
-
       ],
     );
 
@@ -250,5 +248,4 @@ class _ComplaintsState extends State<Complaints> {
       },
     );
   }
-
 }

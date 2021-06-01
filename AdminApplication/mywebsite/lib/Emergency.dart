@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
+import 'package:geocoder/geocoder.dart';
 
 class Emergency extends StatefulWidget {
   static const String id = 'emergency';
@@ -11,6 +12,7 @@ class Emergency extends StatefulWidget {
 }
 
 class _EmergencyState extends State<Emergency> {
+
   SideBarWidget _sideBar = SideBarWidget();
   @override
   Widget build(BuildContext context) {
@@ -21,18 +23,15 @@ class _EmergencyState extends State<Emergency> {
       ),
       sideBar: _sideBar.sideBarMenus(context, Emergency.id),
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('emergencies').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          stream: FirebaseFirestore.instance.collection('emergencies').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return Text('No Value');
             }
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 50),
-              child: ListView(
-                children: snapshot.data.docs.map(
-                  (DocumentSnapshot document) {
+              child: ListView(children: snapshot.data.docs.map((DocumentSnapshot document) {
+
                     return Card(
                       elevation: 10,
                       child: Container(

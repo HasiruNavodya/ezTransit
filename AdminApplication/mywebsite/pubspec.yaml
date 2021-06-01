@@ -41,6 +41,8 @@ dependencies:
   
 
   flutter_vector_icons: ^1.0.0
+  geocoding: ^2.0.0
+  geocoder: ^0.2.1
   
     
 

@@ -133,7 +133,9 @@ class _EmergencyState extends State<ReportEmergencyView> {
                       height: 40,
                       disabledColor: Colors.grey,
                       child: ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black87)),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.black87)),
                         onPressed: () {
                           if (formkey.currentState.validate()) {
                             FirebaseFirestore.instance
@@ -141,8 +143,8 @@ class _EmergencyState extends State<ReportEmergencyView> {
                                 .add({
                                   "busNo": '',
                                   "text": ComplaintDescription.text,
-                                  "time": dateToday.toString(),
-                                  "location":'',
+                                  "time": FieldValue.serverTimestamp(),
+                                  "location": '',
                                   "type": EmergencyType.text
                                 })
                                 .then((value) =>
@@ -206,7 +208,8 @@ class _EmergencyState extends State<ReportEmergencyView> {
   showAlertDialogTwo(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK",
+      child: Text(
+        "OK",
         style: TextStyle(
           fontSize: 15,
           color: Colors.black87,

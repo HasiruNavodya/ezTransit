@@ -239,10 +239,14 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   Map<String, dynamic> data = {
                                     "name": stopName.text,
                                     "time": arrivingTime.text,
-                                    "Time Duration ": timeDu.text,
+                                    'order':FieldValue.serverTimestamp(),
+                                    'passed': 'false',
+                                    'dropCount':0,
+                                    'pickupCount':0,
+                                    "location": GeoPoint(lat, long),
                                     // "Latitude": cnlatitude.text,
                                     // "Longitude": cnlongitude.text,
-                                    "location": GeoPoint(lat, long),
+
                                   };
                                   //  String a = InitializeTrip.tid;
                                   print("fdssssss" + tripid);
