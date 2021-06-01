@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(height: 25.0),
           TextFormField(
               decoration: InputDecoration(
-                  labelText: 'EMAIL',
+                  labelText: 'USER NAME',
                   labelStyle: TextStyle(
                       fontFamily: 'Trueno',
                       fontSize: 12.0,
