@@ -45,7 +45,7 @@ class _ComplaintsState extends State<Complaints> {
                       elevation: 10,
                       child: Container(
                         padding: EdgeInsets.all(30),
-                        height: 250,
+                        height: 150,
                         decoration: BoxDecoration(
                           color: Colors.blue[300],
                           borderRadius: BorderRadius.only(),
@@ -98,7 +98,7 @@ class _ComplaintsState extends State<Complaints> {
                             Row(
                               children: [
                                 Text(
-                                  'Time : ',
+                                  'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(

@@ -45,7 +45,7 @@ class _EmergencyState extends State<Emergency> {
                       elevation: 10,
                       child: Container(
                         padding: EdgeInsets.all(30),
-                        height: 300,
+                        height: 250,
                         decoration: BoxDecoration(
                           color: Colors.blue[300],
                           borderRadius: BorderRadius.only(),
@@ -94,7 +94,7 @@ class _EmergencyState extends State<Emergency> {
                             Row(
                               children: [
                                 Text(
-                                  'Time : ',
+                                  'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -112,16 +112,14 @@ class _EmergencyState extends State<Emergency> {
                                 ),
                                Text(
                                   document
-                                      .data()['location'].position.toString(),
+                                      .data()['location'].latitude.toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text('° N'),
                                 SizedBox(width: 5),
                                 Text(
                                   document
-                                      .data()['location']
-                                      
-                                      .toString(),
+                                      .data()['location'].longitude.toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text('° E'),
