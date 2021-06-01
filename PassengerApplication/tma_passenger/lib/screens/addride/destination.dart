@@ -32,7 +32,7 @@ class _SelectDestinationState extends State<SelectDestination> {
             onPressed: () {
               Navigator.pop(context);
             }),*/
-        title: Text("SELECT DESTINATION"),
+        title: Text("SELECT PICKUP LOCATION"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),

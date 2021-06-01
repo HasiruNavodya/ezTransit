@@ -37,7 +37,7 @@ class _SelectPickupState extends State<SelectPickup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SELECT PICKUP LOCATION"),
+        title: Text("SELECT DESTINATION"),
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),

@@ -242,13 +242,13 @@ class _SelectBusState extends State<SelectBus> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                          'Pickup At: ' + ptime.toString(),
+                                                          'Pickup At: ' + dtime.toString(),
                                                           style: TextStyle(
                                                             fontSize: 16.0,
                                                             //fontWeight: FontWeight.bold
                                                           )),
                                                       Text(
-                                                          'Dropping At: ' + dtime.toString(),
+                                                          'Dropping At: ' + ptime.toString(),
                                                           style: TextStyle(
                                                             fontSize: 16.0,
                                                             //fontWeight: FontWeight.bold
