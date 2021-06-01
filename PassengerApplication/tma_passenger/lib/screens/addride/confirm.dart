@@ -412,6 +412,12 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         })
             .catchError((error) => print("Failed: $error"));
 
+        FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(startcity).update({"pickupCount": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
+        FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(endcity).update({"dropCount": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
       }
     });
   }
@@ -473,6 +479,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                 .then((value) => print("Records Added Successfully!"))
                 .catchError((error) => print("Failed: $error"));
 
+
             FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({
               "currentTicketNo": ticketID,
               "onRide": "True"
@@ -502,6 +509,12 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         }, () {
           print("One Time Payment Dismissed");
         });
+        FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(startcity).update({"pickupCount": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
+        FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(endcity).update({"dropCount": FieldValue.increment(1)})
+            .then((value) => print("Records Added Successfully!"))
+            .catchError((error) => print("Failed: $error"));
       }
     });
   }

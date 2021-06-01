@@ -512,7 +512,7 @@ class _TripViewState extends State<TripView> {
     geoGate = 1;
     print(geoGate);
     getIRCount();
-    //streamLiveLocation();
+    streamLiveLocation();
 
   }
 
@@ -523,16 +523,6 @@ class _TripViewState extends State<TripView> {
         'location' : GeoPoint(position.latitude, position.longitude)
       });
     });
-  }
-
-  void pauseLocationStream() {
-    print('paused');
-    positionStream.pause();
-  }
-
-  void resumeLocationStream() {
-    print('resumed');
-    positionStream.resume();
   }
 
 
@@ -573,7 +563,7 @@ class _TripViewState extends State<TripView> {
   }
 
   void onActivityChanged(Activity prevActivity, Activity currActivity) {
-    //print('prevActivity: ${prevActivity.toMap()}');
+/*    //print('prevActivity: ${prevActivity.toMap()}');
     print('currActivity: ${currActivity.toMap()}\n');
 
     if(currActivity.type.toString() != 'ActivityType.STILL'){
@@ -587,7 +577,7 @@ class _TripViewState extends State<TripView> {
         positionStream.pause();
         print('paused');
       }
-    }
+    }*/
   }
 
   void endTrip(){
@@ -601,7 +591,9 @@ class _TripViewState extends State<TripView> {
     FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').get().then((querySnapshot) {
       querySnapshot.docs.forEach((stopDoc) {
         FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(stopDoc.id).update({
-          'passed' : 'false'
+          'passed' : 'false',
+          'pickupCount' : 0,
+          'dropCount' : 0,
         });
       });
     });

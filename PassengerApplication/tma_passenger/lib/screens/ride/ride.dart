@@ -25,6 +25,7 @@ String ticketID;
 Map ticketData;
 Map tripData;
 Map busData;
+int s=1;
 
 class RideView extends StatefulWidget {
 
@@ -186,7 +187,7 @@ class _RideViewState extends State<RideView> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              Text("Bus will arrive in [Approx] : ",
+                                              Text("Distance [Approx] : ",
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                 ),
@@ -659,15 +660,19 @@ class _RideViewState extends State<RideView> {
           ),
         );
 
-        distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
-        Future.delayed(const Duration(seconds: 10), () {
-          distanceInMeters2 = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
-        });
-        speed = (distanceInMeters - distanceInMeters2)/10;
-        distancenew = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
-        time = (distancenew/speed);
-        time = time/3600;
-        distance.value = time.round().toString() + ' min';
+
+
+          distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+          distance.value = distanceInMeters.round().toString() + ' m';
+/*          Future.delayed(const Duration(seconds: 15), () {
+            distanceInMeters2 = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+            speed = (distanceInMeters - distanceInMeters2)/15.0;
+            distancenew = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+            time = (distancenew/speed);
+            time = time/60.0;
+            distance.value = time.toString() + ' min';
+          });*/
+
 
       });
     });
@@ -684,7 +689,6 @@ class _RideViewState extends State<RideView> {
   void listenToRideStart(){
     FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).snapshots().listen((DocumentSnapshot tripStartDoc) {
       if(tripStartDoc.data()['passed'] == 'true'){
-        startAlert(context);
         setState(() {
           rideState = 'onbus';
         });
