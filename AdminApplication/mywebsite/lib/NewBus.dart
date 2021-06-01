@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class NewBus extends StatefulWidget {
   static const String id = 'newbus';
@@ -58,11 +59,13 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver Name',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Driver Name is required';
-        }
-      },
+      validator: MultiValidator(
+        [
+        RequiredValidator(errorText:"Driver name is required"),
+        
+         PatternValidator(r'([a-z A-Z])', errorText: 'Not a valid name')
+      ]
+      ),
       onSaved: (String value) {
         _driverName = value;
       },
@@ -78,11 +81,14 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Owner Email',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Owner Email is required';
-        }
-      },
+      validator: MultiValidator(
+        [
+        RequiredValidator(errorText:"Owner email is required"),
+        EmailValidator(errorText:"Not a valid email"),
+      ]
+      ),
+      
+     
       onSaved: (String value) {
         _owneremail = value;
       },
@@ -96,11 +102,20 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver License Number',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Driver License Number is required';
+       validator: (String value) {
+         Pattern pattern =
+        r'[A-Z0-9]';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Enter a valid license number';
+        
+        
+        else if (value.isEmpty) {
+          return ('License is required');
         }
+        
       },
+    
       onSaved: (String value) {
         _licenseNumber = value;
       },
@@ -233,12 +248,12 @@ class _NewBusState extends State<NewBus> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
-                    //because of this global key we can acess build in validations
-                    key: _formKey,
+                    autovalidateMode: AutovalidateMode.always, key: _formKey,
 
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      
                       children: <Widget>[
                         _buildPlateNumber(),
                         SizedBox(height: 10.0),

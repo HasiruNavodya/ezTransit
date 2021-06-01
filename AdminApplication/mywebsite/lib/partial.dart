@@ -200,8 +200,8 @@ class Partial extends StatelessWidget {
                                       .set(data);
                                 }),
                           ),
-                          SizedBox(width: 50.0),
-                        ],
+                         // SizedBox(width: 50.0),
+                            ),)],
                       )
                     ],
                   ),

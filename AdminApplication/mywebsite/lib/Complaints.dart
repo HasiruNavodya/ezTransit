@@ -65,7 +65,7 @@ class _ComplaintsState extends State<Complaints> {
                               ],
                             ),
  SizedBox(height: 10),
-                               Row(
+                               /*Row(
                               children: [
                                 Text(
                                   'Time : ',
@@ -78,7 +78,7 @@ class _ComplaintsState extends State<Complaints> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
-                            ),
+                            ),*/
 
 
                             SizedBox(height: 10),

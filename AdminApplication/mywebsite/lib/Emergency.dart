@@ -78,7 +78,7 @@ class _EmergencyState extends State<Emergency> {
                               ],
                             ),
                              SizedBox(height: 10),
-                            Row(
+                           /* Row(
                               children: [
                                 Text(
                                   'Time : ',
@@ -89,7 +89,7 @@ class _EmergencyState extends State<Emergency> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
-                            ),
+                            ),*/
                             SizedBox(height: 10),
                             Row(
                               children: [
@@ -110,11 +110,9 @@ class _EmergencyState extends State<Emergency> {
                                   'Location : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                Text(
+                               Text(
                                   document
-                                      .data()['location']
-                                      .latitude
-                                      .toString(),
+                                      .data()['location'].position.toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text('° N'),
@@ -122,7 +120,7 @@ class _EmergencyState extends State<Emergency> {
                                 Text(
                                   document
                                       .data()['location']
-                                      .longitude
+                                      
                                       .toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
