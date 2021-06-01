@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:mywebsite/busmap.dart';
 
 class Emergency extends StatefulWidget {
   static const String id = 'emergency';
@@ -105,6 +106,13 @@ class _EmergencyState extends State<Emergency> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text('° E'),
+                                SizedBox(width: 5),
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusMap(document.data()['busNo'])));
+                                  },
+                                  child: Text('Show In Map'),
+                                )
                               ],
                             ),
                             SizedBox(height: 10),

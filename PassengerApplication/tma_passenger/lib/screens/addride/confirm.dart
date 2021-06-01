@@ -443,7 +443,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
           "items": "bus fare",
           "amount": widget.ticketprice,
           "currency": "LKR",
-          "first_name": "",
+          "first_name": userEmail,
           "last_name": "",
           "email": userEmail,
           "phone": "",
