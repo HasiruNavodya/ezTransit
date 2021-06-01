@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,11 +17,28 @@ class SelectBusMap extends StatefulWidget {
 
 class _SelectBusMapState extends State<SelectBusMap> {
 
+  String user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      user = auth.currentUser.email;
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Bus'),
+        title: Text('SELECT BUS'),
+        backgroundColor: Colors.black,
+        centerTitle: true,
       ),
       body: buses(),
     );
@@ -29,7 +47,7 @@ class _SelectBusMapState extends State<SelectBusMap> {
 
   Widget buses(){
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('buses').snapshots(),
+      stream: FirebaseFirestore.instance.collection('buses').where('Owner',isEqualTo: user).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
         if (snapshot.hasError) {
@@ -49,7 +67,7 @@ class _SelectBusMapState extends State<SelectBusMap> {
           child: new ListView(
             children: snapshot.data.docs.map((DocumentSnapshot document) {
               return Container(
-                color: Colors.white70,
+                color: Colors.white,
                 margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
                 child: new OutlinedButton(
                   onPressed: () {
@@ -57,7 +75,7 @@ class _SelectBusMapState extends State<SelectBusMap> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => BusMap(bus)));
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(25.0),
                     child: Column(
                       children: [
                         Text(
