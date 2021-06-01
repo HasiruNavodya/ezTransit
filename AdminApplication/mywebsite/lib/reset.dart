@@ -127,8 +127,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Trueno',
-                                )))
-                                ))),
+                                )))))),
           ),
           SizedBox(height: 20.0),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
