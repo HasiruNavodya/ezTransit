@@ -253,6 +253,7 @@ class _InitializeTripState extends State<InitializeTrip> {
                                       "endCity": endCity.text,
                                       "endTime": endTime.text,
                                       "stopCount": stopCount.text,
+                                      'ticketCount': 0,
                                     };
                                     String tid = tripID.text;
                                     FirebaseFirestore.instance

@@ -99,8 +99,10 @@ class _TripViewState extends State<TripView> {
 
 
       return FutureBuilder<DocumentSnapshot>(
+
         future: FirebaseFirestore.instance.collection('trips').doc('$tripID').get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }

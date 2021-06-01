@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:location/location.dart';
 import 'package:tma_bus/screens/home/home.dart';
 
 enum SingingCharacter { lafayette, jefferson }
@@ -15,6 +16,8 @@ class ReportEmergencyView extends StatefulWidget {
 }
 
 class _EmergencyState extends State<ReportEmergencyView> {
+
+  String busEmail,bus;
   String _complaintDescription, _emergencyType;
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
@@ -30,10 +33,23 @@ class _EmergencyState extends State<ReportEmergencyView> {
   TextEditingController EmergencyType = new TextEditingController();
   TextEditingController ComplaintDescription = new TextEditingController();
 
-  DateTime dateToday =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
-  //List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print(auth.currentUser.email);
+      busEmail = auth.currentUser.email;
+      List list = busEmail.split('@');
+      bus = list[0].toString().toUpperCase();
+      print(bus);
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,24 +149,12 @@ class _EmergencyState extends State<ReportEmergencyView> {
                       height: 40,
                       disabledColor: Colors.grey,
                       child: ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black87)),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.black87)),
                         onPressed: () {
                           if (formkey.currentState.validate()) {
-                            FirebaseFirestore.instance
-                                .collection("emergencies")
-                                .add({
-                                  "busNo": '',
-                                  "text": ComplaintDescription.text,
-                                  "time": dateToday.toString(),
-                                  "location":'',
-                                  "type": EmergencyType.text
-                                })
-                                .then((value) =>
-                                    print("Complain Reported Successfully!"))
-                                .catchError((error) =>
-                                    print("Failed to add user: $error"));
-                            showAlertDialog(context);
-                            print("successfull");
+                            addReport();
                           } else {
                             showAlertDialogTwo(context);
                             print("unsuccessfull");
@@ -206,7 +210,8 @@ class _EmergencyState extends State<ReportEmergencyView> {
   showAlertDialogTwo(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK",
+      child: Text(
+        "OK",
         style: TextStyle(
           fontSize: 15,
           color: Colors.black87,
@@ -234,4 +239,28 @@ class _EmergencyState extends State<ReportEmergencyView> {
       },
     );
   }
+
+  void addReport() async {
+
+    LocationData currentLocation;
+    var location = new Location();
+    try {
+      currentLocation = await location.getLocation();
+      FirebaseFirestore.instance.collection("emergencies").add({
+        "busNo": bus,
+        "text": ComplaintDescription.text,
+        "time": FieldValue.serverTimestamp(),
+        "location": GeoPoint(currentLocation.latitude,currentLocation.longitude),
+        "type": EmergencyType.text
+      }).then((value) => print("Complain Reported Successfully!"))
+          .catchError((error) => print("Failed to add user: $error"));
+      showAlertDialog(context);
+      print("successfull");
+    } on Exception {
+      currentLocation = null;
+    }
+
+
+  }
+
 }

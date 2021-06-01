@@ -320,7 +320,7 @@ class _RegisterState extends State<Register> {
       ),
       onPressed:  () {
         Navigator.pop(context);
-        streamController.add(2);
+        streamController.add('2');
         Navigator.of(context).popUntil((route) => route.isFirst);
       },
     );
