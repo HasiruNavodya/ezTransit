@@ -62,7 +62,7 @@ class _SelectPickupState extends State<SelectPickup> {
                         },
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            labelText: 'Search for Pickup Locations',
+                            labelText: 'Search for Destination',
                             border: OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),

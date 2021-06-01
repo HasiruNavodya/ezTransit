@@ -55,7 +55,7 @@ class _SelectDestinationState extends State<SelectDestination> {
                         },
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            labelText: 'Search for Destinations',
+                            labelText: 'Search for Pickup Locations',
                             border: OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),
