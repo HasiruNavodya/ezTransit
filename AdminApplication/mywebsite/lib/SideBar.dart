@@ -20,7 +20,11 @@ class SideBarWidget {
           route: Home.id,
           icon: Icons.home,
         ),
-       
+         MenuItem(
+          title: 'Add New Bus',
+          route: NewBus.id,
+          icon: CupertinoIcons.bus,
+        ),
         MenuItem(
           title: 'Initialize Trip',
           route: InitializeTrip.id,
@@ -32,11 +36,7 @@ class SideBarWidget {
           icon: Icons.add_road,
         ),
 
-         MenuItem(
-          title: 'Add New Bus',
-          route: NewBus.id,
-          icon: CupertinoIcons.bus,
-        ),
+       
         MenuItem(
           title: 'Emergency',
           route: Emergency.id,
