@@ -12,7 +12,7 @@ double lat;
 double long;
 
 const CameraPosition _kInitialPosition =
-    CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
+    CameraPosition(target: LatLng(6.8412, 79.9654), zoom: 11.0);
 
 class MapClickPageNew extends StatefulWidget {
   String tripid;
@@ -74,7 +74,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
   _MapClickBodyState(tripid) {
     this.tripid = tripid;
   }
-
+//take last tapped latlon into this variable
   GoogleMapController mapController;
   LatLng _lastTap;
   LatLng _lastLongPress;
