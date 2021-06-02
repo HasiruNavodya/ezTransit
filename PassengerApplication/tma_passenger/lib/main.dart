@@ -8,8 +8,8 @@ import 'package:tma_passenger/screens/ride/ride.dart';
 import 'package:tma_passenger/screens/auth/login.dart';
 import 'package:tma_passenger/screens/auth/signup.dart';
 
-int appState = 0;
-StreamController<int> streamController = StreamController<int>();
+String appState = '1';
+StreamController<String> streamController = StreamController<String>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class TmaPassengerApp extends StatelessWidget {
 
 class ViewController extends StatefulWidget {
   ViewController(this.stream);
-  final Stream<int> stream;
+  final Stream<String> stream;
 
   @override
   _ViewControllerState createState() => _ViewControllerState();
@@ -42,7 +42,7 @@ class ViewController extends StatefulWidget {
 
 class _ViewControllerState extends State<ViewController> {
 
-  void setAppState(int appStateValue) {
+  void setAppState(String appStateValue) {
     setState(() {
       appState = appStateValue;
     });
@@ -61,11 +61,11 @@ class _ViewControllerState extends State<ViewController> {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
-        setAppState(2);
+        setAppState('2');
       } else {
         print('User is signed in!');
 
-        setAppState(0);
+        setAppState('0');
 
       }
     });
@@ -73,24 +73,24 @@ class _ViewControllerState extends State<ViewController> {
 
   @override
   Widget build(BuildContext context) {
-    if (appState == 0) {
+    if (appState == '0') {
       print(appState);
       return HomeView();
     }
-    else if (appState == 1) {
-      print(appState);
-      return RideView();
-    }
-    else if (appState == 2) {
-      print(appState);
-      return LoginPage();
-    }
-    else {
+    else if (appState == '1') {
       return Scaffold(
         body: Container(
           child: SpinKitDualRing(color: Colors.black87),
         ),
       );
+    }
+    else if (appState == '2') {
+      print(appState);
+      return LoginPage();
+    }
+    else {
+      print(appState);
+      return RideView(appState);
     }
   }
 }

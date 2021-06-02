@@ -80,7 +80,7 @@ class _AddTripViewState extends State<AddTripView> {
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                   return Container(
                     //color: Colors.white,
-                    //margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
                     child: new ElevatedButton(
                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
                       onPressed: () {

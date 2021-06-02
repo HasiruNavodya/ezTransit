@@ -176,21 +176,10 @@ class _InitializeTripState extends State<InitializeTrip> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-         width: MediaQuery.of(context).size.width,
-            height: 1.3 * MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                /* gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.blue[400],
-                    Colors.blue[600],
-                    Colors.blue[900],
-                    Colors.indigo[900],
-                    Colors.deepPurple[900],
-                  ]),*/
-                ),
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 350.0),
+            width: MediaQuery.of(context).size.width,
+            height: 1.1 * MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(),
+            padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
             child: Card(
               color: Colors.blue[300],
               elevation: 20.0,

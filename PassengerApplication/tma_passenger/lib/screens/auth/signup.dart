@@ -33,7 +33,7 @@ class _RegisterState extends State<Register> {
   void initState() {
     super.initState();
 
-    //phoneNo.text = '+94';
+    phoneNo.text = '+947';
 
   }
 
@@ -162,6 +162,10 @@ class _RegisterState extends State<Register> {
                     {
                       return "Please Enter Phone Number";
                     }
+                    if(!RegExp(r"^(?:\+94)[0-9]{9}$").hasMatch(value))
+                    {
+                      return "Please Enter In Valid Format";
+                    }
                     return null;
                   },
                   onSaved: (String phonenum){
@@ -169,7 +173,7 @@ class _RegisterState extends State<Register> {
                   },
 
                   decoration: InputDecoration(
-                    labelText: "Phone Number (07XXXXXXXX)",
+                    labelText: "Phone Number (+947XXXXXXXX)",
                     labelStyle: TextStyle(fontSize: 15.0),
                     filled: true,
                     fillColor: Colors.white,
@@ -320,7 +324,7 @@ class _RegisterState extends State<Register> {
       ),
       onPressed:  () {
         Navigator.pop(context);
-        streamController.add(2);
+        streamController.add('2');
         Navigator.of(context).popUntil((route) => route.isFirst);
       },
     );

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,28 +7,30 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tma_passenger/main.dart';
 import 'package:tma_passenger/screens/home/complains.dart';
 
-import '../../main.dart';
 
 double pickupLat;
 double pickupLng;
 double distanceInMeters;
+double distanceInMeters2;
+double distancenew;
+double speed;
+double time;
 String rideState = 'fetching';
-String ticketID = '';
 String userEmail;
 var payColor;
-
+String ticketID;
 Map ticketData;
 Map tripData;
 Map busData;
+int s=1;
 
 class RideView extends StatefulWidget {
 
-  void setTID(String tidfrompay){
-    ticketID = tidfrompay;
-  }
-
+  RideView(this.ticketIDRV);
+  final ticketIDRV;
 
   @override
   _RideViewState createState() => _RideViewState();
@@ -35,11 +38,13 @@ class RideView extends StatefulWidget {
 
 class _RideViewState extends State<RideView> {
 
+
   BitmapDescriptor busicon;
 
   @override
   void initState() {
     super.initState();
+
     getUserInfo();
     Future<Position> _determinePosition() async {
       bool serviceEnabled;
@@ -82,7 +87,7 @@ class _RideViewState extends State<RideView> {
 
   dynamic data;
 
-  final ValueNotifier<int> distance = ValueNotifier<int>(0);
+  final ValueNotifier<String> distance = ValueNotifier<String>('Calculating..');
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +187,12 @@ class _RideViewState extends State<RideView> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              Text("Distance to Pickup Location : ",
+                                              Text("Distance [Approx] : ",
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                 ),
                                               ),
-                                              ValueListenableBuilder<int>(
+                                              ValueListenableBuilder<String>(
                                                   valueListenable: distance,
                                                   builder: (BuildContext context, distance, Widget child) {
                                                     return Text("$distance",
@@ -196,11 +201,6 @@ class _RideViewState extends State<RideView> {
                                                       ),
                                                     );
                                                   }
-                                              ),
-                                              Text(" m",
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                ),
                                               ),
                                             ],
                                           ),
@@ -519,7 +519,20 @@ class _RideViewState extends State<RideView> {
       endRide();
       return Scaffold(
         body: Container(
-          child: SpinKitDualRing(color: Colors.black87),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Your Ride Has Ended\n\n\n',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SpinKitDualRing(color: Colors.black87),
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -528,7 +541,20 @@ class _RideViewState extends State<RideView> {
       getRideData();
       return Scaffold(
         body: Container(
-          child: SpinKitDualRing(color: Colors.black87),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Loading Ride Data\n\n\n',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SpinKitDualRing(color: Colors.black87),
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -540,7 +566,11 @@ class _RideViewState extends State<RideView> {
     FirebaseFirestore.instance.collection("passengers").doc(userEmail).update({"onRide": "False"})
         .then((value) => print("Records Added Successfully!"))
         .catchError((error) => print("Failed: $error"));
-    streamController.add(0);
+
+    Future.delayed(const Duration(seconds: 1), () {
+      streamController.add('0');
+    });
+
   }
 
   void getRideData(){
@@ -549,7 +579,6 @@ class _RideViewState extends State<RideView> {
       if (user.exists) {
         print("qweqweqweqweqweqwe");
         ticketID = user.data()['currentTicketNo'];
-
         FirebaseFirestore.instance.collection('tickets').doc(ticketID).get().then((DocumentSnapshot ticket) {
           if (ticket.exists) {
             ticketData = ticket.data();
@@ -575,9 +604,13 @@ class _RideViewState extends State<RideView> {
                 if (bus.exists) {
 
                   busData = bus.data();
-                  setState(() {
-                    rideState = 'waiting';
+
+                  Future.delayed(const Duration(seconds: 2), () {
+                    setState(() {
+                      rideState = 'waiting';
+                    });
                   });
+
                 }
               });
             }
@@ -591,6 +624,7 @@ class _RideViewState extends State<RideView> {
         });
       }
     });
+
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -616,20 +650,39 @@ class _RideViewState extends State<RideView> {
         _markers.add(
           Marker(
             markerId: MarkerId('bus'),
-            position: LatLng(6.844610383055133, 80.014490977822),
+            position: LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude),
             icon: busicon,
           ));
 
         mapController?.animateCamera(
           CameraUpdate.newLatLng(
-            LatLng(6.844610383055133, 80.014490977822),
+            LatLng(busLocation.data()['location'].latitude, busLocation.data()['location'].longitude),
           ),
         );
 
-        distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
-        distance.value = distanceInMeters.round();
+
+
+          distanceInMeters = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+          distance.value = distanceInMeters.round().toString() + ' m';
+/*          Future.delayed(const Duration(seconds: 15), () {
+            distanceInMeters2 = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+            speed = (distanceInMeters - distanceInMeters2)/15.0;
+            distancenew = Geolocator.distanceBetween(pickupLat, pickupLng, busLocation.data()['location'].latitude, busLocation.data()['location'].longitude);
+            time = (distancenew/speed);
+            time = time/60.0;
+            distance.value = time.toString() + ' min';
+          });*/
+
 
       });
+    });
+  }
+
+  void getPickupCord(){
+    FirebaseFirestore.instance.collection('trips').doc(ticketData['tripID']).collection('stops').doc(ticketData['pickup']).get().then((DocumentSnapshot pickupcord) {
+      if (pickupcord.exists) {
+
+      }
     });
   }
 
@@ -690,6 +743,36 @@ class _RideViewState extends State<RideView> {
       actions: [
         continueButton,
         cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  startAlert(BuildContext context) {
+    // set up the buttons
+    Widget continueButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(
+          fontSize: 18.0,
+          color: Colors.black87,
+        ),
+      ),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert!"),
+      content: Text("Bus is arriving the pickup location"),
+      actions: [
+        continueButton,
       ],
     );
     // show the dialog

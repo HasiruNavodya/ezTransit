@@ -6,6 +6,30 @@ class ResetPassword extends StatefulWidget {
   _ResetPasswordState createState() => _ResetPasswordState();
 }
 
+class AlertBox extends StatelessWidget {
+  final title;
+  AlertBox(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      //Round rectangle border
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+
+      title: Text('Alert'),
+      content: Text(title),
+      actions: <Widget>[
+        new TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Okay'))
+      ],
+    );
+  }
+}
+
 class _ResetPasswordState extends State<ResetPassword> {
   final formKey = new GlobalKey<FormState>();
 
@@ -92,6 +116,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                         child: InkWell(
                             onTap: () {
                               Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertBox(
+                                        'Please Check Your Email To Reset The Password');
+                                  });
                             },
                             child: Text('RESET',
                                 style: TextStyle(
