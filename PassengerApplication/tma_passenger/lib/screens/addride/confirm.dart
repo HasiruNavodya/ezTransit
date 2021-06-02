@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 import 'package:toast/toast.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 import '../../main.dart';
 import 'destination.dart';
@@ -12,6 +13,7 @@ import '../ride/ride.dart';
 int ticketNum;
 String userEmail;
 String ticketID;
+String phoneNo;
 
 class ConfirmTicket extends StatefulWidget {
   String destinationloc;
@@ -418,6 +420,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(endcity).update({"dropCount": FieldValue.increment(1)})
             .then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
+        sendSMS();
       }
     });
   }
@@ -440,16 +443,16 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
           "items": "bus fare",
           "amount": widget.ticketprice,
           "currency": "LKR",
-          "first_name": "Saman",
-          "last_name": "Perera",
-          "email": "samanp@gmail.com",
-          "phone": "0771234567",
-          "address": "No.1, Galle Road",
-          "city": "Colombo",
-          "country": "Sri Lanka",
-          "delivery_address": "No. 46, Galle road, Kalutara South",
-          "delivery_city": "Kalutara",
-          "delivery_country": "Sri Lanka",
+          "first_name": userEmail,
+          "last_name": "",
+          "email": userEmail,
+          "phone": "",
+          "address": "",
+          "city": "",
+          "country": "",
+          "delivery_address": "",
+          "delivery_city": "",
+          "delivery_country": "",
           "custom_1": "",
           "custom_2": ""
         };
@@ -515,6 +518,30 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(endcity).update({"dropCount": FieldValue.increment(1)})
             .then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
+        sendSMS();
+      }
+    });
+  }
+
+  void sendSMS(){
+    FirebaseFirestore.instance.collection("passengers").doc(userEmail).get().then((DocumentSnapshot userDoc) {
+      if (userDoc.exists) {
+
+        phoneNo = userDoc.data()['PhoneNum'];
+        print('ALALALALALALALAL'+phoneNo.toString());
+
+        TwilioFlutter twilioFlutter;
+        twilioFlutter = TwilioFlutter(
+            accountSid : 'AC30903a9112a151014af6052c82523ef5', // replace *** with Account SIDSKbae770986c6e1af0d3def33cda34b2b8
+            authToken : '8f807406e0c0982b1398338cdb283728',  // replace xxx with Auth Token
+            twilioNumber : '+14154187518'  // replace .... with Twilio Number
+        );
+        twilioFlutter.sendSMS(
+            toNumber : phoneNo,
+            messageBody : '\n\nTicket Info\n\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)\n\nThank you!\nezTransit'
+        );
+
+        print('\n\nTicket Info\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)');
       }
     });
   }
