@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 200.0,
               child: Stack(
                 children: [
-                  Text('Transport Management System',
+                  Text('ezTransit Transport Management System',
                       style: TextStyle(fontFamily: 'Trueno', fontSize: 50.0)),
                   Positioned(
                       top: 50.0,
