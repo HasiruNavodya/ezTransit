@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
-import 'package:form_field_validator/form_field_validator.dart';
+//import 'package:form_field_validator/form_field_validator.dart';
 
 class NewBus extends StatefulWidget {
   static const String id = 'newbus';
@@ -59,13 +59,13 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver Name',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-      validator: MultiValidator(
-        [
-        RequiredValidator(errorText:"Driver name is required"),
-        
-         PatternValidator(r'([a-z A-Z])', errorText: 'Not a valid name')
-      ]
-      ),
+
+       validator: (String value) {
+        if (value.isEmpty) {
+          return 'Plate Number is required';
+        }
+
+      },
       onSaved: (String value) {
         _driverName = value;
       },
@@ -74,26 +74,9 @@ class _NewBusState extends State<NewBus> {
 
 
 
-  Widget _buildOwnerEmail() {
-    return TextFormField(
-      controller: owneremail,
-      decoration: InputDecoration(
-          labelText: 'Owner Email',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      validator: MultiValidator(
-        [
-        RequiredValidator(errorText:"Owner email is required"),
-        EmailValidator(errorText:"Not a valid email"),
-      ]
-      ),
+  
       
-     
-      onSaved: (String value) {
-        _owneremail = value;
-      },
-    );
-  }
+  
 
   Widget _buildLicenseNumber() {
     return TextFormField(
@@ -102,15 +85,15 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver License Number',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
+       
        validator: (String value) {
-         Pattern pattern =
-        r'[A-Z0-9]';
+         /*Pattern pattern =
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter a valid license number';
+      return 'Enter a valid license number';*/
         
         
-        else if (value.isEmpty) {
+        if (value.isEmpty) {
           return ('License is required');
         }
         
@@ -225,30 +208,14 @@ class _NewBusState extends State<NewBus> {
                     Radius.circular(35),
                   ),
                 ),
-                // padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
-
-                /*decoration: BoxDecoration(
-               // color:Colors.blue[300],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.0),
-                  bottomRight: Radius.circular(40.0),
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
+               
                   
-                ),
-              gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Colors.blue[400],
-                      Colors.blue[100],
-                      Colors.blue[400],
-                    ]),
-              ),*/
+          
+             
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
-                    autovalidateMode: AutovalidateMode.always, key: _formKey,
+                   autovalidateMode: AutovalidateMode.always, key: _formKey,
 
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -259,8 +226,7 @@ class _NewBusState extends State<NewBus> {
                         SizedBox(height: 10.0),
                         _buildDriverName(),
                         SizedBox(height: 10.0),
-                        _buildOwnerEmail(),
-                        SizedBox(height: 10.0),
+                      
                         _buildLicenseNumber(),
                         SizedBox(height: 10.0),
                         _buildColor(),
@@ -306,7 +272,7 @@ class _NewBusState extends State<NewBus> {
                                           "Public or Private": publicPrivate.text,
                                           "Luxury Level": luxeryLevel.text,
                                           "Seat Count": seat.text,
-                                          "Owner": owneremail.text,
+                                          //"Owner": owneremail.text,
                                         };
 
                                         String plateno=plateNumber.text;
