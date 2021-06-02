@@ -79,6 +79,11 @@ class _SelectBusState extends State<SelectBus> {
           pnoSet = 'yes';
         });
       }
+      else{
+        setState(() {
+          pnoSet = 'null';
+        });
+      }
     });
   }
 
@@ -411,6 +416,25 @@ class _SelectBusState extends State<SelectBus> {
         // child: Icon(Icons.arrow_forward_ios),
         // backgroundColor: Colors.black87,
         // ),
+      );
+    } if(pnoSet == 'null') {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("SELECT BUS"),
+          backgroundColor: Colors.black,
+          centerTitle: true,
+        ),
+        body: Container(
+          child: Center(
+            child: Text('No buses available for selected locations',
+              style: TextStyle(
+              color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+            ),
+            ),
+          ),
+        ),
       );
     } else {
       return Scaffold(

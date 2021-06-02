@@ -532,16 +532,16 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
 
         TwilioFlutter twilioFlutter;
         twilioFlutter = TwilioFlutter(
-            accountSid : 'AC30903a9112a151014af6052c82523ef5', // replace *** with Account SID
-            authToken : '405f229701cc3c28ea0eaec0c459a63c',  // replace xxx with Auth Token
+            accountSid : 'AC30903a9112a151014af6052c82523ef5', // replace *** with Account SIDSKbae770986c6e1af0d3def33cda34b2b8
+            authToken : '8f807406e0c0982b1398338cdb283728',  // replace xxx with Auth Token
             twilioNumber : '+14154187518'  // replace .... with Twilio Number
         );
         twilioFlutter.sendSMS(
             toNumber : phoneNo,
-            messageBody : 'Ticket Info'
+            messageBody : '\n\nTicket Info\n\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)\n\nThank you!\nezTransit'
         );
 
-        print('Ticket Info\nID:$ticketID:$phoneNo');
+        print('\n\nTicket Info\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)');
       }
     });
   }
