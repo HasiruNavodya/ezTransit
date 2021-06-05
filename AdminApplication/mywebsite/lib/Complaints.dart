@@ -13,24 +13,26 @@ class Complaints extends StatefulWidget {
 class _ComplaintsState extends State<Complaints> {
   @override
   Widget build(BuildContext context) {
-   
-           
     SideBarWidget _sideBar = SideBarWidget();
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Complaints'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          )
+        ],
       ),
       sideBar: _sideBar.sideBarMenus(context, Complaints.id),
       body: StreamBuilder(
-       //  DateTime myDateTime = (snapshots.data.documents[index].data['timestamp']).toDate();
-     // final Timestamp timestamp = snapshot.data['timestamp'] as Timestamp;
+          //  DateTime myDateTime = (snapshots.data.documents[index].data['timestamp']).toDate();
+          // final Timestamp timestamp = snapshot.data['timestamp'] as Timestamp;
 //final DateTime dateTime = timestamp.toDate();
 //final dateString = DateFormat('K:mm:ss').format(dateTime);
           stream:
               FirebaseFirestore.instance.collection('complaints').snapshots(),
-      
-          
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
@@ -64,8 +66,20 @@ class _ComplaintsState extends State<Complaints> {
                                 ),
                               ],
                             ),
- SizedBox(height: 10),
-                               /*Row(
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  'Date and Time : ',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  document.data()['time'].toString(),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            /* Row(
                               children: [
                                 Text(
                                   'Time : ',
@@ -79,7 +93,6 @@ class _ComplaintsState extends State<Complaints> {
                                 ),
                               ],
                             ),*/
-
 
                             SizedBox(height: 10),
                             Row(
@@ -95,18 +108,6 @@ class _ComplaintsState extends State<Complaints> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Text(
-                                  'Date and Time : ',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text(
-                                  document.data()['time'].toString(),
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ),

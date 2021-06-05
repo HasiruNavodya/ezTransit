@@ -45,9 +45,12 @@ class Home extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Row(
                   children: [
-                    Text(
-                      'Welcome To Our Transport Management System',
-                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                      child: Text(
+                        'Welcome To ezTransit Admin Dashboard',
+                        style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(width: 50),
                     SizedBox(

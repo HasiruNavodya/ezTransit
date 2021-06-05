@@ -59,38 +59,13 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver Name',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-      validator: MultiValidator(
-        [
-        RequiredValidator(errorText:"Driver name is required"),
-        
-         PatternValidator(r'([a-z A-Z])', errorText: 'Not a valid name')
-      ]
-      ),
+      validator: (String value) {
+        if (value.isEmpty || value == null) {
+          return 'Plate Number is required';
+        }
+      },
       onSaved: (String value) {
         _driverName = value;
-      },
-    );
-  }
-
-
-
-  Widget _buildOwnerEmail() {
-    return TextFormField(
-      controller: owneremail,
-      decoration: InputDecoration(
-          labelText: 'Owner Email',
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          border: OutlineInputBorder()),
-      validator: MultiValidator(
-        [
-        RequiredValidator(errorText:"Owner email is required"),
-        EmailValidator(errorText:"Not a valid email"),
-      ]
-      ),
-      
-     
-      onSaved: (String value) {
-        _owneremail = value;
       },
     );
   }
@@ -102,20 +77,14 @@ class _NewBusState extends State<NewBus> {
           labelText: 'Driver License Number',
           labelStyle: TextStyle(fontSize: 16, color: Colors.black),
           border: OutlineInputBorder()),
-       validator: (String value) {
-         Pattern pattern =
-        r'[A-Z0-9]';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter a valid license number';
-        
-        
-        else if (value.isEmpty) {
+      validator: (String value) {
+        Pattern pattern = r'^([A-Z0-9])';
+        RegExp regex = new RegExp(pattern);
+        if (value.isEmpty) {
           return ('License is required');
-        }
-        
+        } else if (!regex.hasMatch(value))
+          return 'Enter a valid license number';
       },
-    
       onSaved: (String value) {
         _licenseNumber = value;
       },
@@ -193,6 +162,11 @@ class _NewBusState extends State<NewBus> {
         if (value.isEmpty) {
           return ('Seat count is required');
         }
+
+        Pattern pattern = r'^([0-9])';
+        RegExp regex = new RegExp(pattern);
+
+        if (!regex.hasMatch(value)) return 'Enter a valid seat count';
       },
       onSaved: (String value) {
         _seat = value;
@@ -203,6 +177,7 @@ class _NewBusState extends State<NewBus> {
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
+
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -216,124 +191,51 @@ class _NewBusState extends State<NewBus> {
             height: 1.3 * MediaQuery.of(context).size.height,
             decoration: BoxDecoration(),
             padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
-            child: Center(
-              child: Card(
-                color: Colors.blue[300],
-                elevation: 20.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(35),
-                  ),
+            child: Card(
+              color: Colors.blue[300],
+              elevation: 20.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(35),
                 ),
-                // padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  //because of this global key we can acess build in validations
+                  key: _formKey,
 
-                /*decoration: BoxDecoration(
-               // color:Colors.blue[300],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.0),
-                  bottomRight: Radius.circular(40.0),
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                  
-                ),
-              gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Colors.blue[400],
-                      Colors.blue[100],
-                      Colors.blue[400],
-                    ]),
-              ),*/
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    autovalidateMode: AutovalidateMode.always, key: _formKey,
-
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      
-                      children: <Widget>[
-                        _buildPlateNumber(),
-                        SizedBox(height: 10.0),
-                        _buildDriverName(),
-                        SizedBox(height: 10.0),
-                        _buildOwnerEmail(),
-                        SizedBox(height: 10.0),
-                        _buildLicenseNumber(),
-                        SizedBox(height: 10.0),
-                        _buildColor(),
-                        SizedBox(height: 10.0),
-                        _buildPublicPrivate(),
-                        SizedBox(height: 10.0),
-                        _buildLuxeryLevel(),
-                        SizedBox(height: 10.0),
-                        _buildSeat(),
-                        SizedBox(height: 30.0),
-                        
-                        Row(
-                          
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                            
-                              child: SizedBox(width: 175,
-                                child: ElevatedButton(
-                                  
-                                  
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical:12.0,horizontal: 20),
-                                      child: Text(
-                                        'Submit',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.black87, // background
-                                      onPrimary: Colors.white, // foreground
-                                    ),
-                                    onPressed: () async {
-                                      // validate the form based on it's current state
-                                      if (_formKey.currentState.validate()) {
-                                        Map<String, dynamic> data = {
-                                          "Plate Number": plateNumber.text,
-                                          "Driver Name": driverName.text,
-                                          "License Number": licenseNumber.text,
-                                          "Color": color.text,
-                                          "Public or Private": publicPrivate.text,
-                                          "Luxury Level": luxeryLevel.text,
-                                          "Seat Count": seat.text,
-                                          "Owner": owneremail.text,
-                                        };
-
-                                        String plateno=plateNumber.text;
-
-                                        FirebaseFirestore.instance
-                                            .collection('buses')
-                                            .doc('$plateno')
-                                            .set(data);
-
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertBox(
-                                                  'Successfully Inserted!');
-                                            });
-                                             _formKey.currentState.reset();
-                                      }
-                                    }),
-                              ),
-                            ),
-                            SizedBox(width: 80.0),
-                            SizedBox(width: 175,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _buildPlateNumber(),
+                      SizedBox(height: 10.0),
+                      _buildDriverName(),
+                      SizedBox(height: 10.0),
+                      _buildLicenseNumber(),
+                      SizedBox(height: 10.0),
+                      _buildColor(),
+                      SizedBox(height: 10.0),
+                      _buildPublicPrivate(),
+                      SizedBox(height: 10.0),
+                      _buildLuxeryLevel(),
+                      SizedBox(height: 10.0),
+                      _buildSeat(),
+                      SizedBox(height: 30.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: SizedBox(
+                              width: 175,
                               child: ElevatedButton(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal:20.0 ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 20),
                                     child: Text(
-                                      'Cancel',
+                                      'Submit',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ),
@@ -342,15 +244,60 @@ class _NewBusState extends State<NewBus> {
                                     onPrimary: Colors.white, // foreground
                                   ),
                                   onPressed: () async {
-                                    _formKey.currentState.reset();
+                                    // validate the form based on it's current state
+                                    if (_formKey.currentState.validate()) {
+                                      Map<String, dynamic> data = {
+                                        "Plate Number": plateNumber.text,
+                                        "Driver Name": driverName.text,
+                                        "License Number": licenseNumber.text,
+                                        "Color": color.text,
+                                        "Public or Private": publicPrivate.text,
+                                        "Luxury Level": luxeryLevel.text,
+                                        "Seat Count": seat.text,
+                                        //"Owner": owneremail.text,
+                                      };
+
+                                      String plateno = plateNumber.text;
+
+                                      FirebaseFirestore.instance
+                                          .collection('buses')
+                                          .doc('$plateno')
+                                          .set(data);
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertBox(
+                                                'Successfully Inserted!');
+                                          });
+                                      _formKey.currentState.reset();
+                                    }
                                   }),
                             ),
-
-                               
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                          SizedBox(width: 80.0),
+                          SizedBox(
+                            width: 175,
+                            child: ElevatedButton(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20.0),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black87, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                onPressed: () {
+                                  _formKey.currentState.reset();
+                                }),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

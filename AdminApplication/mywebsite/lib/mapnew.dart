@@ -12,7 +12,7 @@ double lat;
 double long;
 
 const CameraPosition _kInitialPosition =
-    CameraPosition(target: LatLng(7.8731, 80.7718), zoom: 11.0);
+    CameraPosition(target: LatLng(6.8412, 79.9654), zoom: 11.0);
 
 class MapClickPageNew extends StatefulWidget {
   String tripid;
@@ -74,7 +74,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
   _MapClickBodyState(tripid) {
     this.tripid = tripid;
   }
-
+//take last tapped latlon into this variable
   GoogleMapController mapController;
   LatLng _lastTap;
   LatLng _lastLongPress;
@@ -85,14 +85,13 @@ class _MapClickBodyState extends State<_MapClickBody> {
   String _longitude;
   String _stopName;
   String _arrivingTime;
-  String _timeDu;
 
   String tid = InitializeTrip.tid;
 
 //get data from textformfield
   TextEditingController stopName = new TextEditingController();
   TextEditingController arrivingTime = new TextEditingController();
-  TextEditingController timeDu = new TextEditingController();
+
   TextEditingController cnlatitude = new TextEditingController();
   TextEditingController cnlongitude = new TextEditingController();
 
@@ -163,24 +162,6 @@ class _MapClickBodyState extends State<_MapClickBody> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
-                        //  key: ValueKey('timeDu'),
-                        controller: timeDu,
-                        decoration: InputDecoration(
-                            labelText: 'Time Duration From Last Stop',
-                            labelStyle:
-                                TextStyle(fontSize: 16, color: Colors.black),
-                            border: OutlineInputBorder()),
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return 'Time Duration From Last Stop is required';
-                          }
-                        },
-                        onSaved: (String value) {
-                          _timeDu = value;
-                        },
-                      ),
-                      SizedBox(height: 20.0),
-                      TextFormField(
                         //    key: ValueKey('cnlatitude'),
                         controller: cnlatitude,
                         decoration: InputDecoration(
@@ -239,14 +220,13 @@ class _MapClickBodyState extends State<_MapClickBody> {
                                   Map<String, dynamic> data = {
                                     "name": stopName.text,
                                     "time": arrivingTime.text,
-                                    'order':FieldValue.serverTimestamp(),
+                                    'order': FieldValue.serverTimestamp(),
                                     'passed': 'false',
-                                    'dropCount':0,
-                                    'pickupCount':0,
+                                    'dropCount': 0,
+                                    'pickupCount': 0,
                                     "location": GeoPoint(lat, long),
                                     // "Latitude": cnlatitude.text,
                                     // "Longitude": cnlongitude.text,
-
                                   };
                                   //  String a = InitializeTrip.tid;
                                   print("fdssssss" + tripid);

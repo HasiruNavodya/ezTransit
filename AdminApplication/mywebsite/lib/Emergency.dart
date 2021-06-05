@@ -13,7 +13,6 @@ class Emergency extends StatefulWidget {
 }
 
 class _EmergencyState extends State<Emergency> {
-
   SideBarWidget _sideBar = SideBarWidget();
   @override
   Widget build(BuildContext context) {
@@ -24,15 +23,18 @@ class _EmergencyState extends State<Emergency> {
       ),
       sideBar: _sideBar.sideBarMenus(context, Emergency.id),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('emergencies').snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          stream:
+              FirebaseFirestore.instance.collection('emergencies').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return Text('No Value');
             }
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 50),
-              child: ListView(children: snapshot.data.docs.map((DocumentSnapshot document) {
-
+              child: ListView(
+                children: snapshot.data.docs.map(
+                  (DocumentSnapshot document) {
                     return Card(
                       elevation: 10,
                       child: Container(
@@ -73,7 +75,7 @@ class _EmergencyState extends State<Emergency> {
                             Row(
                               children: [
                                 Text(
-                                  'Time : ',
+                                  'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -106,12 +108,41 @@ class _EmergencyState extends State<Emergency> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text('° E'),
-                                SizedBox(width: 5),
+                                /* SizedBox(width: 5),
                                 TextButton(
                                   onPressed: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusMap(document.data()['busNo'])));
-                                  },
-                                  child: Text('Show In Map'),
+                                  },*/
+                                //child: Text('Show In Map'),
+                                SizedBox(
+                                  width: 150,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0, horizontal: 10.0),
+                                    child: ElevatedButton(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 10.0),
+                                        child: Text(
+                                          'Show In Map',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.black87, // background
+                                        onPrimary: Colors.white, // foreground
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        BusMap(document
+                                                            .data()['busNo'])));
+                                      },
+                                    ),
+                                  ),
                                 )
                               ],
                             ),

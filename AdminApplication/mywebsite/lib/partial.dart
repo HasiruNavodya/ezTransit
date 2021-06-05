@@ -185,25 +185,27 @@ class Partial extends StatelessWidget {
                                     onPressed: () async {
                                       // validate the form based on it's current state
 
-                                  Map<String, dynamic> data = {
-                                    "endin": endIn.text,
-                                    "fare": fare.text,
-                                    "partNo ": partNoF.text,
-                                    "startin": startIn.text,
-                                    "name": startIn.text + '-' + endIn.text,
-                                  };
+                                      Map<String, dynamic> data = {
+                                        "endin": endIn.text,
+                                        "fare": fare.text,
+                                        "partNo ": partNoF.text,
+                                        "startin": startIn.text,
+                                        "name": startIn.text + '-' + endIn.text,
+                                      };
 
-                                  String startinendin =
-                                      startIn.text + '-' + endIn.text;
+                                      String startinendin =
+                                          startIn.text + '-' + endIn.text;
 
-                                  FirebaseFirestore.instance
-                                      .collection("partialroutes")
-                                      .doc('$startinendin')
-                                      .set(data);
-                                }),
-                          ),
-                         // SizedBox(width: 50.0),
-                            ),)],
+                                      FirebaseFirestore.instance
+                                          .collection("partialroutes")
+                                          .doc('$startinendin')
+                                          .set(data);
+                                    }),
+                              ),
+                              // SizedBox(width: 50.0),
+                            ),
+                          )
+                        ],
                       )
                     ],
                   ),
@@ -299,6 +301,11 @@ class Partial extends StatelessWidget {
                                     "parts":
                                         FieldValue.arrayUnion([partNoS.text])
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Partial()),
+                                  );
 
                                   showDialog(
                                       context: context,
@@ -306,11 +313,6 @@ class Partial extends StatelessWidget {
                                         return AlertBox(
                                             'Successfully Inserted!');
                                       });
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Partial()),
-                                  );
                                 }),
                           ),
                         ],
