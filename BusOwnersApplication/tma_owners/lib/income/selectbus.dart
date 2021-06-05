@@ -9,8 +9,8 @@ DateTime dateG;
 
 class SelectBus extends StatefulWidget {
 
-  SelectBus(this.date);
-  final DateTime date;
+  //SelectBus(this.date);
+  //final DateTime date;
 
   @override
   _SelectBusState createState() => _SelectBusState();
@@ -22,7 +22,9 @@ class _SelectBusState extends State<SelectBus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Bus'),
+        title: Text('SELECT BUS'),
+        backgroundColor: Colors.black,
+        //centerTitle: true,
       ),
       body: buses(),
     );
@@ -38,6 +40,44 @@ class _SelectBusState extends State<SelectBus> {
           return Text('Something went wrong');
         }
 
+        if (snapshot.hasData) {
+          return Container(
+            color: Colors.grey.shade300,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new ListView(
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom:8.0),
+                    child: new ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
+                      onPressed: () {
+                        bus = document.data()['Plate Number'];
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SelectTrip(bus)));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${document.data()['Plate Number']}',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.black87
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                  //Card(child: Text(document.data()['name']??'default'),);
+                }).toList(),
+              ),
+            ),
+          );
+        }
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             body: Container(
@@ -46,38 +86,7 @@ class _SelectBusState extends State<SelectBus> {
           );
         }
 
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new ListView(
-            children: snapshot.data.docs.map((DocumentSnapshot document) {
-              return Container(
-                color: Colors.white70,
-                margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                child: new OutlinedButton(
-                  onPressed: () {
-                    bus = document.data()['Plate Number'];
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SelectTrip(widget.date,bus)));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          '${document.data()['Plate Number']}',
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black87
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-              //Card(child: Text(document.data()['name']??'default'),);
-            }).toList(),
-          ),
-        );
+        return Text('Something went wrong');
       },
     );
   }

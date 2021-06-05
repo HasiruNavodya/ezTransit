@@ -3,22 +3,20 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:tma_owners/locate/map.dart';
 
-class Alerts extends StatefulWidget {
+
+
+class Complaints extends StatefulWidget {
   @override
-  _AlertsState createState() => _AlertsState();
+  _ComplaintsState createState() => _ComplaintsState();
 }
 
-class _AlertsState extends State<Alerts> {
-
-  String bus;
-
+class _ComplaintsState extends State<Complaints> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ALERTS'),
+        title: Text('COMPLAINTS'),
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
@@ -27,7 +25,7 @@ class _AlertsState extends State<Alerts> {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('emergencies').snapshots(),
+            stream: FirebaseFirestore.instance.collection('complaints').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
               if (snapshot.hasError) {
@@ -66,28 +64,11 @@ class _AlertsState extends State<Alerts> {
                                               color: Colors.black87,
                                             ),
                                           ),
-                                          Text('${document.data()['busNo']}',
+                                          Text('${document.data()['Plate Number']}',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               color: Colors.black87,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 3.0,),
-                                      Row(
-                                        children: [
-                                          Text('TYPE: ',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                          Text('${document.data()['type']}',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black87,),
                                           ),
                                         ],
                                       ),
@@ -112,35 +93,13 @@ class _AlertsState extends State<Alerts> {
                                     ],
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          OutlinedButton(
-                                            onPressed: () {
-                                              bus = document.data()['busNo'];
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => BusMap(bus)));
-                                            },
-                                            child: Text('Show Location',
-                                              style: TextStyle(
-                                                //fontSize: 20.0,document.data()['location']
-                                                color: Colors.black87,),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                             Divider(),
                             Row(
                               children: [
                                 Flexible(
-                                  child: Text('Description: '+'${document.data()['text']}',
+                                  child: Text('Complaint: '+'${document.data()['Complaint']}',
                                     style: TextStyle(
                                       //fontSize: 20.0,
                                       color: Colors.black87,),

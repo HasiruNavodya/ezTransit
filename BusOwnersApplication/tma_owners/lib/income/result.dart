@@ -19,7 +19,8 @@ class _TripResultsState extends State<TripResults> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Trip Details'),
+        title: Text('TRIP INFORMATION'),
+        backgroundColor: Colors.black,
       ),
       body: Container(
           child: trips()
@@ -53,51 +54,107 @@ class _TripResultsState extends State<TripResults> {
           Timestamp et = snapshot.data['stopped'];
           DateTime e = et.toDate();
 
-          return Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-
-                  children: [
-                    SizedBox(
-                      width: 300.0,
-                      height: 400.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black54),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('' + '${snapshot.data['tripName']}', style: TextStyle(fontSize: 18.0,)),
-                            Text('' + '${snapshot.data['turnTime']}', style: TextStyle(fontSize: 18.0,)),
-                            Text('' + '${snapshot.data['busNo']}', style: TextStyle(fontSize: 18.0,)),
-                            Text('' + '${d.year}'+'-${d.month}'+'-${d.day}', style: TextStyle(fontSize: 18.0,)),
-                            Text(''),
-                            Text('Started Time: ' + '${s.hour}'+':${s.minute}', style: TextStyle(fontSize: 18.0,)),
-                            Text('Stopped Time: ' + '${e.hour}'+':${e.minute}', style: TextStyle(fontSize: 18.0,)),
-                            Text(''),
-                            Text('Ticket Count:' + '${snapshot.data['ticketCount']}', style: TextStyle(fontSize: 18.0,)),
-                            Text('People Count: ' + '${snapshot.data['IRCount']}', style: TextStyle(fontSize: 18.0,)),
-                            Text(''),
-                            Text('Income: Rs.' + '${snapshot.data['income']}', style: TextStyle(fontSize: 18.0,)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+          return Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black54),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-              ],
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text('BUS: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('' + '${snapshot.data['busNo']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(''),
+                          Row(
+                            children: [
+                              Text('DATE: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${d.year}'+'-${d.month}'+'-${d.day}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('START CITY: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('' + '${snapshot.data['startCity']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('END CITY: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('' + '${snapshot.data['endCity']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('START TIME: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('' + '${snapshot.data['startTime']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('END TIME: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('' + '${snapshot.data['endTime']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(''),
+                          Row(
+                            children: [
+                              Text('BUS STARTED TIME: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${s.hour}'+':${s.minute}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('BUS STOPPED TIME: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${e.hour}'+':${e.minute}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(''),
+                          Row(
+                            children: [
+                              Text('TICKET COUNT: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${snapshot.data['ticketCount']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('PEOPLE COUNT: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${snapshot.data['IRCount']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(''),
+                          Row(
+                            children: [
+                              Text('INCOME: ', style: TextStyle(fontSize: 18.0,)),
+                              Text('${snapshot.data['income']}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(''),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
             ),
           );
         }
-        return null;
+        return Text('Something went wrong');
       },
     );
   }

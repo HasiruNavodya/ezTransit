@@ -252,22 +252,11 @@ class _RegisterState extends State<Register> {
 
                         if(_formkey.currentState.validate())
                           {
-                            Map <String,dynamic> data= {
-                              "FullName": fullName.text,
-                              "Email": email.text,
-                              "NIC": nIC.text,
-                              "PhoneNo": phoneNo.text,
-                              "Password": password.text,
-                              "ConfirmPassword": confirmPassword.text
-                            };
-                            FirebaseFirestore.instance.collection("passengers").doc(email.text).set(data);
                             signUp();
                           }else
                             {
                               print("unsuccessfull");
                             }
-
-
                       },
                       child: Text('SIGN UP',style: TextStyle(fontSize: 15, color: Colors.white)),
                     ),
@@ -297,6 +286,16 @@ class _RegisterState extends State<Register> {
         print(e.message);
       }
     }
+
+    FirebaseFirestore.instance.collection("passengers").doc(email.text).set({
+      "FullName": fullName.text,
+      "Email": email.text,
+      "NIC": nIC.text,
+      "PhoneNum": phoneNo.text,
+      "Password": password.text,
+      "ConfirmPassword": confirmPassword.text
+    }).then((value) {
+      print("Records Added Successfully!");}).catchError((error) => print("Failed: $error"));
 
   }
 

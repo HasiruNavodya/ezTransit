@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tma_owners/auth/account.dart';
+import 'package:tma_owners/home/complaints.dart';
 import 'package:tma_owners/income/incomehome.dart';
+import 'package:tma_owners/income/selectbus.dart';
 import 'package:tma_owners/income/selectdate.dart';
 import 'package:tma_owners/locate/selectbusmap.dart';
 
@@ -33,7 +35,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
-        //physics: NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[Alerts(), HomeScreen(), Account()],
         controller: controller,
       ),
@@ -74,48 +76,95 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.white,
+        color: Colors.grey.shade600,
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 16),
           child: Column(
             children: [
               Expanded(
-                flex:1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("LIFETIME INCOME",style: TextStyle(fontSize: 18),),
-                    SizedBox(height: 8,),
-                    Text("Rs. 1222000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex:1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("TODAY INCOME",style: TextStyle(fontSize: 18),),
-                    SizedBox(height: 8,),
-                    Text("Rs. 32000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                  ],
+                flex:5,
+                child: Padding(
+                  padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
+                    onPressed: (){},
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("LIFETIME INCOME",style: TextStyle(fontSize: 18,color: Colors.black87),),
+                                  SizedBox(height: 8,),
+                                  Text("Rs. 1222000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 1.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("TODAY INCOME",style: TextStyle(fontSize: 18,color: Colors.black87),),
+                                  SizedBox(height: 8,),
+                                  Text("Rs. 32000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 1.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("BUSES ON TRIPS",style: TextStyle(fontSize: 18,color: Colors.black87),),
+                                  SizedBox(height: 8,),
+                                  Text("5",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Expanded(
                 flex:1,
                 child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: OutlinedButton(
+                  padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDate()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Alerts()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text("SPECIFIC TRIP DETAILS",style: TextStyle(fontSize: 16,color: Colors.black87),),
+                        Text("EMERGENCIES",style: TextStyle(fontSize: 16,color: Colors.black87),),
                         Icon(Icons.navigate_next,color: Colors.black87,)
                       ],
                     ),
@@ -125,8 +174,49 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex:1,
                 child: Padding(
-                  padding: const EdgeInsets.only(right:30,left: 30,top: 0,bottom: 60),
-                  child: OutlinedButton(
+                  padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Complaints()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("COMPLAINTS",style: TextStyle(fontSize: 16,color: Colors.black87),),
+                        Icon(Icons.navigate_next,color: Colors.black87,)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex:1,
+                child: Padding(
+                  padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectBus()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("SPECIFIC TRIP DETAILS",style: TextStyle(fontSize: 16,color: Colors.black87,),),
+                        Icon(Icons.navigate_next,color: Colors.black87,)
+                      ],
+                    ),
+                  ),
+                ),//right:30,left: 30,top: 0,bottom: 30)
+              ),
+              Expanded(
+                flex:1,
+                child: Padding(
+                  padding: const EdgeInsets.only(right:8,left: 8,top: 8,bottom: 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SelectBusMap()));
                     },
@@ -134,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text("CHECK BUS LOCATIONS",style: TextStyle(fontSize: 16,color: Colors.black87),),
+                        Text("BUS LIVE LOCATIONS",style: TextStyle(fontSize: 16,color: Colors.black87),),
                         Icon(Icons.navigate_next,color: Colors.black87,)
                       ],
                     ),

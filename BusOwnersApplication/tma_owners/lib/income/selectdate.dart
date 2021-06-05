@@ -40,7 +40,7 @@ class _SelectDateState extends State<SelectDate> {
                   ElevatedButton(
                     //style: ElevatedButton.styleFrom(onSurface: Colors.red),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectBus(_selectedDay)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectBus()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
