@@ -24,7 +24,8 @@ int IR1 = 5;
 int IR2 = 4;
 //int IR3 = 0;
 //int IR4 = 2;
-int LED = 14;
+int LEDR = 14;
+int LEDG = 12;
 
 
 int count=0;
@@ -41,7 +42,8 @@ void setup()
   pinMode(IR2, INPUT);
   //pinMode(IR3, INPUT);
   //pinMode(IR4, INPUT);
-  pinMode(LED, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(LEDR, OUTPUT);
   
   delay (1000);
   WiFi.begin (WIFI_SSID, WIFI_PASSWORD); 
@@ -58,7 +60,7 @@ void setup()
   Serial.print ("IP Address is:");
   Serial.println (WiFi.localIP ()); 
   Firebase.begin (FIREBASE_HOST, FIREBASE_AUTH);
-  digitalWrite(LED, HIGH);
+  digitalWrite(LEDG, HIGH);
 }
 
 void loop() 
@@ -67,6 +69,8 @@ void loop()
   if(digitalRead(IR1) == 0){
     if(dn==0){
       dn=1; 
+      digitalWrite(LEDR, HIGH);
+      digitalWrite(LEDG, LOW);
     }
     if(dn==2){
       sendCount(--count);
@@ -76,7 +80,8 @@ void loop()
   if(digitalRead(IR2) == 0){
     if(dn==0){
       dn=2;
-       
+      digitalWrite(LEDR, HIGH);
+      digitalWrite(LEDG, LOW); 
     }
     if(dn==1){
       sendCount(++count); 
@@ -90,7 +95,9 @@ void loop()
 void reset(){
   delay(500);
   dn=0;
-  Serial.println("Resetted");
+  digitalWrite(LEDG, HIGH);
+  digitalWrite(LEDR, LOW);
+  Serial.println(" | Sensors Resetted");
 }
 
 void sendCount(int c){
