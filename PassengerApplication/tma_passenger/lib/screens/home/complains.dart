@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:tma_passenger/screens/home/ride.dart';
 
 import 'home.dart';
-
+String busowner;
 class Complaints extends StatefulWidget {
   Complaints(this.plateno);
 
   final String plateno;
+
 
   @override
   _ComplaintsState createState() => _ComplaintsState();
@@ -159,12 +160,20 @@ class _ComplaintsState extends State<Complaints> {
                         onPressed: () {
                           if (formkey.currentState.validate()) {
                             // Map<String,dynamic> data = {"Plate Number": ComplaintBusNo.text,"Complaint":ComplaintDescription.text,"time":'12.00'};
+                            FirebaseFirestore.instance.collection('buses').where('Plate Number', isEqualTo :'$plateno').get().then((value){
+                              //Ran only once data has been retrieved from firestore (which usually takes a few milliseconds)
+                              value.docs.forEach((result) {
+                                busowner = result.data()['Owner'];
+                                print(busowner);
+                              });});
+
                             FirebaseFirestore.instance
                                 .collection("complaints")
                                 .add({
                                   "Plate Number": ComplaintBusNo.text,
                                   "Complaint": ComplaintDescription.text,
                                   "time": FieldValue.serverTimestamp(),
+                                  "owner": busowner,
                                 })
                                 .then((value) =>
                                     print("Complain Reported Successfully!"))
