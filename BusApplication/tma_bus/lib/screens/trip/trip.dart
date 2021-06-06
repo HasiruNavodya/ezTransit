@@ -33,6 +33,7 @@ String nextStopName;
 String busEmail;
 String bus;
 DatabaseReference pCount;
+String currentdate;
 
 StreamController<String> getTripID = StreamController<String>();
 
@@ -581,7 +582,18 @@ class _TripViewState extends State<TripView> {
   }
 
   void endTrip(){
+    currentdate=DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
 
+    Map<String, dynamic> data = {
+      "stopped": currentdate,
+
+    };
+
+
+    FirebaseFirestore.instance
+        .collection('triprecords')
+        .doc('$tripID')
+        .update(data);
     //positionStream.cancel();
 
     setState(() {

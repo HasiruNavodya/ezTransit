@@ -9,12 +9,25 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tma_bus/main.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
+
 
 
 String busNo;
 int sval = 1;
 String busEmail;
 String bus;
+String startcity;
+String endcity;
+String endtime;
+String starttime;
+String tripname;
+int ticketcount;
+String currentdate;
+
+void getCurrentDate() {
+  currentdate=DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+}
 
 // ignore: must_be_immutable
 class AddTripView extends StatefulWidget {
@@ -39,6 +52,8 @@ class _AddTripViewState extends State<AddTripView> {
       List list = busEmail.split('@');
       bus = list[0].toString().toUpperCase();
       print(bus);
+
+
     }
 
 
@@ -78,6 +93,12 @@ class _AddTripViewState extends State<AddTripView> {
               padding: const EdgeInsets.all(8.0),
               child: new ListView(
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  starttime= document.data()['startTime'];
+                  endtime= document.data()['endTime'];
+                  startcity= document.data()['startCity'];
+                  endcity= document.data()['endCity'];
+                  tripname= document.data()['name'];
+                  ticketcount= document.data()['ticketCount'];
                   return Container(
                     //color: Colors.white,
                     margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
@@ -86,6 +107,7 @@ class _AddTripViewState extends State<AddTripView> {
                       onPressed: () {
                         tripID = document.data()['tripID'];
                         print(tripID);
+                        print(busNo);
                         showAlertDialog(context);
                       },
                       child: Padding(
@@ -132,6 +154,35 @@ class _AddTripViewState extends State<AddTripView> {
         ),
       ),
       onPressed:  () {
+        getCurrentDate();
+
+
+        Map<String, dynamic> data = {
+          "IRCount":'0',
+          "busNo": bus,
+          "busOwner": busEmail,
+          "date": currentdate,
+          "endCity": endcity,
+          "endTime": endtime,
+          "income":'0',
+          "startCity": startcity,
+          "startTime": starttime,
+          "started": currentdate,
+          "stopped":'',
+          "tripID": tripID,
+          "tripName": tripname,
+          "ticketCount": ticketcount,
+          "turnTime": '0',
+          //"Owner": owneremail.text,
+        };
+
+
+        FirebaseFirestore.instance
+            .collection('triprecords')
+            .doc('$tripID')
+            .set(data);
+
+
         print(sval);
         streamController.add(sval);
         tripIDStream.add(tripID);
