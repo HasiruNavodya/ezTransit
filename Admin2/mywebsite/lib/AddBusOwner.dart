@@ -108,6 +108,7 @@ class _AddBusOwnerState extends State<AddBusOwner> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Add Bus Owner'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, AddBusOwner.id),
       body: Center(
@@ -119,7 +120,7 @@ class _AddBusOwnerState extends State<AddBusOwner> {
             padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
             child: Center(
               child: Card(
-                color: Colors.blue[300],
+                color: Colors.white,
                 elevation: 20.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
