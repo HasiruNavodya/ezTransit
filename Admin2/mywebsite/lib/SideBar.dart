@@ -20,11 +20,8 @@ class SideBarWidget {
           title: 'Home',
           route: Home.id,
           icon: Icons.home,
-
-
-
         ),
-         MenuItem(
+        MenuItem(
           title: 'Add New Bus',
           route: NewBus.id,
           icon: CupertinoIcons.bus,
@@ -39,8 +36,6 @@ class SideBarWidget {
           route: Partial.id,
           icon: Icons.add_road,
         ),
-
-       
         MenuItem(
           title: 'Emergency',
           route: Emergency.id,
@@ -48,10 +43,10 @@ class SideBarWidget {
         ),
         MenuItem(
             title: 'Complaints', route: Complaints.id, icon: Icons.messenger),
-        /*MenuItem(
-            title: 'Add Bus Owner', route: AddBusOwner.id, icon: Icons.perm_identity
-        ),
-*/
+        MenuItem(
+            title: 'Add Bus Owner',
+            route: AddBusOwner.id,
+            icon: Icons.perm_identity),
       ],
       selectedRoute: selectedRoute,
       onSelected: (item) {
@@ -81,7 +76,7 @@ class SideBarWidget {
                       MaterialPageRoute(
                           builder: (BuildContext context) => LoginPage()));
                 },
-                style: ElevatedButton.styleFrom(primary:(Colors.black)),
+                style: ElevatedButton.styleFrom(primary: (Colors.black)),
                 child: Center(child: Text('LOG OUT')))),
       ),
     );
