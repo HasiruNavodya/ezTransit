@@ -8,6 +8,8 @@ import 'package:tma_bus/screens/home/home.dart';
 
 enum SingingCharacter { lafayette, jefferson }
 
+String busowner;
+
 SingingCharacter _character = SingingCharacter.lafayette;
 
 class ReportEmergencyView extends StatefulWidget {
@@ -241,6 +243,14 @@ class _EmergencyState extends State<ReportEmergencyView> {
   }
 
   void addReport() async {
+    FirebaseFirestore.instance.collection('buses').where('Plate Number', isEqualTo :'$bus').get().then((value){
+      //Ran only once data has been retrieved from firestore (which usually takes a few milliseconds)
+      value.docs.forEach((result) {
+        busowner = result.data()['Owner'];
+        print(busowner);
+      });});
+
+
 
     LocationData currentLocation;
     var location = new Location();
@@ -248,6 +258,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
       currentLocation = await location.getLocation();
       FirebaseFirestore.instance.collection("emergencies").add({
         "busNo": bus,
+        "owner": busowner,
         "text": ComplaintDescription.text,
         "time": FieldValue.serverTimestamp(),
         "location": GeoPoint(currentLocation.latitude,currentLocation.longitude),
