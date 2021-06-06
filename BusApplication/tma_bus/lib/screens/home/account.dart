@@ -365,7 +365,7 @@ class _AccountState extends State<Account> {
 
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(9.0),
               child: ElevatedButton(
                 onPressed: (){logout();},
                 child: Text("LOGOUT"),
