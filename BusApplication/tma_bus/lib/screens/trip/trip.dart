@@ -356,7 +356,7 @@ class _TripViewState extends State<TripView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Passengers in Bus: ',
+                                Text('Ticket Count: ',
                                   style: TextStyle(
                                     //fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
