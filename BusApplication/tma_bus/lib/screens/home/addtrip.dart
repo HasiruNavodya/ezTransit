@@ -158,7 +158,6 @@ class _AddTripViewState extends State<AddTripView> {
 
 
         Map<String, dynamic> data = {
-          "IRCount":'0',
           "busNo": bus,
           "busOwner": busEmail,
           "date": FieldValue.serverTimestamp(),
@@ -167,13 +166,11 @@ class _AddTripViewState extends State<AddTripView> {
           "income":0,
           "startCity": startcity,
           "startTime": starttime,
-          "started": currentdate,
-          "stopped":'',
+          "started": FieldValue.serverTimestamp(),
           "tripID": tripID,
           "tripName": tripname,
           "ticketCount": ticketcount,
-          "turnTime": '0',
-          //"Owner": owneremail.text,
+          "turnTime": '$starttime to $endtime',
         };
 
 

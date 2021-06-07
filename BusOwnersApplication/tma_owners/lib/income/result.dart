@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 
 DateTime date;
 
@@ -114,13 +115,13 @@ class _TripResultsState extends State<TripResults> {
                           Row(
                             children: [
                               Text('BUS STARTED TIME: ', style: TextStyle(fontSize: 18.0,)),
-                              Text('${s.hour}'+':${s.minute}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                              Text(DateFormat.Hm().format(snapshot.data['started'].toDate()).toString(), style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Row(
                             children: [
                               Text('BUS STOPPED TIME: ', style: TextStyle(fontSize: 18.0,)),
-                              Text('${e.hour}'+':${e.minute}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                              Text(DateFormat.Hm().format(snapshot.data['stopped'].toDate()).toString(), style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Text(''),

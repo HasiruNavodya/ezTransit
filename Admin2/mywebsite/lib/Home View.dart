@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                       child: Text(
-                        'Welcome To ezTransit Admin Dashboard',
+                        'Welcome To ezTransit Admin Application',
                         style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),
                       ),
                     ),

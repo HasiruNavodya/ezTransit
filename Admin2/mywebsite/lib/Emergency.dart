@@ -5,6 +5,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:mywebsite/busmap.dart';
+import 'package:intl/intl.dart';
 
 class Emergency extends StatefulWidget {
   static const String id = 'emergency';
@@ -79,8 +80,7 @@ class _EmergencyState extends State<Emergency> {
                                   'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                Text(
-                                  document.data()['time'].toString(),
+                                Text(DateFormat.yMMMd().add_Hm().format(document.data()['time'].toDate()).toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],

@@ -510,6 +510,10 @@ class _TripViewState extends State<TripView> {
       }
     });
 
+    FirebaseFirestore.instance.collection('buses').doc(bus).update({
+      'onTrip' : 'yes'
+    });
+
     geoGate = 1;
     print(geoGate);
     getIRCount();
@@ -585,8 +589,8 @@ class _TripViewState extends State<TripView> {
     currentdate=DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
 
     Map<String, dynamic> data = {
-      "stopped": currentdate,
-
+      "stopped": FieldValue.serverTimestamp(),
+      "IRCount": vnDropCount.value
     };
 
 
@@ -612,6 +616,9 @@ class _TripViewState extends State<TripView> {
 
     FirebaseFirestore.instance.collection('trips').doc('$tripID').update({
       'lastStopPassed' : 0
+    });
+    FirebaseFirestore.instance.collection('buses').doc(bus).update({
+      'onTrip' : 'no'
     });
 
 

@@ -173,7 +173,7 @@ class _ComplaintsState extends State<Complaints> {
                                   "Plate Number": ComplaintBusNo.text,
                                   "Complaint": ComplaintDescription.text,
                                   "time": FieldValue.serverTimestamp(),
-                                  "owner": busowner,
+                                  "owner": 'nimalj@owners.eztransit.lk',
                                 })
                                 .then((value) =>
                                     print("Complain Reported Successfully!"))

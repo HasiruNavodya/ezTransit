@@ -18,6 +18,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+
   TabController controller;
 
   @override
@@ -68,8 +69,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final ValueNotifier<String> vnTotalIncome = ValueNotifier<String>('Loading');
+  final ValueNotifier<String> vnTodayIncome = ValueNotifier<String>('Rs.0.0');
+  final ValueNotifier<String> vnRCount = ValueNotifier<String>('Loading');
+
   @override
   Widget build(BuildContext context) {
+    getIncome();
     return Scaffold(
       appBar: AppBar(
         title: Text("ezTransit"),
@@ -103,9 +110,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text("LIFETIME INCOME",style: TextStyle(fontSize: 18,color: Colors.black87),),
+                                  Text("TOTAL INCOME",style: TextStyle(fontSize: 18,color: Colors.black87),),
                                   SizedBox(height: 8,),
-                                  Text("Rs. 1222000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                  ValueListenableBuilder(
+                                    builder: (BuildContext context, String value, Widget child) {
+                                      return Text('$value', style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),
+                                      );
+                                    },
+                                    valueListenable: vnTotalIncome,
+                                  ),
+                                  //Text("Rs. 1222000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
                                 ],
                               ),
                             ],
@@ -123,7 +137,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text("TODAY INCOME",style: TextStyle(fontSize: 18,color: Colors.black87),),
                                   SizedBox(height: 8,),
-                                  Text("Rs. 32000",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                  ValueListenableBuilder(
+                                    builder: (BuildContext context, String value, Widget child) {
+                                      return Text('$value', style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),
+                                      );
+                                    },
+                                    valueListenable: vnTodayIncome,
+                                  ),
                                 ],
                               ),
                             ],
@@ -141,7 +161,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text("BUSES ON TRIPS",style: TextStyle(fontSize: 18,color: Colors.black87),),
                                   SizedBox(height: 8,),
-                                  Text("5",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                  ValueListenableBuilder(
+                                    builder: (BuildContext context, String value, Widget child) {
+                                      return Text('$value', style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.black87),
+                                      );
+                                    },
+                                    valueListenable: vnRCount,
+                                  ),
                                 ],
                               ),
                             ],
@@ -237,6 +263,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void getIncome(){
+    double c = 0.0;
+    int tc = 0;
+    FirebaseFirestore.instance.collection('triprecords').get().then((querySnapshot) {
+      querySnapshot.docs.forEach((stopDoc) {
+        c = c + stopDoc.data()['income'];
+      });
+      vnTotalIncome.value = 'Rs. '+c.toString();
+    });
+
+    FirebaseFirestore.instance.collection('buses').where('onTrip', isEqualTo: 'yes').get().then((querySnapshot) {
+      querySnapshot.docs.forEach((stopDoc) {
+        tc = tc+1;
+      });
+      vnRCount.value = tc.toString();
+    });
+
   }
 }
 

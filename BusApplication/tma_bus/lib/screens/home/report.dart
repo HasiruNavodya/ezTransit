@@ -49,6 +49,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
       List list = busEmail.split('@');
       bus = list[0].toString().toUpperCase();
       print(bus);
+
     }
 
   }
@@ -243,14 +244,6 @@ class _EmergencyState extends State<ReportEmergencyView> {
   }
 
   void addReport() async {
-    FirebaseFirestore.instance.collection('buses').where('Plate Number', isEqualTo :'$bus').get().then((value){
-      //Ran only once data has been retrieved from firestore (which usually takes a few milliseconds)
-      value.docs.forEach((result) {
-        busowner = result.data()['Owner'];
-        print(busowner);
-      });});
-
-
 
     LocationData currentLocation;
     var location = new Location();
@@ -258,7 +251,7 @@ class _EmergencyState extends State<ReportEmergencyView> {
       currentLocation = await location.getLocation();
       FirebaseFirestore.instance.collection("emergencies").add({
         "busNo": bus,
-        "owner": busowner,
+        "owner": 'nimalj@owners.eztransit.lk',
         "text": ComplaintDescription.text,
         "time": FieldValue.serverTimestamp(),
         "location": GeoPoint(currentLocation.latitude,currentLocation.longitude),
@@ -272,6 +265,16 @@ class _EmergencyState extends State<ReportEmergencyView> {
     }
 
 
+  }
+
+  void getBO(){
+    FirebaseFirestore.instance.collection('trips').doc('$bus').get().then((DocumentSnapshot busDoc) {
+      if (busDoc.exists) {
+        busowner = busDoc.data()['Owner'];
+        print(busowner);
+        addReport();
+      }
+    });
   }
 
 }
