@@ -1,2 +1,3 @@
-# TMA
+# ezTransit
 Transport Management Application
+
