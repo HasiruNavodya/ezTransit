@@ -491,6 +491,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
                   print("Records Added Successfully!");
                   streamController.add(ticketID);
                   Navigator.of(context).popUntil((route) => route.isFirst);
+                  sendSMS();
                 })
                 .catchError((error) => print("Failed: $error"));
 
@@ -518,7 +519,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         FirebaseFirestore.instance.collection("trips").doc(tripid).collection('stops').doc(endcity).update({"dropCount": FieldValue.increment(1)})
             .then((value) => print("Records Added Successfully!"))
             .catchError((error) => print("Failed: $error"));
-        sendSMS();
+
       }
     });
   }
@@ -527,8 +528,9 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
     FirebaseFirestore.instance.collection("passengers").doc(userEmail).get().then((DocumentSnapshot userDoc) {
       if (userDoc.exists) {
 
-        phoneNo = userDoc.data()['PhoneNum'];
-        print('ALALALALALALALAL'+phoneNo.toString());
+        //phoneNo = userDoc.data()['PhoneNum'];
+        phoneNo = '+94786643127';
+        print('ALALALALALALALAL'+phoneNo);
 
         TwilioFlutter twilioFlutter;
         twilioFlutter = TwilioFlutter(
@@ -538,7 +540,7 @@ class _ConfirmTicketState extends State<ConfirmTicket> {
         );
         twilioFlutter.sendSMS(
             toNumber : phoneNo,
-            messageBody : '\n\nTicket Info\n\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)\n\nThank you!\nezTransit'
+            messageBody : '\n\nTicket Info\n\nTicket ID: $ticketID\nBus: $bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)\n\nThank you!\nezTransit'
         );
 
         print('\n\nTicket Info\nTicket ID: $ticketID\n$bus\nRs. $ticketprice\n$startcity ($pickupat)\n$endcity ($droppingat)');

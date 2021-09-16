@@ -357,7 +357,7 @@ class _TripViewState extends State<TripView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Ticket Count: ',
+                                Text('Passenger Count: ',
                                   style: TextStyle(
                                     //fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
@@ -493,7 +493,7 @@ class _TripViewState extends State<TripView> {
           geofenceService.start(geofenceList).catchError(onError);
         });
     });
-      getPDCount(stopList.elementAt(0));
+
       
     }).catchError((onError) {
       print("Database Error!");
@@ -518,6 +518,7 @@ class _TripViewState extends State<TripView> {
     print(geoGate);
     getIRCount();
     streamLiveLocation();
+    //getPDCount(stopList.elementAt(0));
 
   }
 
@@ -548,8 +549,17 @@ class _TripViewState extends State<TripView> {
 
     if (geoStatus == 'GeofenceStatus.ENTER') {
 
-      FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(geofence.id).update({
-        'passed' : 'true'
+      vnStopName.value = 'Current Stop: ' + geofence.id;
+      //getPDCount(geofence.id);
+
+      FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc('${geofence.id}').get().then((DocumentSnapshot nextdoc) {
+        if (nextdoc.exists) {
+          print('Current Stop'+nextdoc.id.toString());
+          print('Pickup'+nextdoc.data()['pickupCount'].toString());
+          print('Drop'+nextdoc.data()['dropCount'].toString());
+          vnPickupCount.value = nextdoc.data()['pickupCount'];
+          vnDropCount.value = nextdoc.data()['dropCount'];
+        }
       });
 
       if(geofence.id == endCity){
@@ -561,8 +571,14 @@ class _TripViewState extends State<TripView> {
     }
 
     if (geoStatus == 'GeofenceStatus.EXIT'){
-      ns = ns + 1;
-      getPDCount(stopList.elementAt(ns));
+      vnStopName.value = 'Passed: ' + geofence.id;
+      FirebaseFirestore.instance.collection('trips').doc('$tripID').collection('stops').doc(geofence.id).update({
+        'passed' : 'true'
+      });
+      //vnStopName.value = 'Next Stop: ' + geofenceList.elementAt(ns+1).toString();
+      //ns = ns + 1;
+      //getPDCount(geofence.id);
+
     }
 
   }
@@ -666,15 +682,6 @@ class _TripViewState extends State<TripView> {
         vnDropCount.value = nextdoc.data()['dropCount'];
       }
     });
-    if(ns!=0){
-      vnStopName.value = 'NEXT STOP: ' + next;
-    }
-    if(next==endCity){
-      vnStopName.value = 'TRIP END: ' + next;
-    }
-    if(next==startCity){
-      vnStopName.value = 'TRIP START: ' + next;
-    }
   }
 
   showAlertDialog(BuildContext context) {
