@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 12.0,
                       color: Colors.grey.withOpacity(0.5)),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: greenColor),
+                    borderSide: BorderSide(color: Colors.black),
                   )),
               onChanged: (value) {
                 this.email = value;
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 12.0,
                       color: Colors.grey.withOpacity(0.5)),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: greenColor),
+                    borderSide: BorderSide(color: Colors.black),
                   )),
               obscureText: true,
               onChanged: (value) {
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: InkWell(
                       child: Text('Forgot Password',
                           style: TextStyle(
-                              color: greenColor,
+                              color: Colors.black,
                               fontFamily: 'Trueno',
                               fontSize: 11.0,
                               decoration: TextDecoration.underline))))),
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Material(
                     borderRadius: BorderRadius.circular(25.0),
                     shadowColor: Colors.greenAccent,
-                    color: greenColor,
+                    color: Colors.black,
                     elevation: 7.0,
                     child: Center(
                         child: Text('LOGIN',

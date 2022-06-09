@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Transport Management System'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, Home.id),
       body: Center(
@@ -35,9 +36,9 @@ class Home extends StatelessWidget {
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [
-                      Colors.blue[400],
-                      Colors.blue[100],
-                      Colors.blue[400],
+                      Colors.black87,
+                      Colors.black87,
+                      Colors.black87,
                     ]),
               ),
               child: Container(
@@ -48,8 +49,8 @@ class Home extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                       child: Text(
-                        'Welcome To ezTransit Admin Dashboard',
-                        style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
+                        'Welcome To ezTransit Admin Application',
+                        style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),
                       ),
                     ),
                     SizedBox(width: 50),
@@ -57,7 +58,7 @@ class Home extends StatelessWidget {
                       height: 400,
                       width: 400,
                       child: Image(
-                        image: AssetImage('assets/bus1.png'),
+                        image: AssetImage('assets/buslogo.png'),
                       ),
                     ),
                   ],

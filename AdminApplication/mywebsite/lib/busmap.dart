@@ -33,6 +33,7 @@ class _BusMapState extends State<BusMap> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bus: "+ widget.busNo+" Location"),
+        backgroundColor: Colors.black,
       ),
       //backgroundColor: Colors.red,
       body: Container(

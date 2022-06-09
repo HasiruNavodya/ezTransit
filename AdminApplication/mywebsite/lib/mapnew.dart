@@ -102,6 +102,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Transport Management System'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, Home.id),
       body: Padding(
@@ -120,7 +121,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
                 child: Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
-                  color: Colors.blue[300],
+                  color: Colors.white,
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 40.0),

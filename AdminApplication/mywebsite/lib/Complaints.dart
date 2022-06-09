@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:intl/intl.dart';
 import 'package:mywebsite/SideBar.dart';
 
 class Complaints extends StatefulWidget {
@@ -18,6 +19,7 @@ class _ComplaintsState extends State<Complaints> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Complaints'),
+        backgroundColor: Colors.black,
         actions: <Widget>[
           IconButton(
             onPressed: () {},
@@ -49,7 +51,7 @@ class _ComplaintsState extends State<Complaints> {
                         padding: EdgeInsets.all(30),
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.blue[300],
+                          color: Colors.white,
                           borderRadius: BorderRadius.only(),
                         ),
                         child: Column(
@@ -73,8 +75,7 @@ class _ComplaintsState extends State<Complaints> {
                                   'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                Text(
-                                  document.data()['time'].toString(),
+                                Text(DateFormat.yMMMd().add_Hm().format(document.data()['time'].toDate()).toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],

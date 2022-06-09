@@ -5,6 +5,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:mywebsite/SideBar.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:mywebsite/busmap.dart';
+import 'package:intl/intl.dart';
 
 class Emergency extends StatefulWidget {
   static const String id = 'emergency';
@@ -20,6 +21,7 @@ class _EmergencyState extends State<Emergency> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Emergency'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, Emergency.id),
       body: StreamBuilder(
@@ -41,7 +43,7 @@ class _EmergencyState extends State<Emergency> {
                         padding: EdgeInsets.all(30),
                         height: 250,
                         decoration: BoxDecoration(
-                          color: Colors.blue[300],
+                          color: Colors.white,
                           borderRadius: BorderRadius.only(),
                         ),
                         child: Column(
@@ -78,8 +80,7 @@ class _EmergencyState extends State<Emergency> {
                                   'Date and Time : ',
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                Text(
-                                  document.data()['time'].toString(),
+                                Text(DateFormat.yMMMd().add_Hm().format(document.data()['time'].toDate()).toString(),
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],

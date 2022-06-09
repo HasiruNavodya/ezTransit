@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mywebsite/AddBusOwner.dart';
 import 'package:mywebsite/Complaints.dart';
 import 'package:mywebsite/Emergency.dart';
@@ -20,7 +21,7 @@ class SideBarWidget {
           route: Home.id,
           icon: Icons.home,
         ),
-         MenuItem(
+        MenuItem(
           title: 'Add New Bus',
           route: NewBus.id,
           icon: CupertinoIcons.bus,
@@ -35,8 +36,6 @@ class SideBarWidget {
           route: Partial.id,
           icon: Icons.add_road,
         ),
-
-       
         MenuItem(
           title: 'Emergency',
           route: Emergency.id,
@@ -44,10 +43,10 @@ class SideBarWidget {
         ),
         MenuItem(
             title: 'Complaints', route: Complaints.id, icon: Icons.messenger),
-        /*MenuItem(
-            title: 'Add Bus Owner', route: AddBusOwner.id, icon: Icons.perm_identity
-        ),
-*/
+        MenuItem(
+            title: 'Add Bus Owner',
+            route: AddBusOwner.id,
+            icon: Icons.perm_identity),
       ],
       selectedRoute: selectedRoute,
       onSelected: (item) {
@@ -56,7 +55,7 @@ class SideBarWidget {
       header: Container(
         height: 50,
         width: double.infinity,
-        color: Colors.black26,
+        color: Colors.black54,
         child: Center(
           child: Text(
             'Menu',
@@ -77,6 +76,7 @@ class SideBarWidget {
                       MaterialPageRoute(
                           builder: (BuildContext context) => LoginPage()));
                 },
+                style: ElevatedButton.styleFrom(primary: (Colors.black)),
                 child: Center(child: Text('LOG OUT')))),
       ),
     );

@@ -182,6 +182,7 @@ class _NewBusState extends State<NewBus> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Add New Bus'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, NewBus.id),
       body: Center(
@@ -192,7 +193,7 @@ class _NewBusState extends State<NewBus> {
             decoration: BoxDecoration(),
             padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 350.0),
             child: Card(
-              color: Colors.blue[300],
+              color: Colors.white,
               elevation: 20.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(

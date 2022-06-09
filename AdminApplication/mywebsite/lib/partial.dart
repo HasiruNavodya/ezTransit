@@ -55,6 +55,7 @@ class Partial extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Transport Management System'),
+        backgroundColor: Colors.black,
       ),
       sideBar: _sideBar.sideBarMenus(context, Home.id),
       body: Padding(
@@ -73,7 +74,7 @@ class Partial extends StatelessWidget {
                 child: Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 50.0, horizontal: 25.0),
-                  color: Colors.blue[300],
+                  color: Colors.white,
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -219,7 +220,7 @@ class Partial extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 60.0, bottom: 60.0, left: 300.0, right: 300.0),
-                  color: Colors.blue[300],
+                  color: Colors.white,
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 30.0),
