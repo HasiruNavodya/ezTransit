@@ -1,3 +1,3 @@
 # ezTransit
-Transport Management Application
+Public transport booking, tracking application and managing system
 
